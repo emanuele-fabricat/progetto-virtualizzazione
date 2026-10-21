@@ -32,6 +32,11 @@ Set
 	Valid redirect URIs: http://localhost:8081/oauth2/callback
 	Web Origins: http://localhost:8081
 Click save
+Click su clients
+Click sul clients oauth2-proxy appena creato
+Click sulla sezione credentilas
+Torvare il client secret
+Copiare in fondo a questo file il client secret
 
 CREAZIONE DI UN UTENTE
 click users
@@ -56,5 +61,5 @@ click sul proprio nome utente in lato a destra
 click su log out
 Chiudere il tunnel con ctrl+c
 	
-
+CLIENT SECRET: 
 
