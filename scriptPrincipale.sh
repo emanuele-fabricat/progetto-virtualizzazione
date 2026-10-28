@@ -27,12 +27,12 @@ sg docker -c '
 '
 
 #Installazione helm
-curl -fsSL \
-  -o get_helm.sh \
+curl -fL --retry 3 \
+  --output "$HOME/get_helm.sh" \
   'https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4'
 
-chmod 700 get_helm.sh
-./get_helm.sh
+chmod 700 "$HOME/get_helm.sh"
+bash "$HOME/get_helm.sh"
 
 #Creazione del namespace progetto dov’è saranno messi tutti i servizi tranne linkerd
 minikube kubectl -- create namespace progetto
