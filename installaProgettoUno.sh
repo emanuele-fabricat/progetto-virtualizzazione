@@ -78,7 +78,7 @@ helm install mio-keycloak bitnami/keycloak \
   --set image.repository=bitnamilegacy/keycloak \
   --set image.tag=26.3.3-debian-12-r0 \
   --set postgresql.image.repository=bitnamilegacy/postgresql \
-  --set postgresql.image.tag=17.6.0-debian-12-r0 \ 
+  --set postgresql.image.tag=17.6.0-debian-12-r0 \
   --set global.security.allowInsecureImages=true \
   --set auth.adminUser=admin \
   --set auth.adminPassword=Admin1234! \
