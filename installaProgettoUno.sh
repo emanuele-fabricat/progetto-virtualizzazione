@@ -24,7 +24,8 @@ sudo usermod -aG docker "$USER"
 sg docker -c '
   set -e
   minikube config set driver docker
-  minikube start --driver=docker
+  minikube config set kubernetes-version v1.35.1
+  minikube start
   minikube status
   minikube kubectl -- get nodes
 '
@@ -55,6 +56,7 @@ helm install mio-apache oci://registry-1.docker.io/bitnamicharts/apache \
   -n progetto \
   --set service.type=ClusterIP \
   --set image.repository=bitnamilegacy/apache \
+  --set image.tag=2.4.65-debian-12-r2 \
   --set image.tag=latest
 
 echo -e "\033[32mINSTALLAZIONE APACHE AVVENUTA CON SUCCESSO\033[0m"
@@ -66,7 +68,7 @@ helm install mio-mariadb bitnami/mariadb \
   --set image.repository=bitnamilegacy/mariadb \
   --set global.security.allowInsecureImages=true \
   --set auth.database=miodb \
-  --set auth.username=adimn \
+  --set auth.username=admin \
   --set auth.password=Admin1234!
 
 echo -e "\033[32mINSTALLAZIONE MARIADB AVVENUTA CON SUCCESSO\033[0m"
@@ -75,7 +77,9 @@ echo -e "\033[32mINSTALLAZIONE MARIADB AVVENUTA CON SUCCESSO\033[0m"
 helm install mio-keycloak bitnami/keycloak \
   -n progetto \
   --set image.repository=bitnamilegacy/keycloak \
+  --set image.tag=26.3.3-debian-12-r0 \
   --set postgresql.image.repository=bitnamilegacy/postgresql \
+  --set postgresql.image.tag=17.6.0-debian-12-r0 \
   --set global.security.allowInsecureImages=true \
   --set auth.adminUser=admin \
   --set auth.adminPassword=Admin1234! \
