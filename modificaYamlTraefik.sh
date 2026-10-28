@@ -1,3 +1,4 @@
+#!/bin/bash
 #Modifica YAML treafik per il redirectory delle rotte
 	
 set -e

@@ -1,9 +1,30 @@
+#!/bin/bash
+#Installazione Docker 
+sudo apt update
+sudo apt install -y docker.io
+sudo systemctl enable --now docker
+sudo usermod -aG docker "$USER"
+
 #Installazione minikube per linux tramite binary download
-curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+url -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
 
 #Avviare minikube
-minikube start
+sudo apt-get update
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y docker.io
+sudo systemctl enable --now docker
+
+# Esegui lo script come utente normale, non con "sudo ./scriptPrincipale.sh"
+sudo usermod -aG docker "$USER"
+
+# sg avvia questi comandi con il gruppo docker attivo, senza logout/login
+sg docker -c '
+  set -e
+  minikube config set driver docker
+  minikube start --driver=docker
+  minikube status
+  minikube kubectl -- get nodes
+'
 
 #Installazione helm
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-4

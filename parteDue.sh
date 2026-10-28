@@ -1,3 +1,4 @@
+#!/bin/bash
 echo "Nel prossimo comando sarà richiesta il client secret, immettere quello salvato nel passo precedente"
 
 #Creazione secret kubernetes
