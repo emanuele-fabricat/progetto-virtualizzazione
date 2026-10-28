@@ -61,6 +61,8 @@ helm install mio-mariadb bitnami/mariadb \
 #Installazione keycloak con postgress
 helm install mio-keycloak bitnami/keycloak \
   -n progetto \
+  --set image.repository=bitnamilegacy/keycloak \
+  --set global.security.allowInsecureImages=true \
   --set auth.adminUser=admin \
   --set auth.adminPassword=Admin1234! \
   --set postgresql.auth.postgresPassword=Admin1234! \
@@ -148,5 +150,8 @@ spec:
           port: 80
 YAML
 
+minikube start 
+
+echo ("Adesso aprire il file settingKeykloack.txt ed eseguire passo passo i comandi dentro ")
 
 
