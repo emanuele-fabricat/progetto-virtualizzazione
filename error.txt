@@ -1,0 +1,142 @@
+./scriptPrincipale.sh 
+Hit:1 http://it.archive.ubuntu.com/ubuntu noble InRelease
+Get:2 http://it.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+Get:3 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+Get:4 http://it.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+Get:5 http://it.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1,406 kB]
+Get:6 http://it.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [310 kB]
+Get:7 http://it.archive.ubuntu.com/ubuntu noble-updates/main amd64 Components [181 kB]
+Get:8 http://it.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1,809 kB]
+Get:9 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1,146 kB]
+Get:10 http://it.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [411 kB] 
+Get:11 http://it.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1,707 kB]      
+Get:12 http://security.ubuntu.com/ubuntu noble-security/main Translation-en [231 kB]               
+Get:13 http://security.ubuntu.com/ubuntu noble-security/main amd64 Components [46.4 kB]                   
+Get:14 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1,223 kB]                    
+Get:15 http://it.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [343 kB]             
+Get:16 http://it.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Components [388 kB]               
+Get:17 http://it.archive.ubuntu.com/ubuntu noble-updates/multiverse Translation-en [14.3 kB]                
+Get:18 http://it.archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Components [940 B]                  
+Get:19 http://it.archive.ubuntu.com/ubuntu noble-backports/main amd64 Components [5,764 B]  
+Get:20 http://it.archive.ubuntu.com/ubuntu noble-backports/universe amd64 Components [12.6 kB]                   
+Get:21 http://security.ubuntu.com/ubuntu noble-security/universe Translation-en [246 kB]                         
+Get:22 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Components [76.3 kB]
+Fetched 9,936 kB in 4s (2,746 kB/s)                                 
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+24 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following package was automatically installed and is no longer required:
+  libfwupd2
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  bridge-utils containerd pigz runc ubuntu-fan
+Suggested packages:
+  ifupdown aufs-tools cgroupfs-mount | cgroup-lite debootstrap docker-buildx docker-compose-v2 docker-doc rinse
+  zfs-fuse | zfsutils
+The following NEW packages will be installed:
+  bridge-utils containerd docker.io pigz runc ubuntu-fan
+0 upgraded, 6 newly installed, 0 to remove and 24 not upgraded.
+Need to get 73.4 MB of archives.
+After this operation, 278 MB of additional disk space will be used.
+Get:1 http://it.archive.ubuntu.com/ubuntu noble/universe amd64 pigz amd64 2.8-1 [65.6 kB]
+Get:2 http://it.archive.ubuntu.com/ubuntu noble/main amd64 bridge-utils amd64 1.7.1-1ubuntu2 [33.9 kB]
+Get:3 http://it.archive.ubuntu.com/ubuntu noble-updates/main amd64 runc amd64 1.3.4-0ubuntu1~24.04.1 [9,574 kB]
+Get:4 http://it.archive.ubuntu.com/ubuntu noble-updates/main amd64 containerd amd64 2.2.1-0ubuntu1~24.04.4 [28.2 MB]
+Get:5 http://it.archive.ubuntu.com/ubuntu noble-updates/universe amd64 docker.io amd64 29.1.3-0ubuntu3~24.04.2 [35.6 MB]
+Get:6 http://it.archive.ubuntu.com/ubuntu noble-updates/universe amd64 ubuntu-fan all 0.12.16+24.04.1 [34.2 kB]
+Fetched 73.4 MB in 2s (29.8 MB/s)     
+Preconfiguring packages ...
+Selecting previously unselected package pigz.
+(Reading database ... 176311 files and directories currently installed.)
+Preparing to unpack .../0-pigz_2.8-1_amd64.deb ...
+Unpacking pigz (2.8-1) ...
+Selecting previously unselected package bridge-utils.
+Preparing to unpack .../1-bridge-utils_1.7.1-1ubuntu2_amd64.deb ...
+Unpacking bridge-utils (1.7.1-1ubuntu2) ...
+Selecting previously unselected package runc.
+Preparing to unpack .../2-runc_1.3.4-0ubuntu1~24.04.1_amd64.deb ...
+Unpacking runc (1.3.4-0ubuntu1~24.04.1) ...
+Selecting previously unselected package containerd.
+Preparing to unpack .../3-containerd_2.2.1-0ubuntu1~24.04.4_amd64.deb ...
+Unpacking containerd (2.2.1-0ubuntu1~24.04.4) ...
+Selecting previously unselected package docker.io.
+Preparing to unpack .../4-docker.io_29.1.3-0ubuntu3~24.04.2_amd64.deb ...
+Unpacking docker.io (29.1.3-0ubuntu3~24.04.2) ...
+Selecting previously unselected package ubuntu-fan.
+Preparing to unpack .../5-ubuntu-fan_0.12.16+24.04.1_all.deb ...
+Unpacking ubuntu-fan (0.12.16+24.04.1) ...
+Setting up runc (1.3.4-0ubuntu1~24.04.1) ...
+Setting up bridge-utils (1.7.1-1ubuntu2) ...
+Setting up pigz (2.8-1) ...
+Setting up containerd (2.2.1-0ubuntu1~24.04.4) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/containerd.service → /usr/lib/systemd/system/containerd.serv
+ice.
+Setting up ubuntu-fan (0.12.16+24.04.1) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/ubuntu-fan.service → /usr/lib/systemd/system/ubuntu-fan.serv
+ice.
+Setting up docker.io (29.1.3-0ubuntu3~24.04.2) ...
+info: Selecting GID from range 100 to 999 ...
+info: Adding group `docker' (GID 126) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/docker.service → /usr/lib/systemd/system/docker.service.
+Created symlink /etc/systemd/system/sockets.target.wants/docker.socket → /usr/lib/systemd/system/docker.socket.
+Processing triggers for man-db (2.12.0-4build2) ...
+Scanning processes...                                                                                                   
+Scanning linux images...                                                                                                
+
+Running kernel seems to be up-to-date.
+
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+./scriptPrincipale.sh: line 9: url: command not found
+install: cannot stat 'minikube-linux-amd64': No such file or directory
+Hit:1 http://it.archive.ubuntu.com/ubuntu noble InRelease
+Hit:2 http://it.archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:3 http://it.archive.ubuntu.com/ubuntu noble-backports InRelease
+Hit:4 http://security.ubuntu.com/ubuntu noble-security InRelease
+Reading package lists... Done         
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+docker.io is already the newest version (29.1.3-0ubuntu3~24.04.2).
+The following package was automatically installed and is no longer required:
+  libfwupd2
+Use 'sudo apt autoremove' to remove it.
+0 upgraded, 0 newly installed, 0 to remove and 24 not upgraded.
+sh: 3: minikube: not found
+Downloading https://get.helm.sh/helm-v4.3.1-linux-amd64.tar.gz
+Verifying checksum... Done.
+Preparing to install helm into /usr/local/bin
+helm installed into /usr/local/bin/helm
+./scriptPrincipale.sh: line 35: minikube: command not found
+"bitnami" has been added to your repositories
+Pulled: registry-1.docker.io/bitnamicharts/apache:11.4.29
+Digest: sha256:fa6dbac6ea30fe7adb9bee2407593090863ae711feb9dec13cd6275642aaa94a
+level=ERROR msg="cluster reachability check failed: kubernetes cluster unreachable: Get \"http://localhost:8080/version\": dial tcp 127.0.0.1:8080: connect: connection refused"
+Error: INSTALLATION FAILED: cluster reachability check failed: kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp 127.0.0.1:8080: connect: connection refused
+level=ERROR msg="cluster reachability check failed: kubernetes cluster unreachable: Get \"http://localhost:8080/version\": dial tcp 127.0.0.1:8080: connect: connection refused"
+Error: INSTALLATION FAILED: cluster reachability check failed: kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp 127.0.0.1:8080: connect: connection refused
+level=ERROR msg="cluster reachability check failed: kubernetes cluster unreachable: Get \"http://localhost:8080/version\": dial tcp 127.0.0.1:8080: connect: connection refused"
+Error: INSTALLATION FAILED: cluster reachability check failed: kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp 127.0.0.1:8080: connect: connection refused
+"traefik" has been added to your repositories
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "traefik" chart repository
+...Successfully got an update from the "bitnami" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Error: kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp 127.0.0.1:8080: connect: connection refused
+"oauth2-proxy" has been added to your repositories
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "oauth2-proxy" chart repository
+...Successfully got an update from the "traefik" chart repository
+...Successfully got an update from the "bitnami" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Error: kubernetes cluster unreachable: Get "http://localhost:8080/version": dial tcp 127.0.0.1:8080: connect: connection refused
+./scriptPrincipale.sh: line 82: minikube: command not found
