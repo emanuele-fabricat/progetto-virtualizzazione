@@ -66,7 +66,7 @@ helm install mio-mariadb bitnami/mariadb \
   --set image.repository=bitnamilegacy/mariadb \
   --set global.security.allowInsecureImages=true \
   --set auth.database=miodb \
-  --set auth.username=adimn \
+  --set auth.username=admin \
   --set auth.password=Admin1234!
 
 echo -e "\033[32mINSTALLAZIONE MARIADB AVVENUTA CON SUCCESSO\033[0m"
