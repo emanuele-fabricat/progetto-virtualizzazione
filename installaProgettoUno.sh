@@ -5,7 +5,7 @@ sudo apt install -y docker.io
 sudo systemctl enable --now docker
 sudo usermod -aG docker "$USER"
 
-echo "Installazione Docker avvenuta con successo"
+echo -e "\033[32mINSTALLAZIONE DOCKER AVVENUTA CON SUCCESSO\033[0m"
 
 #Installazione minikube per linux tramite binary download
 curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
@@ -29,7 +29,7 @@ sg docker -c '
   minikube kubectl -- get nodes
 '
 
-echo "installazione Minikube avvenuta con successo"
+echo -e "\033[32mINSTALLAZIONE MINIKUBE AVVENUTA CON SUCCESSO\033[0m"
 
 #Installazione helm
 curl -fL --retry 3 \
@@ -39,7 +39,7 @@ curl -fL --retry 3 \
 chmod 700 "$HOME/get_helm.sh"
 bash "$HOME/get_helm.sh"
 
-echo "installazione Helm avvenuta con successo"
+echo -e "\033[32mINSTALLAZIONE HELM AVVENUTA CON SUCCESSO\033[0m"
 
 #Creazione del namespace progetto dov’è saranno messi tutti i servizi tranne linkerd
 minikube kubectl -- create namespace progetto
@@ -48,6 +48,8 @@ minikube kubectl -- create namespace progetto
 #Installazione bitnami
 helm repo add bitnami https://charts.bitnami.com/bitnami
 
+echo -e "\033[32mINSTALLAZIONE REPO BITNAMI AVVENUTA CON SOCCESSO\033[0m"
+
 #Installazione apache
 helm install mio-apache oci://registry-1.docker.io/bitnamicharts/apache \
   -n progetto \
@@ -55,7 +57,7 @@ helm install mio-apache oci://registry-1.docker.io/bitnamicharts/apache \
   --set image.repository=bitnamilegacy/apache \
   --set image.tag=latest
 
-echo "installazione Apache avvenuta con successo"
+echo -e "\033[32mINSTALLAZIONE APACHE AVVENUTA CON SUCCESSO\033[0m"
 
 #Installazione mariaDB
 helm install mio-mariadb bitnami/mariadb \
@@ -67,12 +69,13 @@ helm install mio-mariadb bitnami/mariadb \
   --set auth.username=adimn \
   --set auth.password=Admin1234!
 
-echo "installazione MariaDB avvenuta con successo"
+echo -e "\033[32mINSTALLAZIONE MARIADB AVVENUTA CON SUCCESSO\033[0m"
 
 #Installazione keycloak con postgress
 helm install mio-keycloak bitnami/keycloak \
   -n progetto \
   --set image.repository=bitnamilegacy/keycloak \
+  --set postgresql.image.repository=bitnamilegacy/postgresql \
   --set global.security.allowInsecureImages=true \
   --set auth.adminUser=admin \
   --set auth.adminPassword=Admin1234! \
@@ -81,7 +84,7 @@ helm install mio-keycloak bitnami/keycloak \
   --set postgresql.auth.password=Admin1234! \
   --set postgresql.auth.database=keycloak_db
 
-echo "installazione Keycloak avvenuta con successo"
+echo -e "\033[32mINSTALLAZIONE KEYCLOAK AVVENUTA CON SUCCESSO\033[0m"
 
 #Installazione traefik
 helm repo add traefik https://traefik.github.io/charts
@@ -89,7 +92,7 @@ helm repo update
 helm upgrade --install traefik traefik/traefik \
   -n progetto
 
-echo "installazione Traefik avvenuta con successo"
+echo -e "\033[32mINSTALLAZIONE TRAEFIK AVVENUTA CON SUCCESSO\033[0m"
 
 #Installazione Oauth2-proxy
 helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests
@@ -164,10 +167,9 @@ spec:
           port: 80
 YAML
 
-echo "installazione Oauth2-proxy e modifica dello yaml avvenute con successo"
+echo -e "\033[32mINSTALLAZIONE OAUTH2-PROXY E MODIFICA DELLO YAML AVVENUTE CON SUCCESSO\033[0m"
 
 minikube start 
 
-echo "Adesso aprire il file settingKeykloack.txt ed eseguire passo passo i comandi dentro "
-
+echo -e "\033[32mADESSO APRIRE IL FILE settingKeycloak.txt ED ESEGUIRE PASSO PASSO I COMANDI DENTRO \033[0m"
 
