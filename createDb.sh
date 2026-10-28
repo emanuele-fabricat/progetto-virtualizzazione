@@ -1,4 +1,5 @@
 #!/bin/bash
+
 minikube kubectl -- exec -i -n progetto mio-mariadb-0 -- \
 mariadb -u root -pAdmin1234! <<EOF
 CREATE DATABASE IF NOT EXISTS prova;

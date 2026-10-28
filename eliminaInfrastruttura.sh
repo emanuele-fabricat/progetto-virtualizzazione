@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #Elimino minikube da qualsiasi punto del filesistem
+minikube delete
 sudo rm /usr/local/bin/minikube
 rm -rf ~/.minikube
 rm -rf ~/.kube

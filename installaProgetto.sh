@@ -5,9 +5,12 @@ sudo apt install -y docker.io
 sudo systemctl enable --now docker
 sudo usermod -aG docker "$USER"
 
+echo "Installazione Docker avvenuta con successo"
+
 #Installazione minikube per linux tramite binary download
 curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+
 
 #Avviare minikube
 sudo apt-get update
@@ -26,6 +29,8 @@ sg docker -c '
   minikube kubectl -- get nodes
 '
 
+echo "installazione Minikube avvenuta con successo"
+
 #Installazione helm
 curl -fL --retry 3 \
   --output "$HOME/get_helm.sh" \
@@ -33,6 +38,8 @@ curl -fL --retry 3 \
 
 chmod 700 "$HOME/get_helm.sh"
 bash "$HOME/get_helm.sh"
+
+echo "installazione Helm avvenuta con successo"
 
 #Creazione del namespace progetto dov’è saranno messi tutti i servizi tranne linkerd
 minikube kubectl -- create namespace progetto
@@ -48,6 +55,8 @@ helm install mio-apache oci://registry-1.docker.io/bitnamicharts/apache \
   --set image.repository=bitnamilegacy/apache \
   --set image.tag=latest
 
+echo "installazione Apache avvenuta con successo"
+
 #Installazione mariaDB
 helm install mio-mariadb bitnami/mariadb \
   -n progetto \
@@ -57,6 +66,8 @@ helm install mio-mariadb bitnami/mariadb \
   --set auth.database=miodb \
   --set auth.username=adimn \
   --set auth.password=Admin1234!
+
+echo "installazione MariaDB avvenuta con successo"
 
 #Installazione keycloak con postgress
 helm install mio-keycloak bitnami/keycloak \
@@ -70,12 +81,15 @@ helm install mio-keycloak bitnami/keycloak \
   --set postgresql.auth.password=Admin1234! \
   --set postgresql.auth.database=keycloak_db
 
+echo "installazione Keycloak avvenuta con successo"
 
 #Installazione traefik
 helm repo add traefik https://traefik.github.io/charts
 helm repo update
 helm upgrade --install traefik traefik/traefik \
   -n progetto
+
+echo "installazione Traefik avvenuta con successo"
 
 #Installazione Oauth2-proxy
 helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests
@@ -150,8 +164,10 @@ spec:
           port: 80
 YAML
 
+echo "installazione Oauth2-proxy e modifica dello yaml avvenute con successo"
+
 minikube start 
 
-echo ("Adesso aprire il file settingKeykloack.txt ed eseguire passo passo i comandi dentro ")
+echo "Adesso aprire il file settingKeykloack.txt ed eseguire passo passo i comandi dentro "
 
 
