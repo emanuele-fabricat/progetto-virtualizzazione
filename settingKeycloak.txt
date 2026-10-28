@@ -1,6 +1,6 @@
 Eseguire il seguente comando per aprire un tunnel alla porta 8082 e potersi connettere a keycloak
 
-kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+minikube kubectl -- port-forward -n progetto svc/mio-keycloak 8082:80
 
 Aprire la pagina web http://127.0.0.1:8082 e entrare nella dashboard digitando
 utente: admin

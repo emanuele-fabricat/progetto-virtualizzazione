@@ -11,7 +11,7 @@ chmod 700 get_helm.sh
 ./get_helm.sh
 
 #Creazione del namespace progetto dov’è saranno messi tutti i servizi tranne linkerd
-kubectl create namespace progetto
+minikube kubectl -- create namespace progetto
 
 
 #Installazione bitnami
@@ -58,7 +58,7 @@ helm upgrade --install oauth2-proxy oauth2-proxy/oauth2-proxy \
   -n progetto
 
 
-kubectl apply -f - <<'YAML'
+minikube kubectl -- apply -f - <<'YAML'
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:

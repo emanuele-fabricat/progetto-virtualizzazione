@@ -1,2 +1,2 @@
 #Utilizzo sistema
-kubectl port-forward -n progetto svc/traefik 8081:80
+minikube kubectl -- port-forward -n progetto svc/traefik 8081:80

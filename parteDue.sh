@@ -6,12 +6,12 @@ printf '\n'
 COOKIE_SECRET="$(openssl rand -hex 16)"
 COOKIE_SECRET_B64="$(printf '%s' "$COOKIE_SECRET" | base64 -w0)"
 
-kubectl create secret generic mio-oauth2-keycloak \
+minikube kubectl -- create secret generic mio-oauth2-keycloak \
   -n progetto \
   --from-literal=client-id='oauth2-proxy' \
   --from-literal=client-secret="$KC_CLIENT_SECRET" \
   --from-literal=cookie-secret="$COOKIE_SECRET_B64" \
-  --dry-run=client -o yaml | kubectl apply -f -
+  --dry-run=client -o yaml | minikube kubectl -- apply -f -
 
 unset KC_CLIENT_SECRET COOKIE_SECRET COOKIE_SECRET_B64
 
@@ -56,53 +56,53 @@ curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh
 export PATH=$HOME/.linkerd2/bin:$PATH
 #Controllo installazione linkerd version
 #controllo che il sistema possa installare linkerd: linkerd check --pre
-linkerd install --crds | kubectl apply -f -
-linkerd install | kubectl apply -f -
-linkerd viz install | kubectl apply -f -
+linkerd install --crds | minikube kubectl -- apply -f -
+linkerd install | minikube kubectl -- apply -f -
+linkerd viz install | minikube kubectl -- apply -f -
 #Controllo linkerd funzioni: linkerd check
 
 #Mashing di apache
-kubectl get deploy mio-apache -n progetto -o yaml \
+minikube kubectl -- get deploy mio-apache -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | kubectl apply -f -
+  | minikube kubectl -- apply -f -
 
-kubectl rollout status deployment/mio-apache -n progetto
-#Per prova kubectl -n progetto port-forward svc/mio-apache 8080:80
+minikube kubectl -- rollout status deployment/mio-apache -n progetto
+#Per prova minikube kubectl -- -n progetto port-forward svc/mio-apache 8080:80
 
 #Mashing Oauth2-Proxy
-kubectl get deployment mio-oauth2-oauth2-proxy -n progetto -o yaml \
+minikube kubectl -- get deployment mio-oauth2-oauth2-proxy -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | kubectl apply -f -
+  | minikube kubectl -- apply -f -
 
-kubectl rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s
+minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s
 
 #Mashing Keycloak
-kubectl get statefulset mio-keycloak -n progetto -o yaml \
+minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | kubectl apply -f -
+  | minikube kubectl -- apply -f -
 
-kubectl rollout status statefulset/mio-keycloak -n progetto --timeout=300s
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s
 
 #Mashing treafik
-kubectl get deployment traefik -n progetto -o yaml \
+minikube kubectl -- get deployment traefik -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | kubectl apply -f -
+  | minikube kubectl -- apply -f -
 
-kubectl rollout status deployment/traefik -n progetto --timeout=180s
+minikube kubectl -- rollout status deployment/traefik -n progetto --timeout=180s
 
 #Mashing maria-db
-kubectl get statefulset mio-mariadb -n progetto -o yaml \
+minikube kubectl -- get statefulset mio-mariadb -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | kubectl apply -f -
+  | minikube kubectl -- apply -f -
 
-kubectl rollout status statefulset/mio-mariadb -n progetto --timeout=300s
+minikube kubectl -- rollout status statefulset/mio-mariadb -n progetto --timeout=300s
 
 #Mashing postgress
-kubectl get statefulset mio-keycloak-postgresql -n progetto -o yaml \
+minikube kubectl -- get statefulset mio-keycloak-postgresql -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | kubectl apply -f -
+  | minikube kubectl -- apply -f -
 
-kubectl rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s
+minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s
 
 
 #Aggiornamento release
@@ -121,4 +121,4 @@ helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy \
   -f oauth2-keycloak-values.yaml \
   --wait --timeout 5m
   
-kubectl rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s
+minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s

@@ -22,7 +22,7 @@ NC='\033[0m' # No Color
 # ============================================
 echo -e "${YELLOW}📦 Step 1: Applicazione manifesti Traefik...${NC}"
 
-kubectl apply -f - <<'YAML'
+minikube kubectl -- apply -f - <<'YAML'
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
@@ -99,27 +99,27 @@ echo ""
 
 # 2.1 Verifica Namespace
 echo -e "${YELLOW}📋 Namespace:${NC}"
-kubectl get namespace progetto 2>/dev/null && echo -e "${GREEN}✅ Namespace 'progetto' esiste${NC}" || echo -e "${RED}❌ Namespace 'progetto' NON trovato${NC}"
+minikube kubectl -- get namespace progetto 2>/dev/null && echo -e "${GREEN}✅ Namespace 'progetto' esiste${NC}" || echo -e "${RED}❌ Namespace 'progetto' NON trovato${NC}"
 echo ""
 
 # 2.2 Verifica Middleware
 echo -e "${YELLOW}🔧 Middleware:${NC}"
-kubectl get middleware -n progetto 2>/dev/null || echo -e "${YELLOW}⚠️  Nessun middleware trovato${NC}"
+minikube kubectl -- get middleware -n progetto 2>/dev/null || echo -e "${YELLOW}⚠️  Nessun middleware trovato${NC}"
 echo ""
 
 # 2.3 Verifica IngressRoute
 echo -e "${YELLOW}📡 IngressRoute:${NC}"
-kubectl get ingressroute -n progetto 2>/dev/null || echo -e "${YELLOW}⚠️  Nessun IngressRoute trovato${NC}"
+minikube kubectl -- get ingressroute -n progetto 2>/dev/null || echo -e "${YELLOW}⚠️  Nessun IngressRoute trovato${NC}"
 echo ""
 
 # 2.4 Verifica Pods
 echo -e "${YELLOW}🐳 Pods:${NC}"
-kubectl get pods -n progetto 2>/dev/null || echo -e "${YELLOW}⚠️  Nessun pod trovato${NC}"
+minikube kubectl -- get pods -n progetto 2>/dev/null || echo -e "${YELLOW}⚠️  Nessun pod trovato${NC}"
 echo ""
 
 # 2.5 Verifica Servizi
 echo -e "${YELLOW}🌐 Servizi:${NC}"
-kubectl get svc -n progetto 2>/dev/null || echo -e "${YELLOW}⚠️  Nessun servizio trovato${NC}"
+minikube kubectl -- get svc -n progetto 2>/dev/null || echo -e "${YELLOW}⚠️  Nessun servizio trovato${NC}"
 echo ""
 
 # ============================================
@@ -130,7 +130,7 @@ echo ""
 
 # 3.1 Verifica Apache
 echo -e "${YELLOW}📦 Apache:${NC}"
-if kubectl get pod -l app.kubernetes.io/name=apache -n progetto 2>/dev/null | grep -q "Running"; then
+if minikube kubectl -- get pod -l app.kubernetes.io/name=apache -n progetto 2>/dev/null | grep -q "Running"; then
     echo -e "${GREEN}✅ Apache è in esecuzione${NC}"
 else
     echo -e "${RED}❌ Apache NON è in esecuzione${NC}"
@@ -141,7 +141,7 @@ echo ""
 
 # 3.2 Verifica MariaDB
 echo -e "${YELLOW}📦 MariaDB:${NC}"
-if kubectl get pod -l app.kubernetes.io/name=mariadb -n progetto 2>/dev/null | grep -q "Running"; then
+if minikube kubectl -- get pod -l app.kubernetes.io/name=mariadb -n progetto 2>/dev/null | grep -q "Running"; then
     echo -e "${GREEN}✅ MariaDB è in esecuzione${NC}"
 else
     echo -e "${RED}❌ MariaDB NON è in esecuzione${NC}"
@@ -152,7 +152,7 @@ echo ""
 
 # 3.3 Verifica OAuth2 Proxy
 echo -e "${YELLOW}📦 OAuth2 Proxy:${NC}"
-if kubectl get pod -l app.kubernetes.io/name=oauth2-proxy -n progetto 2>/dev/null | grep -q "Running"; then
+if minikube kubectl -- get pod -l app.kubernetes.io/name=oauth2-proxy -n progetto 2>/dev/null | grep -q "Running"; then
     echo -e "${GREEN}✅ OAuth2 Proxy è in esecuzione${NC}"
 else
     echo -e "${RED}❌ OAuth2 Proxy NON è in esecuzione${NC}"
@@ -191,13 +191,13 @@ echo ""
 echo -e "${YELLOW}📝 Step 5: Comandi per log...${NC}"
 echo ""
 echo -e "Per vedere i log di Traefik:"
-echo "   kubectl logs -l app.kubernetes.io/name=traefik -f"
+echo "   minikube kubectl -- logs -l app.kubernetes.io/name=traefik -f"
 echo ""
 echo -e "Per vedere i log di OAuth2 Proxy:"
-echo "   kubectl logs -l app.kubernetes.io/name=oauth2-proxy -n progetto -f"
+echo "   minikube kubectl -- logs -l app.kubernetes.io/name=oauth2-proxy -n progetto -f"
 echo ""
 echo -e "Per vedere i log di Apache:"
-echo "   kubectl logs -l app.kubernetes.io/name=apache -n progetto -f"
+echo "   minikube kubectl -- logs -l app.kubernetes.io/name=apache -n progetto -f"
 echo ""
 
 # ============================================
@@ -216,10 +216,10 @@ echo "   • Login OAuth2: http://localhost/oauth2/sign_in"
 echo "   • Logout: http://localhost/oauth2/sign_out"
 echo ""
 echo -e "📋 Comandi utili:"
-echo "   • Verifica pod: kubectl get pods -n progetto"
-echo "   • Verifica servizi: kubectl get svc -n progetto"
-echo "   • Verifica middleware: kubectl get middleware -n progetto"
-echo "   • Verifica rotte: kubectl get ingressroute -n progetto"
+echo "   • Verifica pod: minikube kubectl -- get pods -n progetto"
+echo "   • Verifica servizi: minikube kubectl -- get svc -n progetto"
+echo "   • Verifica middleware: minikube kubectl -- get middleware -n progetto"
+echo "   • Verifica rotte: minikube kubectl -- get ingressroute -n progetto"
 echo ""
 echo -e "${YELLOW}⚠️  Nota: Se OAuth2 Proxy non è configurato,Apache non sarà accessibile!${NC}"
 echo ""

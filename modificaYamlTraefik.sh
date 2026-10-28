@@ -2,7 +2,7 @@
 	
 set -e
 
-kubectl apply -f - <<'YAML'
+minikube kubectl -- apply -f - <<'YAML'
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
