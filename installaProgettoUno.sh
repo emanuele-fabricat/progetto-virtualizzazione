@@ -24,7 +24,8 @@ sudo usermod -aG docker "$USER"
 sg docker -c '
   set -e
   minikube config set driver docker
-  minikube start --driver=docker
+  minikube config set kubernetes-version v1.35.1
+  minikube start
   minikube status
   minikube kubectl -- get nodes
 '
