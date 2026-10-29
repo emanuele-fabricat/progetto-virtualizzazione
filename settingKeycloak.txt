@@ -6,11 +6,11 @@ Aprire la pagina web http://127.0.0.1:8082 e entrare nella dashboard digitando
 utente: admin
 pswd: Admin1234!
 
-
 CREAZIONE REALM
+
 Click Manage realms nella colonna a sinistra.
 Click Create realm.
-Enter progetto nel Realm name field.
+Enter progetto nel Realm name.
 Set enabled on
 Click Create.
 Controllare in alto a destra di essere nel realm appena creato, alternativamente click menage relams e click progetto
@@ -34,8 +34,9 @@ Set
 Click save
 
 CREAZIONE DI UN UTENTE
-click users
-click create user
+
+Click users
+Click create user
 Settare:
 	email verified: on
 	username: pippo
@@ -44,16 +45,31 @@ Settare:
 	last name: pluto
 Click create
 Click sulla credentials section
-click set password
+Click set password
 Settare:
 	Password: Admin1234!
 	Password confirmation: Admin1234!
 	Temporary: off
-click save
+Click save
 
 FINE PROCESSO
-click sul proprio nome utente in lato a destra
-click su log out
+
+Click clients
+Click oauth2-proxy 
+Click credentials field
+Copiare ClientSecret da qualche parte,  volendo anche qui sotto 
+" "
+
+MODIFICA PERSISTENZA SESSIONE UTENTE
+Click Realm Settings
+Click Session field
+Settare:
+	SSO Session Max: 30 minutes;
+	Offilne Sesson Idle: 1 hour;
+	Salvare tutto  
+
+Click sul proprio nome utente in alto a destra
+Click su Sign out
 Chiudere il tunnel con ctrl+c
 	
 
