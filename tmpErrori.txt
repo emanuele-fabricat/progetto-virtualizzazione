@@ -1,2 +1,127 @@
+./progetto-virtualizzazione/installaProgettoDue.sh 
+Nel prossimo comando sarà richiesta il client secret, immettere quello salvato nel passo precedente
+Client secret Keycloak: 
+secret/mio-oauth2-keycloak created
+CREAZIONE SECRET AVVENUTA CON SUCCESSO
+MIDIFICA YAML AVVENUTA CON SUCCESSO
+"oauth2-proxy" has been added to your repositories
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "oauth2-proxy" chart repository
+...Successfully got an update from the "traefik" chart repository
+...Successfully got an update from the "bitnami" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Release "mio-oauth2" does not exist. Installing it now.
+NAME: mio-oauth2
+LAST DEPLOYED: Thu Oct 29 16:28:03 2026
+NAMESPACE: progetto
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+To verify that oauth2-proxy has started, run:
+
+  kubectl --namespace=progetto get pods -l "app=oauth2-proxy"
+INSTALLAZIONE OAUTH2-PROXY AVVENUTA CON SUCCESSO
+
+Linkerd edge-26.10.1 was already downloaded; making it the default 🎉
+
+To force re-downloading, delete '/home/lele/.linkerd2/bin/linkerd-edge-26.10.1' then run me again.
+
+Add the linkerd CLI to your path with:
+
+  export PATH=$PATH:/home/lele/.linkerd2/bin
+
+Now run:
+
+  # install the GatewayAPI CRDs
+  kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
+
+  linkerd check --pre                         # validate that Linkerd can be installed
+  linkerd install --crds | kubectl apply -f - # install the Linkerd CRDs
+  linkerd install | kubectl apply -f -        # install the control plane into the 'linkerd' namespace
+  linkerd check                               # validate everything worked!
+
+You can also obtain observability features by installing the viz extension:
+
+  linkerd viz install | kubectl apply -f -  # install the viz extension into the 'linkerd-viz' namespace
+  linkerd viz check                         # validate the extension works!
+  linkerd viz dashboard                     # launch the dashboard
+
+Looking for more? Visit https://linkerd.io/2/tasks
+
+kubernetes-api
+--------------
+√ can initialize the client
+√ can query the Kubernetes API
+
+kubernetes-version
+------------------
+√ is running the minimum Kubernetes API version
+
+gateway-api-crd
+---------------
+× Gateway API CRDs are installed
+    The Gateway API CRDs must be installed prior to installing Linkerd. Run:
+
+kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
+
+or see https://gateway-api.sigs.k8s.io/guides/#installing-gateway-api for more options.
+    see https://linkerd.io/2/checks/#gateway-api-crd for hints
+
+Status check results are ×
+The Gateway API CRDs must be installed prior to installing Linkerd. Run:
+
+kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
+
+or see https://gateway-api.sigs.k8s.io/guides/#installing-gateway-api for more options.
+error: no objects passed to apply
+Linkerd CRDs must be installed first. Run linkerd install with the --crds flag.
+error: no objects passed to apply
+Cannot find Linkerd: configmaps "linkerd-config" not found
+Validate the install with: 'linkerd check'
+error: no objects passed to apply
+customresourcedefinition.apiextensions.k8s.io/backendtlspolicies.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/gatewayclasses.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/gateways.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/grpcroutes.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/httproutes.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/listenersets.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/referencegrants.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/tlsroutes.gateway.networking.k8s.io serverside-applied
+validatingadmissionpolicy.admissionregistration.k8s.io/safe-upgrades.gateway.networking.k8s.io serverside-applied
+validatingadmissionpolicybinding.admissionregistration.k8s.io/safe-upgrades.gateway.networking.k8s.io serverside-applied
+kubernetes-api
+--------------
+√ can initialize the client
+√ can query the Kubernetes API
+
+kubernetes-version
+------------------
+√ is running the minimum Kubernetes API version
+
+gateway-api-crd
+---------------
+√ Gateway API CRDs are installed
+
+linkerd-existence
+-----------------
+× 'linkerd-config' config map exists
+    configmaps "linkerd-config" not found
+    see https://linkerd.io/2/checks/#l5d-existence-linkerd-config for hints
+
+Status check results are ×
+INSTALLAZIONE LINKERD AVVENUTA CON SUCCESSO
+Cannot find Linkerd: configmaps "linkerd-config" not found
+Validate the install with: 'linkerd check'
+error: no objects passed to apply
+deployment "mio-apache" successfully rolled out
+INIEZIONE DI APACHE IN LINKERD AVVENUTA CON SUCCESSO
+Cannot find Linkerd: configmaps "linkerd-config" not found
+Validate the install with: 'linkerd check'
+error: no objects passed to apply
+Waiting for deployment "mio-oauth2-oauth2-proxy" rollout to finish: 0 of 1 updated replicas are available...
+^C
+lele@leleserver:~$ 
 
 
