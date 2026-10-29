@@ -105,6 +105,6 @@ echo -e "\033[32m MODIFICA DELLO YAML DI TRAEFIK AVVENUTE CON SUCCESSO\033[0m"
 minikube start
 
 echo -e "\033[32mQUANDO TUTTI I POD RISULTANO IN STATO RUNNING e NELLA COLONNA READY 1/1 APRIRE IL FILE settingKeycloak.txt ED ESEGUIRE PASSO PASSO I COMANDI ALL'INTENRO\033[0m"
-echo -e "\033[33mNOTA BENE: il fatto che alcuni pod risultino in READY = 0/1 dopo diversi restarts non è un prblema, basta atttendere qualche tentativo (stima in base i tentativi fatti 6minuti e 4 secondi) in fine quando tutto risulta in stato 1/1 premere ctrl+C\033[0m"
+echo -e "\033[93mNOTA BENE: il fatto che alcuni pod risultino in READY = 0/1 dopo diversi restarts non è un prblema, basta atttendere qualche tentativo (stima in base i tentativi fatti 6minuti e 4 secondi) in fine quando tutto risulta in stato 1/1 premere ctrl+C\033[0m"
  
 minikube kubectl -- get pods -n progetto -w
