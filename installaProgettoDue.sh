@@ -61,7 +61,8 @@ export LINKERD2_VERSION=edge-26.10.1
 curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh
 export PATH=$HOME/.linkerd2/bin:$PATH
 #Controllo installazione linkerd version
-#controllo che il sistema possa installare linkerd: linkerd check --pre
+#controllo che il sistema possa installare linkerd: 
+linkerd check --pre
 linkerd install --crds | minikube kubectl -- apply -f -
 linkerd install | minikube kubectl -- apply -f -
 linkerd viz install | minikube kubectl -- apply -f -
