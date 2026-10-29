@@ -60,14 +60,17 @@ echo -e "\033[32mINSTALLAZIONE OAUTH2-PROXY AVVENUTA CON SUCCESSO\033[0m"
 export LINKERD2_VERSION=edge-26.10.1
 curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh
 export PATH=$HOME/.linkerd2/bin:$PATH
+#Isntallazione Gatewai API GRD
+
+set -o pipefail
+minikube kubectl -- apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml || exit 1
+
 #Controllo installazione linkerd version
 #controllo che il sistema possa installare linkerd: 
 linkerd check --pre
 linkerd install --crds | minikube kubectl -- apply -f -
 linkerd install | minikube kubectl -- apply -f -
 linkerd viz install | minikube kubectl -- apply -f -
-
-minikube kubectl -- apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml 
 
 #Controllo linkerd funzioni: 
 linkerd check
