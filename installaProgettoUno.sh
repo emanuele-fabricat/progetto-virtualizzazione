@@ -175,5 +175,7 @@ echo -e "\033[32mINSTALLAZIONE OAUTH2-PROXY E MODIFICA DELLO YAML AVVENUTE CON S
 
 minikube start 
 
-echo -e "\033[32mADESSO APRIRE IL FILE settingKeycloak.txt ED ESEGUIRE PASSO PASSO I COMANDI DENTRO \033[0m"
+echo -e "\033[32mQUANDO TUTTI I POD RISULTANO IN STATO RUNNING e NELLA COLONNA READY 1/1 APRIRE IL FILE settingKeycloak.txt ED ESEGUIRE PASSO PASSO I COMANDI ALL'INTENRO\033[0m"
+echo -e "\033[33mNOTA BENE: il fatto che il pod legato a keyclock risulti in READY = 0/1 dopo diversi restarts non è un prblema, basta atttendere qualche tentativo\033[0m"
 
+minikube kubectl -- get pods -n progetto -w
