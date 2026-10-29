@@ -98,13 +98,6 @@ helm upgrade --install traefik traefik/traefik \
 
 echo -e "\033[32mINSTALLAZIONE TRAEFIK AVVENUTA CON SUCCESSO\033[0m"
 
-#Installazione Oauth2-proxy
-helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests
-helm repo update
-helm upgrade --install oauth2-proxy oauth2-proxy/oauth2-proxy \
-  -n progetto
-
-
 minikube kubectl -- apply -f - <<'YAML'
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
@@ -171,7 +164,7 @@ spec:
           port: 80
 YAML
 
-echo -e "\033[32mINSTALLAZIONE OAUTH2-PROXY E MODIFICA DELLO YAML AVVENUTE CON SUCCESSO\033[0m"
+echo -e "\033[32m MODIFICA DELLO YAML DI TRAEFIK AVVENUTE CON SUCCESSO\033[0m"
 
 minikube start 
 

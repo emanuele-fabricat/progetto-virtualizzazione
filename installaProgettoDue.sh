@@ -78,7 +78,7 @@ minikube kubectl -- get deploy mio-apache -n progetto -o yaml \
 minikube kubectl -- rollout status deployment/mio-apache -n progetto
 #Per prova minikube kubectl -- -n progetto port-forward svc/mio-apache 8080:80
 
-echo -e "\033[32mINIZIEZIONE DI APACHE IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
+echo -e "\033[32mINIEZIONE DI APACHE IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 #Mashing Oauth2-Proxy
 minikube kubectl -- get deployment mio-oauth2-oauth2-proxy -n progetto -o yaml \
@@ -87,7 +87,7 @@ minikube kubectl -- get deployment mio-oauth2-oauth2-proxy -n progetto -o yaml \
 
 minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s
 
-echo -e "\033[32mINIZIEZIONE DI OAUTH2-PROXY IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
+echo -e "\033[32mINIEZIONE DI OAUTH2-PROXY IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 #Mashing Keycloak
 minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
@@ -96,7 +96,7 @@ minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
 
 minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s
 
-echo -e "\033[32mINIZIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
+echo -e "\033[32mINIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 #Mashing treafik
 minikube kubectl -- get deployment traefik -n progetto -o yaml \
@@ -105,7 +105,7 @@ minikube kubectl -- get deployment traefik -n progetto -o yaml \
 
 minikube kubectl -- rollout status deployment/traefik -n progetto --timeout=180s
 
-echo -e "\033[32mINIZIEZIONE DI TRAEFIK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
+echo -e "\033[32mINIEZIONE DI TRAEFIK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 #Mashing maria-db
 minikube kubectl -- get statefulset mio-mariadb -n progetto -o yaml \
@@ -121,7 +121,7 @@ minikube kubectl -- get statefulset mio-keycloak-postgresql -n progetto -o yaml 
 
 minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s
 
-echo -e "\033[32mINIZIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
+echo -e "\033[32mINIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 #Aggiornamento release
 helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy \
