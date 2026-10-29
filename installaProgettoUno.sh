@@ -98,75 +98,9 @@ helm upgrade --install traefik traefik/traefik \
 
 echo -e "\033[32mINSTALLAZIONE TRAEFIK AVVENUTA CON SUCCESSO\033[0m"
 
-minikube kubectl -- apply -f - <<'YAML'
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: oauth2-forwardauth
-  namespace: progetto
-spec:
-  forwardAuth:
-    address: http://mio-oauth2-oauth2-proxy.progetto.svc.cluster.local/oauth2/auth
-    trustForwardHeader: true
-    authResponseHeaders:
-      - X-Auth-Request-User
-      - X-Auth-Request-Email
----
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: oauth2-errors
-  namespace: progetto
-spec:
-  errors:
-    status:
-      - "401"
-    service:
-      name: mio-oauth2-oauth2-proxy
-      port: 80
-    query: "/oauth2/sign_in?rd={url}"
-    statusRewrites:
-      "401": 302
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: oauth2-endpoints
-  namespace: progetto
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: "Host(`<HOST_APP>`) && PathPrefix(`/oauth2/`)"
-      kind: Rule
-      priority: 100
-      services:
-        - name: mio-oauth2-oauth2-proxy
-          port: 80
----
-apiVersion: traefik.io/v1alpha1
-kind: IngressRoute
-metadata:
-  name: apache-protetto
-  namespace: progetto
-spec:
-  entryPoints:
-    - web
-  routes:
-    - match: "Host(`<HOST_APP>`)"
-      kind: Rule
-      priority: 10
-      middlewares:
-        - name: oauth2-errors
-        - name: oauth2-forwardauth
-      services:
-        - name: mio-apache
-          port: 80
-YAML
+bash "$HOME/modificaYamlTraefik.sh"
 
 echo -e "\033[32m MODIFICA DELLO YAML DI TRAEFIK AVVENUTE CON SUCCESSO\033[0m"
-
-minikube start 
 
 echo -e "\033[32mQUANDO TUTTI I POD RISULTANO IN STATO RUNNING e NELLA COLONNA READY 1/1 APRIRE IL FILE settingKeycloak.txt ED ESEGUIRE PASSO PASSO I COMANDI ALL'INTENRO\033[0m"
 echo -e "\033[33mNOTA BENE: il fatto che il pod legato a keyclock risulti in READY = 0/1 dopo diversi restarts non è un prblema, basta atttendere qualche tentativo\033[0m"
