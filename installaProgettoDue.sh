@@ -65,6 +65,10 @@ export PATH=$HOME/.linkerd2/bin:$PATH
 linkerd install --crds | minikube kubectl -- apply -f -
 linkerd install | minikube kubectl -- apply -f -
 linkerd viz install | minikube kubectl -- apply -f -
+
+kubectl apply --server-side -f \ 
+https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml 
+
 #Controllo linkerd funzioni: 
 linkerd check
 
