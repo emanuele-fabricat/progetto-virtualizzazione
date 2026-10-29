@@ -12,6 +12,11 @@ rm -rf ~/.cache/helm
 rm -rf ~/.config/helm
 rm -rf ~/.local/share/helm
 
+#Elimino Linkerd
+sudo rm -f ~/.local/bin/linkerd
+rm -rf ~/linkerd*
+
+
 # Ferma docker
 sudo systemctl stop docker
 sudo systemctl stop docker.socket
@@ -38,3 +43,5 @@ sudo apt clean
 minikube version
 helm version
 docker --version
+
+
