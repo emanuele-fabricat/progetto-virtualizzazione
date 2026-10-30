@@ -134,5 +134,3 @@ minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n proget
 
 echo -e "\033[32mINIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
-  
-minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s || exit 1
