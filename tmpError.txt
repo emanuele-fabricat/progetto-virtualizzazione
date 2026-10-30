@@ -1,127 +1,349 @@
-./progetto-virtualizzazione/installaProgettoDue.sh 
-Nel prossimo comando sarà richiesta il client secret, immettere quello salvato nel passo precedente
-Client secret Keycloak: 
-secret/mio-oauth2-keycloak created
-CREAZIONE SECRET AVVENUTA CON SUCCESSO
-MIDIFICA YAML AVVENUTA CON SUCCESSO
-"oauth2-proxy" has been added to your repositories
-Hang tight while we grab the latest from your chart repositories...
-...Successfully got an update from the "oauth2-proxy" chart repository
-...Successfully got an update from the "traefik" chart repository
-...Successfully got an update from the "bitnami" chart repository
-Update Complete. ⎈Happy Helming!⎈
-Release "mio-oauth2" does not exist. Installing it now.
-NAME: mio-oauth2
-LAST DEPLOYED: Thu Oct 29 16:28:03 2026
-NAMESPACE: progetto
-STATUS: deployed
-REVISION: 1
-DESCRIPTION: Install complete
-TEST SUITE: None
-NOTES:
-To verify that oauth2-proxy has started, run:
+minikube kubectl -- get pods -n progetto -l app.kubernetes.io/name=oauth2-proxy
+minikube kubectl -- describe pods -n progetto -l app.kubernetes.io/name=oauth2-proxy
+minikube kubectl -- logs deployment/mio-oauth2-proxy -n progetto -c oauth2-proxy
+NAME                                       READY   STATUS             RESTARTS        AGE
+mio-oauth2-oauth2-proxy-84f5dcd79f-76k7v   1/2     CrashLoopBackOff   7 (2m40s ago)   13m
+mio-oauth2-oauth2-proxy-89748f88c-9z7v5    0/1     CrashLoopBackOff   7 (4m54s ago)   16m
+Name:             mio-oauth2-oauth2-proxy-84f5dcd79f-76k7v
+Namespace:        progetto
+Priority:         0
+Service Account:  mio-oauth2-oauth2-proxy
+Node:             minikube/192.168.49.2
+Start Time:       Fri, 30 Oct 2026 10:59:15 +0000
+Labels:           app=oauth2-proxy
+                  app.kubernetes.io/component=authentication-proxy
+                  app.kubernetes.io/instance=mio-oauth2
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=oauth2-proxy
+                  app.kubernetes.io/part-of=oauth2-proxy
+                  app.kubernetes.io/version=7.15.5
+                  helm.sh/chart=oauth2-proxy-10.7.1
+                  linkerd.io/control-plane-ns=linkerd
+                  linkerd.io/proxy-deployment=mio-oauth2-oauth2-proxy
+                  linkerd.io/workload-ns=progetto
+                  pod-template-hash=84f5dcd79f
+Annotations:      checksum/config: 052b3706583beb7047e0b3b36032555fdf49a204a18c93f7097d078005c2b9bf
+                  checksum/google-secret: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+                  checksum/redis-secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+                  checksum/secret: 9eb46bbdefd5cf844a2c4965b1241a7177addaa7c07789e7873ccda6b0104111
+                  linkerd.io/created-by: linkerd/proxy-injector edge-26.10.1
+                  linkerd.io/inject: enabled
+                  linkerd.io/proxy-version: edge-26.10.1
+                  linkerd.io/trust-root-sha256: 435f2218b2455e10be50ce6d67fcf5dd927faec5b53ac28bcf3ca4a22a573801
+                  viz.linkerd.io/tap-enabled: true
+Status:           Running
+IP:               10.244.0.18
+IPs:
+  IP:           10.244.0.18
+Controlled By:  ReplicaSet/mio-oauth2-oauth2-proxy-84f5dcd79f
+Init Containers:
+  linkerd-init:
+    Container ID:    containerd://93c2f6f70662e50e31ea5158d6b8d81fbb3b112963d1e36ab9c290cb57f99e45
+    Image:           cr.l5d.io/linkerd/proxy:edge-26.10.1
+    Image ID:        cr.l5d.io/linkerd/proxy@sha256:f2add36071cfca33754d2930800860785aaed672590bc0207be2f4da9889eb11
+    Port:            <none>
+    Host Port:       <none>
+    SeccompProfile:  RuntimeDefault
+    Command:
+      /usr/lib/linkerd/linkerd2-proxy-init
+    Args:
+      --firewall-bin-path
+      iptables-nft
+      --firewall-save-bin-path
+      iptables-nft-save
+      --ipv6=false
+      --incoming-proxy-port
+      4143
+      --outgoing-proxy-port
+      4140
+      --proxy-uid
+      2102
+      --inbound-ports-to-ignore
+      4190,4191,4567,4568
+      --outbound-ports-to-ignore
+      4567,4568
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Fri, 30 Oct 2026 10:59:16 +0000
+      Finished:     Fri, 30 Oct 2026 10:59:16 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /run from linkerd-proxy-init-xtables-lock (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-q4gn4 (ro)
+  linkerd-proxy:
+    Container ID:    containerd://03564499227f350e61c51154059feee6dc1a54e3f25a4852d58c502943748440
+    Image:           cr.l5d.io/linkerd/proxy:edge-26.10.1
+    Image ID:        cr.l5d.io/linkerd/proxy@sha256:f2add36071cfca33754d2930800860785aaed672590bc0207be2f4da9889eb11
+    Ports:           4143/TCP (linkerd-proxy), 4191/TCP (linkerd-admin)
+    Host Ports:      0/TCP (linkerd-proxy), 0/TCP (linkerd-admin)
+    SeccompProfile:  RuntimeDefault
+    State:           Running
+      Started:       Fri, 30 Oct 2026 10:59:17 +0000
+    Ready:           True
+    Restart Count:   0
+    Liveness:        http-get http://:4191/live delay=10s timeout=1s period=10s #success=1 #failure=3
+    Readiness:       http-get http://:4191/ready delay=2s timeout=1s period=10s #success=1 #failure=3
+    Startup:         http-get http://:4191/ready delay=0s timeout=1s period=1s #success=1 #failure=120
+    Environment:
+      _pod_name:                                                 mio-oauth2-oauth2-proxy-84f5dcd79f-76k7v (v1:metadata.name)
+      _pod_ns:                                                   progetto (v1:metadata.namespace)
+      _pod_uid:                                                   (v1:metadata.uid)
+      _pod_ip:                                                    (v1:status.podIP)
+      _pod_nodeName:                                              (v1:spec.nodeName)
+      _pod_containerName:                                        linkerd-proxy
+      LINKERD2_PROXY_CORES:                                      1
+      LINKERD2_PROXY_CORES_MIN:                                  1
+      LINKERD2_PROXY_SHUTDOWN_ENDPOINT_ENABLED:                  false
+      LINKERD2_PROXY_LOG:                                        warn,linkerd=info,hickory=error,[{headers}]=off,[{request}]=off
+      LINKERD2_PROXY_LOG_FORMAT:                                 plain
+      LINKERD2_PROXY_DESTINATION_SVC_ADDR:                       linkerd-dst-headless.linkerd.svc.cluster.local.:8086
+      LINKERD2_PROXY_DESTINATION_PROFILE_NETWORKS:               10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16,fd00::/8
+      LINKERD2_PROXY_POLICY_SVC_ADDR:                            linkerd-policy.linkerd.svc.cluster.local.:8090
+      LINKERD2_PROXY_POLICY_WORKLOAD:                            {"ns":"$(_pod_ns)", "pod":"$(_pod_name)"}
+                                                                 
+      LINKERD2_PROXY_INBOUND_DEFAULT_POLICY:                     all-unauthenticated
+      LINKERD2_PROXY_POLICY_CLUSTER_NETWORKS:                    10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16,fd00::/8
+      LINKERD2_PROXY_CONTROL_STREAM_INITIAL_TIMEOUT:             3s
+      LINKERD2_PROXY_CONTROL_STREAM_IDLE_TIMEOUT:                5m
+      LINKERD2_PROXY_CONTROL_STREAM_LIFETIME:                    1h
+      LINKERD2_PROXY_INBOUND_CONNECT_TIMEOUT:                    100ms
+      LINKERD2_PROXY_OUTBOUND_CONNECT_TIMEOUT:                   1000ms
+      LINKERD2_PROXY_OUTBOUND_DISCOVERY_IDLE_TIMEOUT:            5s
+      LINKERD2_PROXY_INBOUND_DISCOVERY_IDLE_TIMEOUT:             90s
+      LINKERD2_PROXY_CONTROL_LISTEN_ADDR:                        0.0.0.0:4190
+      LINKERD2_PROXY_ADMIN_LISTEN_ADDR:                          0.0.0.0:4191
+      LINKERD2_PROXY_OUTBOUND_LISTEN_ADDR:                       127.0.0.1:4140
+      LINKERD2_PROXY_OUTBOUND_LISTEN_ADDRS:                      127.0.0.1:4140
+      LINKERD2_PROXY_INBOUND_LISTEN_ADDR:                        0.0.0.0:4143
+      LINKERD2_PROXY_INBOUND_IPS:                                 (v1:status.podIPs)
+      LINKERD2_PROXY_INBOUND_PORTS:                              4180,44180
+      LINKERD2_PROXY_DESTINATION_PROFILE_SUFFIXES:               svc.cluster.local.
+      LINKERD2_PROXY_INBOUND_ACCEPT_KEEPALIVE:                   10000ms
+      LINKERD2_PROXY_OUTBOUND_CONNECT_KEEPALIVE:                 10000ms
+      LINKERD2_PROXY_INBOUND_ACCEPT_USER_TIMEOUT:                30s
+      LINKERD2_PROXY_OUTBOUND_CONNECT_USER_TIMEOUT:              30s
+      LINKERD2_PROXY_OUTBOUND_METRICS_HOSTNAME_LABELS:           false
+      LINKERD2_PROXY_INBOUND_SERVER_HTTP2_KEEP_ALIVE_INTERVAL:   10s
+      LINKERD2_PROXY_INBOUND_SERVER_HTTP2_KEEP_ALIVE_TIMEOUT:    3s
+      LINKERD2_PROXY_OUTBOUND_SERVER_HTTP2_KEEP_ALIVE_INTERVAL:  10s
+      LINKERD2_PROXY_OUTBOUND_SERVER_HTTP2_KEEP_ALIVE_TIMEOUT:   3s
+      LINKERD2_PROXY_INBOUND_PORTS_DISABLE_PROTOCOL_DETECTION:   25,587,3306,4444,5432,6379,9300,11211
+      LINKERD2_PROXY_DESTINATION_CONTEXT:                        {"ns":"$(_pod_ns)", "nodeName":"$(_pod_nodeName)", "pod":"$(_pod_name)"}
+                                                                 
+      _pod_sa:                                                    (v1:spec.serviceAccountName)
+      _l5d_ns:                                                   linkerd
+      _l5d_trustdomain:                                          cluster.local
+      LINKERD2_PROXY_IDENTITY_DIR:                               /var/run/linkerd/identity/end-entity
+      LINKERD2_PROXY_IDENTITY_TRUST_ANCHORS:                     -----BEGIN CERTIFICATE-----
+                                                                 MIIBhzCCAS6gAwIBAgIBATAKBggqhkjOPQQDAjAcMRowGAYDVQQDExFpZGVudGl0
+                                                                 eS5saW5rZXJkLjAeFw0yNjEwMzAxMDU2MTlaFw0yNzEwMzAxMDU2MzlaMBwxGjAY
+                                                                 BgNVBAMTEWlkZW50aXR5LmxpbmtlcmQuMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD
+                                                                 QgAE+ZfI6b+bnXQ40FJcZsHx4IyEbZl/4aMACx7uMmApsMkjcHbV4MFqiONfg9xT
+                                                                 2lhs7Gb/1oHw5jrBAjB0d9F9Q6NhMF8wDgYDVR0PAQH/BAQDAgEGMB0GA1UdJQQW
+                                                                 MBQGCCsGAQUFBwMBBggrBgEFBQcDAjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW
+                                                                 BBQbX52j3ML6u8b1KvK6pt8eBCssGjAKBggqhkjOPQQDAgNHADBEAiAIxJxLm4ir
+                                                                 XV3UQrWiRkLdLQY3wwZwiF+pBL0lvThbewIgEKMcOpxx8hoBWTcKG7UHIsz1I1hG
+                                                                 /t+Ac2HIbCbxNW8=
+                                                                 -----END CERTIFICATE-----
+                                                                 
+      LINKERD2_PROXY_IDENTITY_TOKEN_FILE:                        /var/run/secrets/tokens/linkerd-identity-token
+      LINKERD2_PROXY_IDENTITY_SVC_ADDR:                          linkerd-identity-headless.linkerd.svc.cluster.local.:8080
+      LINKERD2_PROXY_IDENTITY_LOCAL_NAME:                        $(_pod_sa).$(_pod_ns).serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_IDENTITY_SVC_NAME:                          linkerd-identity.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_DESTINATION_SVC_NAME:                       linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_POLICY_SVC_NAME:                            linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_TAP_SVC_NAME:                               tap.linkerd-viz.serviceaccount.identity.linkerd.cluster.local
+    Mounts:
+      /var/run/linkerd/identity/end-entity from linkerd-identity-end-entity (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-q4gn4 (ro)
+      /var/run/secrets/tokens from linkerd-identity-token (rw)
+Containers:
+  oauth2-proxy:
+    Container ID:    containerd://b51c32200bc1083c8d0a8abee36fbf5d37ebfa5aaf8e13d4b08f9901492ca3d7
+    Image:           quay.io/oauth2-proxy/oauth2-proxy:v7.15.5
+    Image ID:        quay.io/oauth2-proxy/oauth2-proxy@sha256:8498b0d0ef0a7b29686414000a08aee467f02d0299c9ed1e006a8f33fc017916
+    Ports:           4180/TCP (http), 44180/TCP (metrics)
+    Host Ports:      0/TCP (http), 0/TCP (metrics)
+    SeccompProfile:  RuntimeDefault
+    Args:
+      --http-address=0.0.0.0:4180
+      --https-address=0.0.0.0:4443
+      --metrics-address=0.0.0.0:44180
+      --cookie-secure=false
+      --oidc-issuer-url=http://192.168.49.2:32622/realms/progetto
+      --provider=keycloak-oidc
+      --redirect-url=http://localhost:8081/oauth2/callback
+      --reverse-proxy=true
+      --set-xauthrequest=true
+      --skip-provider-button=true
+      --whitelist-domain=localhost:8081
+      --config=/etc/oauth2_proxy/oauth2_proxy.cfg
+    State:          Waiting
+      Reason:       CrashLoopBackOff
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Fri, 30 Oct 2026 11:09:49 +0000
+      Finished:     Fri, 30 Oct 2026 11:09:49 +0000
+    Ready:          False
+    Restart Count:  7
+    Liveness:       http-get http://:http/ping delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:      http-get http://:http/ready delay=0s timeout=5s period=10s #success=1 #failure=3
+    Environment:
+      OAUTH2_PROXY_CLIENT_ID:      <set to the key 'client-id' in secret 'mio-oauth2-oauth2-proxy'>      Optional: false
+      OAUTH2_PROXY_CLIENT_SECRET:  <set to the key 'client-secret' in secret 'mio-oauth2-oauth2-proxy'>  Optional: false
+      OAUTH2_PROXY_COOKIE_SECRET:  <set to the key 'cookie-secret' in secret 'mio-oauth2-oauth2-proxy'>  Optional: false
+    Mounts:
+      /etc/oauth2_proxy/oauth2_proxy.cfg from configmain (rw,path="oauth2_proxy.cfg")
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-q4gn4 (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  configmain:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      mio-oauth2-oauth2-proxy
+    Optional:  false
+  kube-api-access-q4gn4:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+  linkerd-proxy-init-xtables-lock:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  linkerd-identity-end-entity:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     Memory
+    SizeLimit:  <unset>
+  linkerd-identity-token:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  86400
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                   From               Message
+  ----     ------     ----                  ----               -------
+  Normal   Scheduled  13m                   default-scheduler  Successfully assigned progetto/mio-oauth2-oauth2-proxy-84f5dcd79f-76k7v to minikube
+  Normal   Pulled     13m                   kubelet            spec.initContainers{linkerd-init}: Container image "cr.l5d.io/linkerd/proxy:edge-26.10.1" already present on machine and can be accessed by the pod
+  Normal   Created    13m                   kubelet            spec.initContainers{linkerd-init}: Container created
+  Normal   Started    13m                   kubelet            spec.initContainers{linkerd-init}: Container started
+  Normal   Pulled     13m                   kubelet            spec.initContainers{linkerd-proxy}: Container image "cr.l5d.io/linkerd/proxy:edge-26.10.1" already present on machine and can be accessed by the pod
+  Normal   Created    13m                   kubelet            spec.initContainers{linkerd-proxy}: Container created
+  Normal   Started    13m                   kubelet            spec.initContainers{linkerd-proxy}: Container started
+  Normal   Started    10m (x6 over 13m)     kubelet            spec.containers{oauth2-proxy}: Container started
+  Warning  Unhealthy  10m                   kubelet            spec.containers{oauth2-proxy}: Readiness probe failed: HTTP probe failed with statuscode: 502
+  Normal   Created    7m41s (x7 over 13m)   kubelet            spec.containers{oauth2-proxy}: Container created
+  Normal   Pulled     2m40s (x8 over 13m)   kubelet            spec.containers{oauth2-proxy}: Container image "quay.io/oauth2-proxy/oauth2-proxy:v7.15.5" already present on machine and can be accessed by the pod
+  Warning  BackOff    2m40s (x26 over 13m)  kubelet            spec.containers{oauth2-proxy}: Back-off restarting failed container oauth2-proxy in pod mio-oauth2-oauth2-proxy-84f5dcd79f-76k7v_progetto(f14eacc8-3168-4478-a552-ff3ce3bd4e1e)
 
-  kubectl --namespace=progetto get pods -l "app=oauth2-proxy"
-INSTALLAZIONE OAUTH2-PROXY AVVENUTA CON SUCCESSO
 
-Linkerd edge-26.10.1 was already downloaded; making it the default 🎉
-
-To force re-downloading, delete '/home/lele/.linkerd2/bin/linkerd-edge-26.10.1' then run me again.
-
-Add the linkerd CLI to your path with:
-
-  export PATH=$PATH:/home/lele/.linkerd2/bin
-
-Now run:
-
-  # install the GatewayAPI CRDs
-  kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
-
-  linkerd check --pre                         # validate that Linkerd can be installed
-  linkerd install --crds | kubectl apply -f - # install the Linkerd CRDs
-  linkerd install | kubectl apply -f -        # install the control plane into the 'linkerd' namespace
-  linkerd check                               # validate everything worked!
-
-You can also obtain observability features by installing the viz extension:
-
-  linkerd viz install | kubectl apply -f -  # install the viz extension into the 'linkerd-viz' namespace
-  linkerd viz check                         # validate the extension works!
-  linkerd viz dashboard                     # launch the dashboard
-
-Looking for more? Visit https://linkerd.io/2/tasks
-
-kubernetes-api
---------------
-√ can initialize the client
-√ can query the Kubernetes API
-
-kubernetes-version
-------------------
-√ is running the minimum Kubernetes API version
-
-gateway-api-crd
----------------
-× Gateway API CRDs are installed
-    The Gateway API CRDs must be installed prior to installing Linkerd. Run:
-
-kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
-
-or see https://gateway-api.sigs.k8s.io/guides/#installing-gateway-api for more options.
-    see https://linkerd.io/2/checks/#gateway-api-crd for hints
-
-Status check results are ×
-The Gateway API CRDs must be installed prior to installing Linkerd. Run:
-
-kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
-
-or see https://gateway-api.sigs.k8s.io/guides/#installing-gateway-api for more options.
-error: no objects passed to apply
-Linkerd CRDs must be installed first. Run linkerd install with the --crds flag.
-error: no objects passed to apply
-Cannot find Linkerd: configmaps "linkerd-config" not found
-Validate the install with: 'linkerd check'
-error: no objects passed to apply
-customresourcedefinition.apiextensions.k8s.io/backendtlspolicies.gateway.networking.k8s.io serverside-applied
-customresourcedefinition.apiextensions.k8s.io/gatewayclasses.gateway.networking.k8s.io serverside-applied
-customresourcedefinition.apiextensions.k8s.io/gateways.gateway.networking.k8s.io serverside-applied
-customresourcedefinition.apiextensions.k8s.io/grpcroutes.gateway.networking.k8s.io serverside-applied
-customresourcedefinition.apiextensions.k8s.io/httproutes.gateway.networking.k8s.io serverside-applied
-customresourcedefinition.apiextensions.k8s.io/listenersets.gateway.networking.k8s.io serverside-applied
-customresourcedefinition.apiextensions.k8s.io/referencegrants.gateway.networking.k8s.io serverside-applied
-customresourcedefinition.apiextensions.k8s.io/tlsroutes.gateway.networking.k8s.io serverside-applied
-validatingadmissionpolicy.admissionregistration.k8s.io/safe-upgrades.gateway.networking.k8s.io serverside-applied
-validatingadmissionpolicybinding.admissionregistration.k8s.io/safe-upgrades.gateway.networking.k8s.io serverside-applied
-kubernetes-api
---------------
-√ can initialize the client
-√ can query the Kubernetes API
-
-kubernetes-version
-------------------
-√ is running the minimum Kubernetes API version
-
-gateway-api-crd
----------------
-√ Gateway API CRDs are installed
-
-linkerd-existence
------------------
-× 'linkerd-config' config map exists
-    configmaps "linkerd-config" not found
-    see https://linkerd.io/2/checks/#l5d-existence-linkerd-config for hints
-
-Status check results are ×
-INSTALLAZIONE LINKERD AVVENUTA CON SUCCESSO
-Cannot find Linkerd: configmaps "linkerd-config" not found
-Validate the install with: 'linkerd check'
-error: no objects passed to apply
-deployment "mio-apache" successfully rolled out
-INIEZIONE DI APACHE IN LINKERD AVVENUTA CON SUCCESSO
-Cannot find Linkerd: configmaps "linkerd-config" not found
-Validate the install with: 'linkerd check'
-error: no objects passed to apply
-Waiting for deployment "mio-oauth2-oauth2-proxy" rollout to finish: 0 of 1 updated replicas are available...
-^C
-lele@leleserver:~$ 
-
-
+Name:             mio-oauth2-oauth2-proxy-89748f88c-9z7v5
+Namespace:        progetto
+Priority:         0
+Service Account:  mio-oauth2-oauth2-proxy
+Node:             minikube/192.168.49.2
+Start Time:       Fri, 30 Oct 2026 10:56:18 +0000
+Labels:           app=oauth2-proxy
+                  app.kubernetes.io/component=authentication-proxy
+                  app.kubernetes.io/instance=mio-oauth2
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=oauth2-proxy
+                  app.kubernetes.io/part-of=oauth2-proxy
+                  app.kubernetes.io/version=7.15.5
+                  helm.sh/chart=oauth2-proxy-10.7.1
+                  pod-template-hash=89748f88c
+Annotations:      checksum/config: 052b3706583beb7047e0b3b36032555fdf49a204a18c93f7097d078005c2b9bf
+                  checksum/google-secret: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+                  checksum/redis-secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+                  checksum/secret: 9eb46bbdefd5cf844a2c4965b1241a7177addaa7c07789e7873ccda6b0104111
+Status:           Running
+IP:               10.244.0.8
+IPs:
+  IP:           10.244.0.8
+Controlled By:  ReplicaSet/mio-oauth2-oauth2-proxy-89748f88c
+Containers:
+  oauth2-proxy:
+    Container ID:    containerd://62a3961695f6fb8c6001125463e0f65b54a47e54d3ff20dce3d83e30b5241d24
+    Image:           quay.io/oauth2-proxy/oauth2-proxy:v7.15.5
+    Image ID:        quay.io/oauth2-proxy/oauth2-proxy@sha256:8498b0d0ef0a7b29686414000a08aee467f02d0299c9ed1e006a8f33fc017916
+    Ports:           4180/TCP (http), 44180/TCP (metrics)
+    Host Ports:      0/TCP (http), 0/TCP (metrics)
+    SeccompProfile:  RuntimeDefault
+    Args:
+      --http-address=0.0.0.0:4180
+      --https-address=0.0.0.0:4443
+      --metrics-address=0.0.0.0:44180
+      --cookie-secure=false
+      --oidc-issuer-url=http://192.168.49.2:32622/realms/progetto
+      --provider=keycloak-oidc
+      --redirect-url=http://localhost:8081/oauth2/callback
+      --reverse-proxy=true
+      --set-xauthrequest=true
+      --skip-provider-button=true
+      --whitelist-domain=localhost:8081
+      --config=/etc/oauth2_proxy/oauth2_proxy.cfg
+    State:          Waiting
+      Reason:       CrashLoopBackOff
+    Last State:     Terminated
+      Reason:       Error
+      Exit Code:    1
+      Started:      Fri, 30 Oct 2026 11:07:35 +0000
+      Finished:     Fri, 30 Oct 2026 11:07:35 +0000
+    Ready:          False
+    Restart Count:  7
+    Liveness:       http-get http://:http/ping delay=0s timeout=1s period=10s #success=1 #failure=3
+    Readiness:      http-get http://:http/ready delay=0s timeout=5s period=10s #success=1 #failure=3
+    Environment:
+      OAUTH2_PROXY_CLIENT_ID:      <set to the key 'client-id' in secret 'mio-oauth2-oauth2-proxy'>      Optional: false
+      OAUTH2_PROXY_CLIENT_SECRET:  <set to the key 'client-secret' in secret 'mio-oauth2-oauth2-proxy'>  Optional: false
+      OAUTH2_PROXY_COOKIE_SECRET:  <set to the key 'cookie-secret' in secret 'mio-oauth2-oauth2-proxy'>  Optional: false
+    Mounts:
+      /etc/oauth2_proxy/oauth2_proxy.cfg from configmain (rw,path="oauth2_proxy.cfg")
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-tmc9x (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  configmain:
+    Type:      ConfigMap (a volume populated by a ConfigMap)
+    Name:      mio-oauth2-oauth2-proxy
+    Optional:  false
+  kube-api-access-tmc9x:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                  From               Message
+  ----     ------     ----                 ----               -------
+  Normal   Scheduled  16m                  default-scheduler  Successfully assigned progetto/mio-oauth2-oauth2-proxy-89748f88c-9z7v5 to minikube
+  Normal   Pulling    16m                  kubelet            spec.containers{oauth2-proxy}: Pulling image "quay.io/oauth2-proxy/oauth2-proxy:v7.15.5"
+  Normal   Pulled     16m                  kubelet            spec.containers{oauth2-proxy}: Successfully pulled image "quay.io/oauth2-proxy/oauth2-proxy:v7.15.5" in 6.254s (6.254s including waiting). Image size: 20950870 bytes.
+  Warning  Unhealthy  14m (x5 over 16m)    kubelet            spec.containers{oauth2-proxy}: Readiness probe failed: Get "http://10.244.0.8:4180/ready": dial tcp 10.244.0.8:4180: connect: connection refused
+  Warning  Unhealthy  14m (x2 over 15m)    kubelet            spec.containers{oauth2-proxy}: Liveness probe failed: Get "http://10.244.0.8:4180/ping": dial tcp 10.244.0.8:4180: connect: connection refused
+  Normal   Created    4m54s (x8 over 16m)  kubelet            spec.containers{oauth2-proxy}: Container created
+  Normal   Started    4m54s (x8 over 16m)  kubelet            spec.containers{oauth2-proxy}: Container started
+  Normal   Pulled     4m54s (x7 over 16m)  kubelet            spec.containers{oauth2-proxy}: Container image "quay.io/oauth2-proxy/oauth2-proxy:v7.15.5" already present on machine and can be accessed by the pod
+  Warning  BackOff    13s (x29 over 16m)   kubelet            spec.containers{oauth2-proxy}: Back-off restarting failed container oauth2-proxy in pod mio-oauth2-oauth2-proxy-89748f88c-9z7v5_progetto(f8cf75d6-6289-42c2-8191-faf6f1a9ce4b)
+error: error from server (NotFound): deployments.apps "mio-oauth2-proxy" not found in namespace "progetto"
