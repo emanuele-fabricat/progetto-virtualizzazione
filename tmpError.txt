@@ -347,3 +347,10 @@ Events:
   Normal   Pulled     4m54s (x7 over 16m)  kubelet            spec.containers{oauth2-proxy}: Container image "quay.io/oauth2-proxy/oauth2-proxy:v7.15.5" already present on machine and can be accessed by the pod
   Warning  BackOff    13s (x29 over 16m)   kubelet            spec.containers{oauth2-proxy}: Back-off restarting failed container oauth2-proxy in pod mio-oauth2-oauth2-proxy-89748f88c-9z7v5_progetto(f8cf75d6-6289-42c2-8191-faf6f1a9ce4b)
 error: error from server (NotFound): deployments.apps "mio-oauth2-proxy" not found in namespace "progetto"
+
+minikube kubectl -- logs -n progetto pod/mio-oauth2-oauth2-proxy-84f5dcd79f-76k7v -c oauth2-proxy --previous
+minikube kubectl -- logs -n progetto pod/mio-oauth2-oauth2-proxy-89748f88c-9z7v5 -c oauth2-proxy
+[2026/10/30 11:19:59] [provider.go:55] Performing OIDC Discovery...
+[2026/10/30 11:19:59] [main.go:73] ERROR: Failed to initialise OAuth2 Proxy: error initialising provider: could not create provider data: error building OIDC ProviderVerifier: could not get verifier builder: error while discovery OIDC configuration: failed to discover OIDC configuration: unexpected status "502": 
+[2026/10/30 11:23:11] [provider.go:55] Performing OIDC Discovery...
+[2026/10/30 11:23:11] [main.go:73] ERROR: Failed to initialise OAuth2 Proxy: error initialising provider: could not create provider data: error building OIDC ProviderVerifier: could not get verifier builder: error while discovery OIDC configuration: failed to discover OIDC configuration: error performing request: Get "http://192.168.49.2:32622/realms/progetto/.well-known/openid-configuration": dial tcp 192.168.49.2:32622: connect: connection refused
