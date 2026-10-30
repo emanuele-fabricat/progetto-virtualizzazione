@@ -123,6 +123,8 @@ minikube kubectl -- get statefulset mio-mariadb -n progetto -o yaml \
 
 minikube kubectl -- rollout status statefulset/mio-mariadb -n progetto --timeout=300s || exit 1
 
+echo -e "\033[32mINIEZIONE DI MARIA-DB IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
+
 #Mashing postgress
 minikube kubectl -- get statefulset mio-keycloak-postgresql -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
