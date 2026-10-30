@@ -48,14 +48,7 @@ helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests || exit 1
 helm repo update || exit 1
 helm upgrade --install mio-oauth2 oauth2-proxy/oauth2-proxy \
   -n progetto \
-  --set-string 'extraArgs.provider=keycloak-oidc' \
-  --set-string 'extraArgs.oidc-issuer-url=http://192.168.49.2:32622/realms/progetto' \
-  --set-string 'extraArgs.redirect-url=http://localhost:8081/oauth2/callback' \
-  --set-string 'extraArgs.skip-provider-button=true' \
-  --set-string 'extraArgs.reverse-proxy=true' \
-  --set-string 'extraArgs.cookie-secure=false' \
-  --set-string 'extraArgs.whitelist-domain=localhost:8081' \
-  --set-string 'extraArgs.set-xauthrequest=true' || exit 1
+  -f oauth2-keycloak-values.yaml || exit 1
 
 echo -e "\033[32mINSTALLAZIONE OAUTH2-PROXY AVVENUTA CON SUCCESSO\033[0m"
 
