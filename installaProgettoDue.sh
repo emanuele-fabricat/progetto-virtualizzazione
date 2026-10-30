@@ -1,4 +1,7 @@
 #!/bin/bash
+set -e
+set -o pipefail
+
 echo "Nel prossimo comando sarà richiesta il client secret, immettere quello salvato nel passo precedente"
 
 #Creazione secret kubernetes
@@ -12,7 +15,7 @@ minikube kubectl -- create secret generic mio-oauth2-keycloak \
   --from-literal=client-id='oauth2-proxy' \
   --from-literal=client-secret="$KC_CLIENT_SECRET" \
   --from-literal=cookie-secret="$COOKIE_SECRET_B64" \
-  --dry-run=client -o yaml | minikube kubectl -- apply -f -
+  --dry-run=client -o yaml | minikube kubectl -- apply -f - || exit 1
 
 unset KC_CLIENT_SECRET COOKIE_SECRET COOKIE_SECRET_B64
 
@@ -39,8 +42,8 @@ EOF
 echo -e "\033[32mMIDIFICA YAML AVVENUTA CON SUCCESSO\033[0m"
 
 #Installazione Oauth2-proxy
-helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests
-helm repo update
+helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests || exit 1
+helm repo update || exit 1
 helm upgrade --install mio-oauth2 oauth2-proxy/oauth2-proxy \
   -n progetto \
   --set-string 'extraArgs.provider=keycloak-oidc' \
@@ -50,39 +53,38 @@ helm upgrade --install mio-oauth2 oauth2-proxy/oauth2-proxy \
   --set-string 'extraArgs.reverse-proxy=true' \
   --set-string 'extraArgs.cookie-secure=false' \
   --set-string 'extraArgs.whitelist-domain=localhost:8081' \
-  --set-string 'extraArgs.set-xauthrequest=true' \
-  
+  --set-string 'extraArgs.set-xauthrequest=true' || exit 1
+
 echo -e "\033[32mINSTALLAZIONE OAUTH2-PROXY AVVENUTA CON SUCCESSO\033[0m"
 
 #Installazione linkerd tramite guida ufficiale https://linkerd.io/docs/getting-started/
 # Setting LINKERD2_VERSION sets the version to install.
 # If unset, you'll get the latest available edge version.
 export LINKERD2_VERSION=edge-26.10.1
-curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh
+curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh || exit 1
 export PATH=$HOME/.linkerd2/bin:$PATH
 #Isntallazione Gatewai API GRD
 
-set -o pipefail
 minikube kubectl -- apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml || exit 1
 
 #Controllo installazione linkerd version
 #controllo che il sistema possa installare linkerd: 
-linkerd check --pre
-linkerd install --crds | minikube kubectl -- apply -f -
-linkerd install | minikube kubectl -- apply -f -
-linkerd viz install | minikube kubectl -- apply -f -
+linkerd check --pre || exit 1
+linkerd install --crds | minikube kubectl -- apply -f - || exit 1
+linkerd install | minikube kubectl -- apply -f - || exit 1
+linkerd viz install | minikube kubectl -- apply -f - || exit 1
 
 #Controllo linkerd funzioni: 
-linkerd check
+linkerd check || exit 1
 
 echo -e "\033[32mINSTALLAZIONE LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 #Mashing di apache
 minikube kubectl -- get deploy mio-apache -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | minikube kubectl -- apply -f -
+  | minikube kubectl -- apply -f - || exit 1
 
-minikube kubectl -- rollout status deployment/mio-apache -n progetto
+minikube kubectl -- rollout status deployment/mio-apache -n progetto || exit 1
 #Per prova minikube kubectl -- -n progetto port-forward svc/mio-apache 8080:80
 
 echo -e "\033[32mINIEZIONE DI APACHE IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
@@ -90,43 +92,43 @@ echo -e "\033[32mINIEZIONE DI APACHE IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 #Mashing Oauth2-Proxy
 minikube kubectl -- get deployment mio-oauth2-oauth2-proxy -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | minikube kubectl -- apply -f -
+  | minikube kubectl -- apply -f - || exit 1
 
-minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s
+minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s || exit 1
 
 echo -e "\033[32mINIEZIONE DI OAUTH2-PROXY IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 #Mashing Keycloak
 minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | minikube kubectl -- apply -f -
+  | minikube kubectl -- apply -f - || exit 1
 
-minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s || exit 1
 
 echo -e "\033[32mINIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 #Mashing treafik
 minikube kubectl -- get deployment traefik -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | minikube kubectl -- apply -f -
+  | minikube kubectl -- apply -f - || exit 1
 
-minikube kubectl -- rollout status deployment/traefik -n progetto --timeout=180s
+minikube kubectl -- rollout status deployment/traefik -n progetto --timeout=180s || exit 1
 
 echo -e "\033[32mINIEZIONE DI TRAEFIK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 #Mashing maria-db
 minikube kubectl -- get statefulset mio-mariadb -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | minikube kubectl -- apply -f -
+  | minikube kubectl -- apply -f - || exit 1
 
-minikube kubectl -- rollout status statefulset/mio-mariadb -n progetto --timeout=300s
+minikube kubectl -- rollout status statefulset/mio-mariadb -n progetto --timeout=300s || exit 1
 
 #Mashing postgress
 minikube kubectl -- get statefulset mio-keycloak-postgresql -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
-  | minikube kubectl -- apply -f -
+  | minikube kubectl -- apply -f - || exit 1
 
-minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s
+minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s || exit 1
 
 echo -e "\033[32mINIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
@@ -136,7 +138,7 @@ helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy \
   -n progetto \
   --reuse-values \
   -f oauth2-keycloak-values.yaml \
-  --dry-run
+  --dry-run || exit 1
   
 #upgrade
 helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy \
@@ -144,6 +146,6 @@ helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy \
   -n progetto \
   --reuse-values \
   -f oauth2-keycloak-values.yaml \
-  --wait --timeout 5m
+  --wait --timeout 5m || exit 1
   
-minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s
+minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s || exit 1
