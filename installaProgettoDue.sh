@@ -9,6 +9,8 @@ read -r -s -p 'Client secret Keycloak: ' KC_CLIENT_SECRET
 printf '\n'
 COOKIE_SECRET="$(openssl rand -hex 16)"
 COOKIE_SECRET_B64="$(printf '%s' "$COOKIE_SECRET" | base64 -w0)"
+MINIKUBE_IP="$(minikube ip)" || exit 1
+KEYCLOAK_ISSUER_URL="http://${MINIKUBE_IP}:32622/realms/progetto"
 
 minikube kubectl -- create secret generic mio-oauth2-keycloak \
   -n progetto \
@@ -22,13 +24,13 @@ unset KC_CLIENT_SECRET COOKIE_SECRET COOKIE_SECRET_B64
 echo -e "\033[32mCREAZIONE SECRET AVVENUTA CON SUCCESSO\033[0m"
 
 #Preparazione valori Helm
-cat > oauth2-keycloak-values.yaml <<'EOF'
+cat > oauth2-keycloak-values.yaml <<EOF
 config:
   existingSecret: mio-oauth2-keycloak
 
 extraArgs:
   provider: "keycloak-oidc"
-  oidc-issuer-url: "http://192.168.49.2:32622/realms/progetto"
+  oidc-issuer-url: "${KEYCLOAK_ISSUER_URL}"
   redirect-url: "http://localhost:8081/oauth2/callback"
   skip-provider-button: "true"
   reverse-proxy: "true"
@@ -39,7 +41,7 @@ podAnnotations:
   linkerd.io/inject: "enabled"
 EOF
 
-echo -e "\033[32mMIDIFICA YAML AVVENUTA CON SUCCESSO\033[0m"
+echo -e "\033[32mMIDIFICA YAML DEL SECRET AVVENUTA CON SUCCESSO\033[0m"
 
 #Installazione Oauth2-proxy
 helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests || exit 1

@@ -2,6 +2,8 @@ Eseguire il seguente comando per aprire un tunnel alla porta 8082 e potersi conn
 
 minikube kubectl -- port-forward -n progetto svc/mio-keycloak 8082:80
 
+OAuth2 Proxy raggiunge Keycloak tramite il NodePort 32622, configurato dallo script di installazione. L'indirizzo dell'issuer viene composto automaticamente usando l'IP corrente di Minikube.
+
 Aprire la pagina web http://127.0.0.1:8082 e entrare nella dashboard digitando
 utente: admin
 pswd: Admin1234!
@@ -72,5 +74,4 @@ Click sul proprio nome utente in alto a destra
 Click su Sign out
 Chiudere il tunnel con ctrl+c
 	
-
 

@@ -81,6 +81,8 @@ helm install mio-keycloak bitnami/keycloak \
   -n progetto \
   --set image.repository=bitnamilegacy/keycloak \
   --set image.tag=26.3.3-debian-12-r0 \
+  --set service.type=NodePort \
+  --set service.nodePorts.http=32622 \
   --set postgresql.image.repository=bitnamilegacy/postgresql \
   --set postgresql.image.tag=17.6.0-debian-12-r0 \
   --set global.security.allowInsecureImages=true \
