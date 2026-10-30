@@ -57,7 +57,12 @@ echo -e "\033[32mINSTALLAZIONE OAUTH2-PROXY AVVENUTA CON SUCCESSO\033[0m"
 # If unset, you'll get the latest available edge version.
 export LINKERD2_VERSION=edge-26.10.1
 curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh || exit 1
-export PATH=$HOME/.linkerd2/bin:$PATH
+LINKERD_BIN="$HOME/.linkerd2/bin"
+export PATH="$LINKERD_BIN:$PATH"
+touch "$HOME/.bashrc"
+if ! grep -Fqx 'export PATH="$HOME/.linkerd2/bin:$PATH"' "$HOME/.bashrc"; then
+  printf '\n%s\n' 'export PATH="$HOME/.linkerd2/bin:$PATH"' >> "$HOME/.bashrc"
+fi
 #Isntallazione Gatewai API GRD
 
 minikube kubectl -- apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml || exit 1
