@@ -129,20 +129,5 @@ minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n proget
 
 echo -e "\033[32mINIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
-#Aggiornamento release
-helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy \
-  --version 10.7.1 \
-  -n progetto \
-  --reuse-values \
-  -f oauth2-keycloak-values.yaml \
-  --dry-run || exit 1
-  
-#upgrade
-helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy \
-  --version 10.7.1 \
-  -n progetto \
-  --reuse-values \
-  -f oauth2-keycloak-values.yaml \
-  --wait --timeout 5m || exit 1
   
 minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s || exit 1
