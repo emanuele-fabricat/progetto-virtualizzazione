@@ -1,19 +1,4 @@
-cat > rimuovi-htdocs.yaml <<'YAML'
-spec:
-  template:
-    spec:
-      volumes:
-        - name: htdocs
-          $patch: delete
-      containers:
-        - name: apache
-          volumeMounts:
-            - mountPath: /opt/bitnami/apache/htdocs
-              $patch: delete
-YAML
-
-kubectl patch deployment mio-apache -n progetto \
-  --type=strategic \
-  --patch-file=rimuovi-htdocs.yaml
-
-kubectl rollout status deployment/mio-apache -n progetto
+mkdir ./progetto-virtualizzazione/YamlDebian
+for d in $(minikube kubectl -- get deployments -n progetto -o jsonpath='{.items[*].metadata.name}'); do
+  minikube kubectl -- get deployment "$d" -n progetto -o yaml > "./progetto-virtualizzazione/YamlDebian/${d}.yaml"
+done
