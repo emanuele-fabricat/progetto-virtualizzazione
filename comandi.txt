@@ -1,12 +1,1000 @@
-  df -h /
-
-minikube kubectl -- get pods -n progetto -o wide
-minikube kubectl -- describe pod -n progetto mio-keycloak-postgresql-0
-minikube kubectl -- logs -n progetto mio-keycloak-postgresql-0 \
-  -c postgresql --previous --tail=200
-minikube kubectl -- get events -n progetto \
-  --sort-by=.metadata.creationTimestamp
-
-
-  minikube kubectl -- get svc,endpoints -n progetto
-minikube kubectl -- get ingressroute -n progetto
+  177  minikube config get memory ; minikube config get cpus
+  178  minikube start
+  179  minikube config get memory ; minikube config get cpus
+  180  minikube describe node minikube | grep -A 6 "Capacity:"
+  181  kubectl describe node minikube | grep -A 6 "Capacity:"
+  182  kubectl version
+  183  helm uninstall traefik-mesh -n mesh
+  184  kubectl delete ns mesh
+  185  kubectl get ns
+  186  kubectl delete ns default mysql-operator
+  187  kubectl get ns
+  188  kubectl get configmap coredns -n kube-system -o yaml | grep -n "traefik.mesh"
+  189  helm list -n linkerd
+  190  helm uninstall linkerd-control-plane -n linkerd 2>/dev/null
+  191  helm uninstall linkerd-crds -n linkerd 2>/dev/null
+  192  kubectl delete ns linkerd 2>/dev/null
+  193  curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh
+  194  echo 'export PATH=$HOME/.linkerd2/bin:$PATH' >> ~/.bashrc
+  195  source ~/.bashrc
+  196  linkerd version
+  197  linkerd check --pre
+  198  kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.5.1/standard-install.yaml
+  199  linkerd check --pre
+  200  linkerd install --crds | kubectl apply -f -
+  201  linkerd install | kubectl apply -f -
+  202  linkerd install --set proxyInit.runASRoot=true | kubectl apply -f -
+  203  minikube tunnel
+  204  minikube start
+  205  minikube status
+  206  minikube start
+  207  linkerd install --set proxyInit.runAsRoot=true | kubectl apply -f -
+  208  kubectl get pods -n linkerd -w  /
+  209  kubectl get pods -n linkerd -w
+  210  linkerd check
+  211  for ns in lamp traefik keycloak oauth2 db; do   kubectl create namespace "$ns" --dry-run=client -o yaml | kubectl apply -f -;   kubectl annotate namespace "$ns"     linkerd.io/inject=enabled     --overwrite; done
+  212  kubectl get ns -o custom-columns='NAME:.metadata.name,INJECT:.metadata.annotations.linkerd\.io/inject' 
+  213  kubectl rollout restart deploy -n lamp
+  214  kubectl rollout restart deploy -n traefik
+  215  kubectl get pods -n lamp
+  216  kubectl get pods -n traefik
+  217  minikube status
+  218  helm upgrade traefik traefik/traefik -n traefik --reuse-values \
+  219  helm upgrade traefik traefik/traefik -n traefik --reuse-values --set providers.kubernetesIngress.nativeLBByDefault=true --set providers.kubernetesCRD.nativeLBByDefault=true
+  220  kubectl rollout status deploy traefik -n traefik
+  221  kubectl get pods -n traefik
+  222  linkerd viz install | kubectl apply -f -
+  223  linkerd check
+  224  linkerd viz dashboard
+  225  linkerd check --proxy
+  226  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{.spec.containers[*].name}{"\n"}{end}' | grep linkerd-proxy
+  227  kubectl get pods -A /  -o custom-columns='NAMESPACE:.metadata.namespace,NAME:.metadata.name,CONTAINERS:.spec.containers[*].name'   | grep -E '(^|[[:space:]])linkerd-proxy([[:space:]]|$)' 
+  228  kubectl get pods -A /  -o custom-columns='NAMESPACE:.metadata.namespace,NAME:.metadata.name,CONTAINERS:.spec.containers[*].name'   | grep -E '(^|[[:space:]])linkerd-proxy([[:space:]]|$)' 
+  229  clear
+  230  kubectl get pods -A -o custom-columns='NAMESPACE:.metadata.namespace,NAME:.metadata.name,CONTAINERS:.spec.containers[*].name'   | grep -E '(^|[[:space:]])linkerd-proxy([[:space:]]|$)' 
+  231  kubectl get pods -n lamp 
+  232  kubectl get pods -n traefik 
+  233  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' | grep -E '(^|[[:space:]])linkerd-proxy([[:space:]]|$)' '
+  234  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' | grep -E '(^|[[:space:]])linkerd-proxy([[:space:]]|$)'
+  235  clear
+  236  kubectl rollout restart deployment -n lamp
+  237  kubectl rollout restart deployment -n traefik 
+  238  kubectl rollout status deployment -n lamp
+  239  kubectl rollout status deployment -n traefik 
+  240  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' | grep -E '(^|[[:space:]])linkerd-proxy([[:space:]]|$)' 
+  241  kubectl get ns lamp traefik   -o custom-columns='NAME:.metadata.name,INJECT:.metadata.annotations.linkerd\.io/inject' 
+  242  kubectl rollout restart deployment --all -n lamp
+  243  kubectl rollout restart deployment --all -n traefik 
+  244  minikube start
+  245  kubectl get pods -n lamp
+  246  kubectl get pods -n traefik 
+  247  kubectl get ns lamp traefik   -o custom-columns='NAME:.metadata.name,INJECT:.metadata.annotations.linkerd\.io/inject' 
+  248  kubectl rollout restart deployment -n lamp
+  249  kubectl rollout restart deployment -n traefik 
+  250  kubectl rollout status deployment -n lamp
+  251  kubectl rollout status deployment -n traefik 
+  252  kubectl get pods -n lamp
+  253  kubectl get pods -n traefik 
+  254  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' | grep -E '(^|[[:space:]])linkerd-proxy([[:space:]]|$)' 
+  255  kubectl get pods -n lamp -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' 
+  256  kubectl get pods -n traefik -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' 
+  257  kubectl get deployment -n lamp
+  258  kubectl get deployment -n traefik 
+  259  kubectl rollout restart deployment/my-headlamp -n lamp
+  260  kubectl rollout restart deployment/traefik -n traefik 
+  261  kubectl rollout status deployment/my-headlamp -n lamp
+  262  kubectl rollout status deployment/traefik -n traefik 
+  263  kubectl get pods -n lamp
+  264  kubectl get pods -n traefik 
+  265  kubectl get pods -n linkerd
+  266  linkerd check 
+  267  kubectl get ns lamp traefik   -o custom-columns='NAME:.metadata.name,INJECT:.metadata.annotations.linkerd\.io/inject' 
+  268  kubectl get ns lamp traefik   -o custom-columns='NAME:.metadata.name,INJECT:.metadata.annotations.linkerd\.io/inject' 
+  269  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' | grep -E '(^|[[:space:]])linkerd-proxy([[:space:]]|$)' 
+  270  linkerd check
+  271  kubectl get pods -n lamp
+  272  kubectl get pods -n traefik
+  273  kubectl get pods -n linkerd
+  274  kubectl get deployment -n lamp
+  275  kubectl get deployment -n traefik 
+  276  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{.spec.containers[*].name}{"\n"}{end}' | grep linkerd-proxy
+  277  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' | grep -E '(^|[[:space:]])linkerd-proxy([[:space:]]|$)' 
+  278  linkerd viz edges deployment -n lamp
+  279  linkerd viz edges deployment -n traefik
+  280  minikube status
+  281  minkube start
+  282  minikube
+  283  minikube start
+  284  kubectl get pods -n lamp -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' 
+  285  kubectl get pods -n traefik -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' 
+  286  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}{.spec.containers[?(@.name=="linkerd-proxy")].name}{"\n"}{end}' | grep -F 'linkerd-proxy' 
+  287  clear
+  288  kubectl get deployment -n lmap/
+  289  kubectl get deployment -n lamp
+  290  kubectl get deployment -n traefik 
+  291  kubectl rollout restart deployment/my-headlamp -n lamp
+  292  kubectl rollout restart deployment/traefik -n traefik 
+  293  kubectl rollout status deployment/my-headlamp -n lamp
+  294  kubectl rollout status deployment/traefik -n traefik 
+  295  kubectl get pods -n lamp
+  296  kubectl get pods -n traefik 
+  297  kubectl get pods -n lamp -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' 
+  298  kubectl get pods -n traefik -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' 
+  299  kubectl get pods -n linkerd
+  300  linkerd check
+  301  kubectl get mutatingwebhookconfiguration | grep -i linkerd 
+  302  kubectl logs -n linkerd deployment/linkerd-proxy-injector --tail=100 
+  303  kubectl get pods -n lamp -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' 
+  304  kubectl get pods -n traefik -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{range .spec.containers[*]}{.name}{" "}{end}{"\n"}{end}' 
+  305  clear
+  306  kubectl get pods -n lamp
+  307  kubectl get pods -n traefik
+  308  kubectl get deployment -n lamp
+  309  kubectl get deployment -n traefik
+  310  kubectl get pods -n linkerd 
+  311  kubectl get pods -n lamp   -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{.spec.containers[0].name}{" + "}{.spec.containers[1].name}{"\n"}{end}' ' 
+  312  kubectl get pods -n traefik \
+  313    -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{.spec.containers[0].name}{" + "}{.spec.containers[1].name}{"\n"}{end}' 
+  314  kubectl get pods -n lamp   -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{.spec.containers[0].name}{" + "}{.spec.containers[1].name}{"\n"}{end}' \ 
+  315  kubectl get pods -n traefik   -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{.spec.containers[0].name}{" + "}{.spec.containers[1].name}{"\n"}{end}' 
+  316  clear
+  317  kubectl get pods -n lamp   -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{.spec.containers[0].name}{" + "}{.spec.containers[1].name}{"\n"}{end}' 
+  318  kubectl get pods -n traefik   -o jsonpath='{range .items[*]}{.metadata.name}{" -> "}{.spec.containers[0].name}{" + "}{.spec.containers[1].name}{"\n"}{end}' 
+  319  kubectl get pod traefik-6854f48fbd-wmhg7 -n traefik   -o jsonpath='{.spec.containers[*].name}{" | initContainers: "}{.spec.initContainers[*].name}{"\n"}' 
+  320  kubectl get pods -n lamp   -o jsonpath='{range .items[*]}{.metadata.name}{" | containers: "}{.spec.containers[*].name}{" | initContainers: "}{.spec.initContainers[*].name}{"\n"}{end}' 
+  321  kubectl get pods -A -o jsonpath='{range .items[*]}{.metadata.namespace}{"\t"}{.metadata.name}{"\t"}containers:{range .spec.containers[*]}{.name}{" "}{end}initContainers:{range .spec.initContainers[*]}{.name}{" "}{end}{"\n"}{end}' | grep -E '(^|[[:space:]])linkerd-proxy([[:space:]]|$)' 
+  322  linkerd viz edges deployment -n lamp
+  323  linkerd viz edges deployment -n traefik
+  324  kubectl get pods -n lamp
+  325  kubectl get pods -n traefik 
+  326  linkerd viz tap deploy/my-headlamp -n lamp
+  327  clear
+  328  linkerd viz tap deploy/my-headlamp -n lamp
+  329  linkerd viz edges deployment -n lamp cle
+  330  linkerd viz edges deployment -n lamp
+  331  linkerd viz edges deployment -n traefik
+  332  kubectl get pods -n linkerd-viz -o jsonpath='{range .items[*]}{.metadata.name}{" -> containers:"}{range .spec.containers[*]}{.name}{" "}{end}{" initContainers:"}{range .spec.initContainers[*]}{.name}{" "}{end}{"\n"}{end}' 
+  333  kubectl get pods -n linkerd-viz 
+  334  linkerd viz edges deployment -n lamp 
+  335  linkerd viz edges deployment -n lamp
+  336  linkerd viz edges deployment -n traefik
+  337  clear
+  338  kubectl get ingress -A
+  339  kubectl get svc -n lamp
+  340  kubectl apply -f - <<'EOF'
+  341  apiVersion: networking.k8s.io/v1
+  342  kind: Ingress
+  343  metadata:
+  344    name: headlamp
+  345    namespace: lamp
+  346  spec:
+  347    ingressClassName: traefik
+  348    rules:
+  349      - host: headlamp.local
+  350        http:
+  351          paths:
+  352            - path: /
+  353              pathType: Prefix
+  354              backend:
+  355                service:
+  356                  name: my-headlamp
+  357                  port:
+  358                    number: 80
+  359  EOF
+  360  kubectl get ingress -n lamp
+  361  kubectl describe ingress headlamp -n lamp
+  362  echo "$(minikube ip) headlamp.local" | sudo tee -a /etc/hosts
+  363  echo '--- SERVICE HEADLAMP ---'
+  364  kubectl get svc -n lamp -o wide
+  365  echo '--- ENDPOINT HEADLAMP ---'
+  366  kubectl get endpoints -n lamp -o wide
+  367  echo '--- INGRESS ---'
+  368  kubectl get ingress -n lamp -o wide
+  369  echo '--- INGRESS YAML ---'
+  370  kubectl get ingress -n lamp -o yaml
+  371  echo '--- INGRESSROUTE ---'
+  372  kubectl get ingressroute -n lamp -o yaml 2>/dev/null || true
+  373  echo '--- SERVICE TRAEFIK ---'
+  374  kubectl get svc -n traefik -o wide
+  375  echo '--- MINIKUBE IP ---'
+  376  minikube ip
+  377  curl -i --resolve headlamp.local:32038:192.168.49.2   http://headlamp.local:32038/
+  378  minikube start
+  379  kubectl get ingress -A
+  380  linkerdd viz tap deploy/my-headlamp - lamp
+  381  linkerd viz tap deploy/my-headlamp -n lamp
+  382  linkerd viz edges deployment -n lamp
+  383  linkerd viz edges deployment -n traefik
+  384  kubectl get pods -n linkerd -w
+  385  linkerd check
+  386  kube ctl get ns -o 
+  387  kubectl get ns -o 
+  388  kubectl get ns -o custom-columns='NAME:.metadata.name,INJECT:.metadata.annotations.linkerd|.io/inject'
+  389  linkerd viz dashboard
+  390  linkerd viz stat pods -n lamp
+  391  linkerd viz dashboard
+  392  linkerd viz stat pods -n traefik
+  393  kubectl get pods -n linkerd-viz
+  394  linkerd check
+  395  linkerd viz tap deploy/my-headlamp -n lamp
+  396  curl -i --resolve headlamp.local:32038:192.168.49.2   http://headlamp.local:32038/
+  397  kubectl get pods -n linkerd -n linkerd-viz ~
+  398  kubectl get pods -n linkerd -n linkerd-viz
+  399  curl -i --resolve headlamp.local:32038:192.168.49.2   http://headlamp.local:32038/
+  400  minikube service keycloak -n keycloak
+  401  minikube start
+  402  linkerd check
+  403  linkerd liz check
+  404  linkerd viz check
+  405  minikube service keycloak -n keycloak
+  406  kubectl get pods -n keycloak -n db
+  407  linkerd viz edges -n keycloak
+  408  kubectl run test-client --rm -i --tty --image=curlimages/curl --restart=Never -- sh
+  409  minikube start
+  410  kubectl run test-client --rm -i --tty --image=curlimages/curl --restart=Never -- sh
+  411  kubectl attach -it test-client
+  412  kubectl exec -it test-client -- sh
+  413  kubectl delete pod test-client
+  414  kubectl run test-client --rm -i --tty --image=curlimages/curl --restart=Never -- sh
+  415  kubectl get pods,svc,endpoints -n keycloak
+  416  kubectl describe pod keycloak-0 -n keycloak | grep -A 8 -B 2 "Init Containers:"
+  417  kubectl describe pod keycloak-0 -n keycloak | tail -n 25
+  418  helm list -A
+  419  minikube image pull docker.io/bitnami/keycloak:26.3.3-debian-12-r0
+  420  kubectl delete pod keycloak-0 -n keycloak
+  421  kubectl get pod keycloak-0 -n keycloak -w
+  422  helm upgrade keycloak bitnami/keycloak   --namespace keycloak   --reuse-values   --set image.repository=bitnamilegacy/keycloak   --set httpEnabled=true
+  423  kubectl delete pod keycloak-0 -n keycloak
+  424  kubectl get pod keycloak-0 -n keycloak -w
+  425  kubectl logs keycloak-0 -n keycloak -c keycloak --previous --tail=40
+  426  kubectl get svc -n db
+  427  helm upgrade keycloak bitnami/keycloak   --namespace keycloak   --reuse-values   --set externalDatabase.host=postgres-postgresql.db.svc.cluster.local
+  428  kubectl delete pod keycloak-0 -n keycloak
+  429  kubectl get pod keycloak-0 -n keycloak -w
+  430  kubectl logs keycloak-0 -n keycloak -c keycloak --previous --tail=40
+  431  helm upgrade keycloak bitnami/keycloak   --namespace keycloak   --reuse-values   --set externalDatabase.extraParams="sslmode=disable"
+  432  kubectl delete pod keycloak-0 -n keycloak
+  433  kubectl get pod keycloak-0 -n keycloak -w
+  434  kubectl logs keycloak-0 -n keycloak -c keycloak --previous --tail=40
+  435  helm upgrade keycloak bitnami/keycloak   --namespace keycloak   --reuse-values   --set externalDatabase.host=postgres-postgresql.db.svc.cluster.local   --set externalDatabase.user=Admin   --set externalDatabase.password="Admin1234!"   --set externalDatabase.database=postgres   --set externalDatabase.extraParams="sslmode=disable"
+  436  kubectl delete pod keycloak-0 -n keycloak
+  437  kubectl get pod keycloak-0 -n keycloak -w
+  438  kubectl logs keycloak-0 -n keycloak -c keycloak --previous --tail=40
+  439  kubectl get pod keycloak-0 -n keycloak -w
+  440  kubectl logs keycloak-0 -n keycloak -c keycloak --previous --tail=40
+  441  kubectl run test-client --rm -i --tty --image=curlimages/curl --restart=Never -- sh
+  442  linkerd viz edges deploy --all-namespaces
+  443  minikube start
+  444  linkerd check
+  445  kubectl get pod keycloak-0 -n keycloak
+  446  kubectl logs keycloak-0 -n keycloak -c keycloak --previous --tail=25
+  447  # 1. Verifica lo stato del pod di PostgreSQL
+  448  kubectl get pods -n db
+  449  # 2. Leggi gli ultimi log registrati da PostgreSQL
+  450  kubectl logs -n db -l app.kubernetes.io/name=postgresql --tail=35
+  451  clear
+  452  minikube status
+  453  # 1. Dichiara la porta 6347 come opaca sul namespace db
+  454  kubectl annotate ns db config.linkerd.io/opaque-ports="6347" --overwrite
+  455  # 2. Dichiara la porta 6347 come opaca sul Service di PostgreSQL
+  456  kubectl annotate svc postgres-postgresql -n db config.linkerd.io/opaque-ports="6347" --overwrite
+  457  # 3. Assicura che la policy di Linkerd consenta le connessioni tra namespace
+  458  kubectl annotate ns db config.linkerd.io/default-inbound-policy="all-unauthenticated" --overwrite
+  459  kubectl rollout restart statefulset -n db
+  460  kubectl rollout status statefulset -n db
+  461  kubectl delete pod keycloak-0 -n keycloak
+  462  kubectl get pod keycloak-0 -n keycloak -w
+  463  kubectl logs -n db -l app.kubernetes.io/name=postgresql --tail=35
+  464  kubectl get list -A
+  465  kubectl get ns -A
+  466  kubectl logs --timestamps
+  467  kubectl log --timestamps
+  468  kubectl logs --timestamps
+  469  kubectl exec -i -n db postgres-postgresql-0 -c postgresql -- psql -U postgres -d postgres -c "SELECT 'DATABASE FUNZIONANTE' AS stato;"
+  470  linkerd check
+  471  kubectl get pods -A
+  472  kubectl describe keycloak-0 -n keycloak
+  473  kubectl describe pod-keycloak -n keycloak
+  474  kubectl describe keycloak-0 -n keycloak
+  475  kubectl describe pod keycloak-0 -n keycloak
+  476  linkerd check
+  477  kubectl exec -i -n db postgres-postgresql-0 -c postgresql -- psql -U postgres -d postgres -c "SELECT 'DATABASE FUNZIONANTE' AS stato;"
+  478  kubectl logs keycloak-0 -n keycloak -c keycloak -f
+  479  kubectl logs keycloak-0 -n keycloak -c keycloak -f --verbos
+  480  kubectl logs keycloak-0 -n keycloak -c keycloak -f --verbose
+  481  kubectl logs --verbose keycloak-0 -n keycloak -c keycloak -f
+  482  kubectl logs keycloak-0 -n keycloak -c --verbose keycloak -f
+  483  kubectl get pods -A
+  484  linkerd vizdashboard
+  485  linkerd viz dashboard
+  486  linkerd viz edges --all-namespaces
+  487  linkerd viz edges -A
+  488  linkerd viz edges
+  489  linkerd viz edges -A
+  490  linkerd viz edges --all-namespaces
+  491  linkerd viz edges po --all-namespaces
+  492  linkerd viz edges deploy --all-namespaces
+  493  kubectl get server -A
+  494  kubectl exec -n linkerd-viz deploy/prometheus -c prometheus --   wget -qO- 'http://localhost:9090/api/v1/query?query=tcp_open_total'   | grep -oP '\{[^}]*target_port="[0-9]+"[^}]*\}' | sort -u
+  495  kubectl get svc -A -o custom-columns="NAMESPACE":.metadata.namespace,"SERVIZIO":.metadata.name,"PORTA-ESTERNA":.spec.ports[*].port,"PORTA-CONTAINER":.spec.ports[*].targetPort
+  496  kubectl get cm keycloak-env-vars -n keycloak -o yaml | grep -i port
+  497  kubectl get cm keycloak-env-vars -n keycloak -o yaml | grep -E "KC_DB|KEYCLOAK_DATABASE"
+  498  helm upgrade keycloak bitnami/keycloak   --namespace keycloak   --reuse-values   --set externalDatabase.port=5432   --set extraEnvVars[0].name="KC_DB_URL"   --set extraEnvVars[0].value="jdbc:postgresql://postgres-postgresql.db.svc.cluster.local:5432/postgres?sslmode=disable&gssEncMode=disable"
+  499  # Riavvia il pod
+  500  kubectl delete pod keycloak-0 -n keycloak --force --grace-period=0
+  501  kubectl exec -i -n db postgres-postgresql-0 -c postgresql -- psql -U postgres -d postgres -c "SELECT 'DATABASE FUNZIONANTE' AS stato;"
+  502  kubectl logs keycloak-0 -n keycloak -c --verbose keycloak -f
+  503  kubectl logs keycloak-0 -n keycloak -c keycloak -f
+  504  kubectl get cm keycloak-env-vars -n keycloak -o jsonpath='{.data.KC_DB_USERNAME}'
+  505  echo ""
+  506  kubectl exec -i -n db postgres-postgresql-0 -c postgresql -- psql -U postgres -d postgres -c   "GRANT ALL ON SCHEMA public TO Admin; ALTER SCHEMA public OWNER TO Admin;"
+  507  cubectl exec -i -n db postgres-postgresql-0 -c postgresql -- psql -U postgres -d postgres -c   "GRANT ALL ON SCHEMA public TO “Admin”; ALTER SCHEMA public OWNER TO “Admin”;"
+  508  kubectl exec -i -n db postgres-postgresql-0 -c postgresql -- psql -U postgres -d postgres -c   "GRANT ALL ON SCHEMA public TO “Admin”; ALTER SCHEMA public OWNER TO “Admin”;"
+  509  kubectl exec -i -n db postgres-postgresql-0 -c postgresql -- psql -U postgres -d postgres -c "\du"
+  510  kubectl exec -i -n db postgres-postgresql-0 -c postgresql -- psql -U postgres -d postgres -c   'GRANT ALL ON SCHEMA public TO "Admin"; ALTER SCHEMA public OWNER TO "Admin";'
+  511  kubectl logs keycloak-0 -n keycloak -c keycloak -f
+  512  helm uninstall my-headlamp -n lamp
+  513  kubectl delete ingress headlamp-ingress -n lamp --ignore-not-found
+  514  kubectl delete clusterrolebinding headlamp-admin-binding --ignore-not-found
+  515  kubectl delete sa headlamp-admin -n lamp --ignore-not-found
+  516  kubectl get all -n lamp
+  517  helm repo list
+  518  helm repo add lamp https://lead4good.github.io/lamp-helm-repository
+  519  helm repo update
+  520  helm install my-lamp lamp/lamp   --namespace lamp
+  521  helm repo list
+  522  kubectl port-forward svc/keycloak -n keycloak 8080:80 --address 0.0.0.0
+  523  minikube status
+  524  kubectl delete ns lamp
+  525  # 1. Crea i due namespace
+  526  kubectl create ns mariadb
+  527  kubectl create ns apache
+  528  # 2. Attiva il Service Mesh su entrambi
+  529  kubectl annotate ns mariadb apache linkerd.io/inject=enabled
+  530  helm install site-db bitnami/mariadb   --namespace mariadb   --set auth.database=sitedb   --set auth.username=Admin   --set auth.password=Admin1234!   --set auth.rootPassword=Admin1234!
+  531  kubectl wait --namespace mariadb --for=condition=ready pod -l app.kubernetes.io/name=mariadb --timeout=120s
+  532  minikube start
+  533  kubectl wait --namespace mariadb --for=condition=ready pod -l app.kubernetes.io/name=mariadb --timeout=120s
+  534  kubectl apply -f guida_autenticazione_sito_lamp.yaml
+  535  ls
+  536  ls ./scaricati
+  537  ls ./Scaricati
+  538  kubectl apply -f ./Scaricati/guida_autenticazione_sito_lamp.yaml
+  539  minikube ip
+  540  192.168.49.2 mio-sito.local
+  541  minikube ip mio-sito.local
+  542  kubectl get pods,svc,ingress -n apache
+  543  kubectl get pods,svc -n mariadb
+  544  kubectl get middleware,ingress -n apache -n oauth2
+  545  kubectl get middleware,ingress -A
+  546  kubectl get pods -n apache
+  547  kubectl get pods -n mariadb
+  548  kubectl port-forward svc/keycloak -n keycloak 8080:80 --address 0.0.0.0
+  549  clear
+  550  minikube update-check
+  551  minikube start --kubernetes-version=latest
+  552  minikube stop
+  553  minikube start --kubernetes-version=latest
+  554  minikube stop
+  555  minikube start | minikube update
+  556  minikube start
+  557  kubectl get ns -A
+  558  helm repo list
+  559  helm repo ?
+  560  helm repo remove ?
+  561  helm repo list
+  562  helm repo remove mysql-operator
+  563  helm repo remove ozone-helm
+  564  helm repo remove headlamp
+  565  helm repo remove treafik
+  566  helm repo remove linkerd-edge oauth2-proxy bitnami
+  567  helm repo list
+  568  helm repo remove traefik
+  569  helm repo list
+  570  helm repo add bitnami https://charts.bitnami.com/bitnami
+  571  helm repo update
+  572  helm repo list
+  573  helm install mio-apache bitnami/apache --set service.type=ClusterIP
+  574  kubectl get svc -A -o custom-columns="NAMESPACE":.metadata.namespace,"SERVIZIO":.metadata.name,"PORTA-ESTERNA":.spec.ports[*].port,"PORTA-CONTAINER":.spec.ports[*].targetPort
+  575  kubectl exec -it mio-mariadb -- mariadb -u root -pAdmin1234!
+  576  helm install mio-mariadb bitnami/mariadb --set auth.rootPassword=Admin1234!
+  577  kubectl get svc -A -o custom-columns="NAMESPACE":.metadata.namespace,"SERVIZIO":.metadata.name,"PORTA-ESTERNA":.spec.ports[*].port,"PORTA-CONTAINER":.spec.ports[*].targetPort
+  578  helm install mio-postgres bitnami/postgresql --set auth.postgresPassword=Admin1234!
+  579  kubectl get svc -A -o custom-columns="NAMESPACE":.metadata.namespace,"SERVIZIO":.metadata.name,"PORTA-ESTERNA":.spec.ports[*].port,"PORTA-CONTAINER":.spec.ports[*].targetPort
+  580  helm uninstall mio-postgres-postgresql
+  581  helm list
+  582  helm uninstall mio-postgres
+  583  kubectl get svc -A -o custom-columns="NAMESPACE":.metadata.namespace,"SERVIZIO":.metadata.name,"PORTA-ESTERNA":.spec.ports[*].port,"PORTA-CONTAINER":.spec.ports[*].targetPort
+  584  helm uninstall mio-apache
+  585  helm uninstall mio-mariadb
+  586  kubectl get svc -A -o custom-columns="NAMESPACE":.metadata.namespace,"SERVIZIO":.metadata.name,"PORTA-ESTERNA":.spec.ports[*].port,"PORTA-CONTAINER":.spec.ports[*].targetPort
+  587  kubectl config set-context --current --namespace=mio-progetto
+  588  kubectl config set-context --current --namespace=progetto
+  589  kubectl get svc -A -o custom-columns="NAMESPACE":.metadata.namespace,"SERVIZIO":.metadata.name,"PORTA-ESTERNA":.spec.ports[*].port,"PORTA-CONTAINER":.spec.ports[*].targetPort
+  590  kubectl delete pvc -l app.kubernetes.io/instance=mio-postgres
+  591  helm install mio-apache bitnami/apache --set service.type=ClusterIP
+  592  helm install mio-apache bitnami/apache --set service.type=ClusterIP
+  593  kubectl get -ns
+  594  kubectl get ns -A
+  595  kubectl create namespace progetto
+  596  helm install mio-apache bitnami/apache --set service.type=ClusterIP
+  597  helm install mio-mariadb bitnami/mariadb --set auth.rootPassword=Admin1234!
+  598  helm install mio-keycloak bitnami/keycloak    --set auth.adminUser=admin   --set auth.adminPassword=Admin1234!   --set postgresql.auth.username=admin   --set postgresql.auth.password=Admin1234!   --set postgresql.auth.database=keycloak_db
+  599  kubectl get svc -A -o custom-columns="NAMESPACE":.metadata.namespace,"SERVIZIO":.metadata.name,"PORTA-ESTERNA":.spec.ports[*].port,"PORTA-CONTAINER":.spec.ports[*].targetPort
+  600  minikube start
+  601  helm install stable/traefik
+  602  helm repo add traefik https://traefik.github.io/charts
+  603  helm repo update
+  604  helm install traefik traefik/traefik
+  605  kubectl get svc -A -o custom-columns="NAMESPACE":.metadata.namespace,"SERVIZIO":.metadata.name,"PORTA-ESTERNA":.spec.ports[*].port,"PORTA-CONTAINER":.spec.ports[*].targetPort
+  606  kubectl get svc -A -o custom-columns='NAMESPACE:.metadata.namespace,SERVIZIO:.metadata.name,TYPE:.spec.type,CLUSTER-IP:.spec.clusterIP,PORTA-SERVICE:.spec.ports[*].port,NODEPORT:.spec.ports[*].nodePort,TARGET-PORT:.spec.ports[*].targetPort'
+  607  helm uninstall treafik
+  608  helm uninstall -n default 
+  609  helm uninstall traefik -n default 
+  610  helm install traefik -n progetto  traefik/traefik 
+  611  kubectl get svc -A -o custom-columns='NAMESPACE:.metadata.namespace,SERVIZIO:.metadata.name,TYPE:.spec.type,CLUSTER-IP:.spec.clusterIP,PORTA-SERVICE:.spec.ports[*].port,NODEPORT:.spec.ports[*].nodePort,TARGET-PORT:.spec.ports[*].targetPort'
+  612  mariadb -h 127.0.0.1 -P 3307 -u root -p
+  613  kubectl exec -it -n progetto mio-mariadb-0  -- mariadb -u root -p
+  614  minkube start
+  615  minikube start
+  616  helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests
+  617  helm install mio-oauth2 oauth2-proxy/oauth2-proxy
+  618  kubectl get svc -A -o custom-columns='NAMESPACE:.metadata.namespace,SERVIZIO:.metadata.name,TYPE:.spec.type,CLUSTER-IP:.spec.clusterIP,PORTA-SERVICE:.spec.ports[*].port,NODEPORT:.spec.ports[*].nodePort,TARGET-PORT:.spec.ports[*].targetPort'
+  619  helm uninstall mio-oauth2-oauth2-proxy -n default
+  620  kubectl get svc -A -o custom-columns='NAMESPACE:.metadata.namespace,SERVIZIO:.metadata.name,TYPE:.spec.type,CLUSTER-IP:.spec.clusterIP,PORTA-SERVICE:.spec.ports[*].port,NODEPORT:.spec.ports[*].nodePort,TARGET-PORT:.spec.ports[*].targetPort'
+  621  helm uninstall mio-oauth2-oauth2-proxy -n default
+  622  helm uninstall mio-oauth2-oauth2-proxy -n default 
+  623  helm uninstall mio-oauth2 -n default 
+  624  helm install mio-oauth2 -n progetto oauth2-proxy/oauth2-proxy
+  625  kubectl get svc -A -o custom-columns='NAMESPACE:.metadata.namespace,SERVIZIO:.metadata.name,TYPE:.spec.type,CLUSTER-IP:.spec.clusterIP,PORTA-SERVICE:.spec.ports[*].port,NODEPORT:.spec.ports[*].nodePort,TARGET-PORT:.spec.ports[*].targetPort'
+  626  kubectl get svc -A
+  627  kubectl get pods -A
+  628  helm list -A
+  629  kubectl port-forward -n progetto svc/mio-apache 8080:80
+  630  kubectl get pods -A
+  631  helm list -A
+  632  kubectl get svc -A
+  633  kubectl port-forward -n progetto svc/keycloak 8081:80
+  634  kubectl port-forward -n progetto svc/mio-keycloak 8081:80
+  635  minikube start
+  636  kubectl port-forward -n progetto svc/mio-keycloak 8081:80
+  637  kubectl describe pod -n progetto mio-apache
+  638  helm list -A
+  639  helm upgrade mio-apache   oci://registry-1.docker.io/bitnamicharts/apache   --version 11.4.29   -n progetto --reuse-values   --set image.repository=bitnamilegacy/apache   --set image.tag=2.4.65-debian-12-r2   --set global.security.allowInsecureImages=true
+  640  kubectl describe pod -n progetto mio-apache
+  641  kubectl get svc -A
+  642  kubectl get pods -A
+  643  kubectl get pods -n progetto -w
+  644  kubectl describe pod -n progetto mio-apache
+  645  kubectl port-forward -n progetto svc/mio-apache 8080:80
+  646  kubectl describe pod -n progetto mio-keycloak
+  647  helm upgrade mio-keycloak   oci://registry-1.docker.io/bitnamicharts/keycloak   --version 25.2.0   -n progetto   --reuse-values   --set image.repository=bitnamilegacy/keycloak   --set image.tag=26.3.3-debian-12-r0   --set postgresql.image.repository=bitnamilegacy/postgresql   --set postgresql.image.tag=17.6.0-debian-12-r0   --set global.security.allowInsecureImages=true
+  648  kubectl get pods -n progetto -w
+  649  kubectl describe pod -n progetto mio-keycloak
+  650  helm get values mio-keycloak -n progetto
+  651  helm get manifest mio-keycloak -n progetto | grep 'image:'
+  652  kubectl describe pod -n progetto mio-keycloak
+  653  kubectl get pods -n progetto -w
+  654  helm get values
+  655  helm get values mio-keycloak -n progetto
+  656  helm status mio-keycloak -n progetto
+  657  helm get manifest mio-keycloak -n progetto | grep 'image:'
+  658  kubectl get statefulset mio-keycloak mio-keycloak-postgresql -n progetto -o yaml | grep 'image:'
+  659  minikube stop
+  660  minikube start
+  661  helm status mio-keycloak -n progetto
+  662  helm get values mio-keycloak -n progetto
+  663  kubectl get pods -n progetto -w
+  664  kubectl describe pod -n progetto mio-keycloak-0
+  665  kubectl describe pod -n progetto mio-keycloak-postgresql-0
+  666  kubectl get events -n progetto --sort-by=.metadata.creationTimestamp
+  667  kubectl describe pod -n progetto mio-keycloak-0
+  668  kubectl delete pod -n progetto mio-keycloak-0 mio-keycloak-postgresql-0
+  669  kubectl get pods -n progetto -w
+  670  kubectl delete pod -n progetto mio-keycloak-0 mio-keycloak-postgresql-0
+  671  kubectl get pods -n progetto -w
+  672  kubectl describe pod -n progetto mio-keycloak-0
+  673  kubectl get pods -n progetto -w
+  674  kubectl port-forward -n progetto svc/mio-keycloak 8081:80
+  675  kubectl port-forward -n NS_TRAEFIK pod/POD_TRAEFIK 9000:8080
+  676  kubectl port-forward -n progetto pod/treafik 9000:8080
+  677  kubectl get pods
+  678  kubectl get pod
+  679  kubectl get pod -A
+  680  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 9000:8080
+  681  kubectl get ingressroute -
+  682  kubectl get ingressroute -A
+  683  kubectl get svc -A
+  684  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 9000:8080
+  685  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 8081:8080
+  686  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 8081:80
+  687  kubectl describe svc traefik -n progetto
+  688  kubectl get pods -n progetto -o wide
+  689  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 8081:8000
+  690  kubectl get svc -A
+  691  kubectl port-forward -n progetto svc/my-oauth2-oauth2-proxy 4180:80
+  692  kubectl port-forward -n progetto svc/my-oauth2 4180:80
+  693  kubectl port-forward -n progetto svc/mio-oauth2-oauth2-proxy 4180:80
+  694  curl.exe -i http://127.0.0.1:9000/
+  695  curl -i http://127.0.0.1:9000/
+  696  curl -i http://127.0.0.1:8081/
+  697  kubectl get svc -A
+  698  curl -i http://127.0.0.1:8081/
+  699  curl -v --noproxy "*" http://127.0.0.1:8081/
+  700  curl -i http://localhost:4180/ping
+  701  curl -i -H 'Host: apache.local' http://127.0.0.1:8080/
+  702  curl -v --noproxy "*" http://127.0.0.1:8081/
+  703  curl -i http://localhost:4180/ping
+  704  minikube start
+  705  kubectl get pods -n progetto -o wide
+  706  kubectl get pods -n progetto
+  707  kubectl get pods -n progetto -w
+  708  helm upgrade mio-keycloak   oci://registry-1.docker.io/bitnamicharts/keycloak   --version 25.2.0   -n progetto   --reuse-values   --set image.repository=bitnamilegacy/keycloak   --set image.tag=26.3.3-debian-12-r0   --set postgresql.image.repository=bitnamilegacy/postgresql   --set postgresql.image.tag=17.6.0-debian-12-r0   --set global.security.allowInsecureImages=true
+  709  find traefik.yaml
+  710  find traefik
+  711  kubectl get svc -A -o custom-columns='NAMESPACE:.metadata.namespace,SERVIZIO:.metadata.name,TYPE:.spec.type,CLUSTER-IP:.spec.clusterIP,PORTA-SERVICE:.spec.ports[*].port,NODEPORT:.spec.ports[*].nodePort,TARGET-PORT:.spec.ports[*].targetPort'
+  712  kubectl get pods -n progetto -w
+  713  ls
+  714  sudo su
+  715  kubectl apply -f - <<'YAML'
+  716  apiVersion: traefik.io/v1alpha1
+  717  kind: Middleware
+  718  metadata:
+  719    name: oauth2-forwardauth
+  720    namespace: progetto
+  721  spec:
+  722    forwardAuth:
+  723      address: http://mio-oauth2-oauth2-proxy.progetto.svc.cluster.local/oauth2/auth
+  724      trustForwardHeader: true
+  725      authResponseHeaders:
+  726        - X-Auth-Request-User
+  727        - X-Auth-Request-Email
+  728  ---
+  729  apiVersion: traefik.io/v1alpha1
+  730  kind: Middleware
+  731  metadata:
+  732    name: oauth2-errors
+  733    namespace: progetto
+  734  spec:
+  735    errors:
+  736      status:
+  737        - "401"
+  738      service:
+  739        name: mio-oauth2-oauth2-proxy
+  740        port: 80
+  741      query: "/oauth2/sign_in?rd={url}"
+  742      statusRewrites:
+  743        "401": 302
+  744  ---
+  745  apiVersion: traefik.io/v1alpha1
+  746  kind: IngressRoute
+  747  metadata:
+  748    name: oauth2-endpoints
+  749    namespace: progetto
+  750  spec:
+  751    entryPoints:
+  752      - web
+  753    routes:
+  754      - match: "Host(`<HOST_APP>`) && PathPrefix(`/oauth2/`)"
+  755        kind: Rule
+  756        priority: 100
+  757        services:
+  758          - name: mio-oauth2-oauth2-proxy
+  759            port: 80
+  760  ---
+  761  apiVersion: traefik.io/v1alpha1
+  762  kind: IngressRoute
+  763  metadata:
+  764    name: apache-protetto
+  765    namespace: progetto
+  766  spec:
+  767    entryPoints:
+  768      - web
+  769    routes:
+  770      - match: "Host(`<HOST_APP>`)"
+  771        kind: Rule
+  772        priority: 10
+  773        middlewares:
+  774          - name: oauth2-errors
+  775          - name: oauth2-forwardauth
+  776        services:
+  777          - name: mio-apache
+  778            port: 80
+  779  YAML
+  780  kubectl get middleware -n progetto
+  781  kubectl get ingressroot -n progetto
+  782  kubectl get ingressroute -n progetto
+  783  curl -i -H 'Host: apache.local' http://127.0.0.1:8081/
+  784  kubectl port-forward -n progetto svc/mio-apache 8080:80
+  785  kubectl exec -it -n progetto mio-mariadb-0  -- mariadb -u root -p
+  786  kubectl port-forward -n progetto svc/mio-keycloak 8081:80
+  787  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 8081:8000
+  788  kubectl port-forward -n progetto svc/mio-oauth2-oauth2-proxy 4180:80
+  789  kubectl version
+  790  # Setting LINKERD2_VERSION sets the version to install.
+  791  # If unset, you'll get the latest available edge version.
+  792  export LINKERD2_VERSION=edge-26.10.1
+  793  curl --proto '=https' --tlsv1.2 -sSfL https://run.linkerd.io/install-edge | sh
+  794  export PATH=$PATH:/home/fra/.linkerd2/bin
+  795  linkerd check --pre
+  796  linkerd install --crds | kubectl apply -f -
+  797  linkerd install | kubectl apply -f -
+  798  linkerd install --set proxyInit.runAsRoot=true | kubectl apply -f -
+  799  kubectl get ns
+  800  linkerd install | kubectl apply -f -
+  801  linkerd check
+  802  linkerd version
+  803  linkerd check --pre
+  804  kubectl get crds/httproutes.gateway.networking.k8s.io -o "jsonpath={.metadata.annotations.gateway\.networking\.k8s\.io/bundle-version}"
+  805  kubectl config current-context
+  806  linkerd version
+  807  kubectl get ns progetto linkerd linkerd-system linkerd-viz --ignore-not-found
+  808  kubectl config current-context
+  809  linkerd version
+  810  kubectl get ns progetto linkerd linkerd-system linkerd-viz --ignore-not-found
+  811  kubectl get pods -A | grep -i linkerd || true
+  812  kubectl get deploy,sts -n progetto
+  813  kubectl config current-context
+  814  linkerd version
+  815  kubectl get pods -A | grep -i linkerd || true
+  816  kubectl get ns progetto -o yaml | grep -i 'linkerd.io/inject' || true
+  817  kubectl get deploy,sts -n progetto
+  818  linkerd --linkerd-namespace linkerd check
+  819  kubectl get pods -n progetto -o jsonpath='{range .items[*]}{.metadata.name}{" | containers: "}{.spec.containers[*].name}{" | init: "}{.spec.initContainers[*].name}{"\n"}{end}'
+  820  kubectl get deploy mio-apache -n progetto -o yaml   | linkerd --linkerd-namespace linkerd inject -   | kubectl apply -f -
+  821  kubectl rollout status deployment/mio-apache -n progetto
+  822  kubectl -n progetto port-forward svc/mio-apache 8080:80
+  823  kubectl rollout status deployment/mio-apache -n progetto --timeout=180s
+  824  kubectl get pods -n progetto -o jsonpath='{range .items[*]}{.metadata.name}{" | containers: "}{.spec.containers[*].name}{" | init: "}{.spec.initContainers[*].name}{"\n"}{end}'
+  825  linkerd --linkerd-namespace linkerd check
+  826  kubectl port-forward -n progetto svc/mio-apache 8080:80
+  827  for i in {1..10}; do   curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/; done
+  828  linkerd viz install | kubectl apply -f - # install the on-cluster metrics stack
+  829  linkerd check
+  830  linkerd viz dashboard &
+  831  for i in {1..10}; do   curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/; done
+  832  linkerd --linkerd-namespace linkerd -n progetto viz stat deploy
+  833  linkerd --linkerd-namespace linkerd viz dashboard
+  834  minkube start
+  835  minikube start
+  836  kubectl rollout status deployment/mio-apache -n progetto --timeout=180s
+  837  kubectl get deployment mio-oauth2-oauth2-proxy -n progetto -o yaml   | linkerd --linkerd-namespace linkerd inject -   | kubectl apply -f -
+  838  kubectl rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s
+  839  kubectl port-forward -n progetto svc/mio-oauth2-oauth2-proxy 4180:80
+  840  kubectl get statefulset mio-keycloak -n progetto -o yaml   | linkerd --linkerd-namespace linkerd inject -   | kubectl apply -f -
+  841  kubectl rollout status statefulset/mio-keycloak -n progetto --timeout=300s
+  842  kubectl port-forward -n progetto svc/mio-keycloak 8081:80
+  843  kubectl get deployment traefik -n progetto -o yaml   | linkerd --linkerd-namespace linkerd inject -   | kubectl apply -f -
+  844  kubectl rollout status deployment/traefik -n progetto --timeout=180s
+  845  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 8081:8000
+  846  kubectl rollout status statefulset/mio-keycloak -n progetto --timeout=300s
+  847  kubectl get pod
+  848  kubectl get pod -A
+  849  kubectl get pvc -n progetto
+  850  kubectl get statefulset mio-mariadb -n progetto -o yaml   | linkerd --linkerd-namespace linkerd inject -   | kubectl apply -f -
+  851  kubectl rollout status statefulset/mio-mariadb -n progetto --timeout=300s
+  852  kubectl exec -it -n progetto mio-mariadb-0  -- mariadb -u root -p
+  853  kubectl get statefulset mio-keycloak-postgresql -n progetto -o yaml   | linkerd --linkerd-namespace linkerd inject -   | kubectl apply -f -
+  854  kubectl rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s
+  855  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 8081:8000
+  856  linkerd --linkerd-namespace linkerd check
+  857  linkerd --linkerd-namespace linkerd -n progetto check --proxy
+  858  linkerd --linkerd-namespace linkerd check
+  859  linkerd --linkerd-namespace linkerd -n progetto check --proxy
+  860  kubectl get pods -n progetto -o wide
+  861  kubectl get deploy,sts -n progetto
+  862  kubectl get pods -n progetto -o jsonpath='{range .items[*]}{.metadata.name}{" | containers: "}{.spec.containers[*].name}{" | init: "}{.spec.initContainers[*].name}{"\n"}{end}'
+  863  kubectl -n progetto port-forward svc/mio-apache 8080:80
+  864  sudo lsof -i :50750
+  865  linkerd --linkerd-namespace linkerd viz dashboard --port 50751
+  866  cd /
+  867  cat ./etc/apt/sources.list
+  868  linkerd --linkerd-namespace linkerd -n progetto viz edges po
+  869  kubectl delete pod linkerd-curl-probe -n progetto
+  870  kubectl run linkerd-curl-probe -n progetto   --image=curlimages/curl:8.12.1   --restart=Never   --annotations=linkerd.io/inject=enabled   --command -- sh -c 'while true; do curl -sS -o /dev/null -w "%{http_code}\n" http://mio-apache.progetto.svc.cluster.local/; sleep 2; done'
+  871  kubectl wait --for=condition=Ready pod/linkerd-curl-probe -n progetto --timeout=120s
+  872  kubectl get pod linkerd-curl-probe -n progetto -o jsonpath='{.spec.containers[*].name}{" | init: "}{.spec.initContainers[*].name}{"\n"}'
+  873  linkerd --linkerd-namespace linkerd -n progetto viz edges po
+  874  ls
+  875  minikube start
+  876  linkerd check
+  877  kubectl run linkerd-curl-probe -n progetto   --image=curlimages/curl:8.12.1   --restart=Never   --annotations=linkerd.io/inject=enabled   --command -- sh -c 'while true; do curl -sS -o /dev/null -w "%{http_code}\n" http://mio-apache.progetto.svc.cluster.local/; sleep 2; done'
+  878  kubectl wait --for=condition=Ready pod/linkerd-curl-probe -n progetto --timeout=120s
+  879  kubectl get pod linkerd-curl-probe -n progetto -o jsonpath='{.spec.containers[*].name}{" | init: "}{.spec.initContainers[*].name}{"\n"}'
+  880  minikube restart
+  881  minikube start
+  882  kubectl -n progetto port-forward svc/mio-apache 8080:80
+  883  kubectl get ingressroute -A
+  884  kubectl get middleware -A
+  885  kubectl describe ingressroute apache-protetto -n progetto
+  886  kubectl describe ingressroute oauth2-endpoints -n progetto
+  887  kubectl -n progetto port-forward svc/traefik 8081:80
+  888  kubectl patch ingressroute apache-protetto -n progetto --type='json'   -p='[{"op":"replace","path":"/spec/routes/0/match","value":"Host(`localhost`)"}]'
+  889  kubectl patch ingressroute oauth2-endpoints -n progetto --type='json'   -p='[{"op":"replace","path":"/spec/routes/0/match","value":"Host(`localhost`) && PathPrefix(`/oauth2/`)"}]'
+  890  kubectl -n progetto port-forward svc/traefik 8081:80
+  891  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+  892  for i in {1..10}; do   curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/; done
+  893  kubectl run linkerd-curl-probe -n progetto   --image=curlimages/curl:8.12.1   --restart=Never   --annotations=linkerd.io/inject=enabled   --command -- sh -c 'while true; do curl -sS -o /dev/null -w "%{http_code}\n" http://mio-apache.progetto.svc.cluster.local/; sleep 2; done'
+  894  kubectl wait --for=condition=Ready pod/linkerd-curl-probe -n progetto --timeout=120s
+  895  for true; do   curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/; done
+  896  while true; do   curl -sS -o /dev/null -w '%{http_code}\n' http://127.0.0.1:8080/; done
+  897  kubectl delete pod linkerd-curl-probe -n progetto
+  898  curl -sS -D- -o /dev/null   -H 'Host(`<HOST_APP>`)'   http://127.0.0.1:8081/
+  899  curl -sS -D- -o /dev/null   -H ''   http://127.0.0.1:8081/
+  900  curl -i -H 'Host: localhost' http://127.0.0.1:8081/
+  901  kubectl get deployment mio-oauth2-oauth2-proxy -n progetto -o yaml   | grep -iE 'provider|issuer|redirect-url'
+  902  helm list -n progetto
+  903  kubectl get deployment mio-oauth2-oauth2-proxy -n progetto   -o jsonpath='{range .spec.template.spec.containers[0].args[*]}{.}{"\n"}{end}'   | grep -Ei 'provider|issuer|redirect' || true
+  904  kubectl get deployment mio-oauth2-oauth2-proxy -n progetto   -o jsonpath='{range .spec.template.spec.containers[0].env[*]}{.name}{"\n"}{end}'
+  905  helm get values mio-oauth2 -n progetto -o yaml
+  906  kubectl get svc -n progetto | grep -i keycloak
+  907  curl -sS http://127.0.0.1:8082/realms/master/.well-known/openid-configuration   | grep -oE '"(issuer|authorization_endpoint|token_endpoint)":"[^"]+"'
+  908  kubectl run kc-oidc-check -n progetto   --rm -i --restart=Never   --image=curlimages/curl:8.12.1   --command -- curl -sS   http://mio-keycloak.progetto.svc.cluster.local/realms/master/.well-known/openid-configuration
+  909  minikube ip
+  910  kubectl get svc traefik -n progetto
+  911  kubectl apply -f - <<'EOF'
+  912  apiVersion: traefik.io/v1alpha1
+  913  kind: IngressRoute
+  914  metadata:
+  915    name: keycloak-public
+  916    namespace: progetto
+  917  spec:
+  918    entryPoints:
+  919      - web
+  920    routes:
+  921      - match: Host(`192.168.49.2`)
+  922        kind: Rule
+  923        services:
+  924          - name: mio-keycloak
+  925            port: 80
+  926  EOF
+  927  curl -fsS 'http://192.168.49.2:32622/realms/progetto/.well-known/openid-configuration'   | grep -oE '"(issuer|authorization_endpoint|token_endpoint)":"[^"]+"'
+  928  kubectl run kc-nodeport-check -n progetto   --rm -i --restart=Never   --image=curlimages/curl:8.12.1   --command -- curl -fsS   http://192.168.49.2:32622/realms/progetto/.well-known/openid-configuration
+  929  helm repo list
+  930  curl -i http://localhost:4180/ping
+  931  minikube start
+  932  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 8081:8000
+  933  linkerd status
+  934  linkerd ?
+  935  linkerd --h
+  936  linkerd check
+  937  kubectl port-forward -n progetto svc/mio-apache 8080:80
+  938  kubectl exec -it -n progetto mio-mariadb-0  -- mariadb -u root -p
+  939  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+  940  curl -fsS 'http://192.168.49.2:32622/realms/progetto/.well-known/openid-configuration'   | grep -oE '"(issuer|authorization_endpoint|token_endpoint)":"[^"]+"'
+  941  kubectl run kc-nodeport-check -n progetto   --rm -i --restart=Never   --image=curlimages/curl:8.12.1   --command -- curl -fsS   http://192.168.49.2:32622/realms/progetto/.well-known/openid-configuration
+  942  clear
+  943  kubectl port-forward -n progetto svc/mio-oauth2-oauth2-proxy 4180:80
+  944  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 8081:8000
+  945  minikube stop
+  946  minikube status
+  947  minkube start
+  948  minikube start
+  949  kubectl get pods -A
+  950  kubectl port-forward -n progetto svc/mio-apache 8080:80
+  951  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+  952  kubectl port-forward -n progetto pod/traefik-678ff59c7d-hqqbt 8081:8000
+  953  kubectl port-forward -n progetto pod/traefik-67b766b758-xthwf  8081:8000
+  954  kubectl port-forward -n progetto svc/mio-oauth2-oauth2-proxy 4180:80
+  955  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+  956  kubectl get pods -A
+  957  helm upgrade --install mio-oauth2-proxy oauth2-proxy/oauth2-proxy --set config.provider="keycloak-oidc" --set config.clientID="oauth2-proxy" --set config.clientSecret="yDfmPxrXiRjAtPshAMq6ZaaVzQaPGuuh" \
+  958  curl -v --noproxy "*" http://127.0.0.1:8081/
+  959  curl -i http://localhost:4180/ping
+  960  --config-test=/etc/oauth2-proxy.cfg
+  961  oauth2-proxy --version
+  962  kubectl edit deployment oauth2-proxy --provider=keycloak-oidc
+  963  curl http://mio-keycloak/realms/master/.well-known/openid-configuration
+  964  curl http://mio-keycloak-0/realms/master/.well-known/openid-configuration
+  965  COOKIE_SECRET="$(openssl rand -base64 32)"
+  966  kubectl create secret generic mio-oauth2-keycloak   -n progetto   --from-literal=client-id='oauth2-proxy'   --from-literal=client-secret="yDfmPxrXiRjAtPshAMq6ZaaVzQaPGuuh"   --from-literal=cookie-secret="$COOKIE_SECRET"   --dry-run=client -o yaml | kubectl apply -f -
+  967  unset KC_CLIENT_SECRET COOKIE_SECRET
+  968  kubectl get segretes
+  969  kubectl get secretes
+  970  kubectl get secrets
+  971  kubectl get secrets ?
+  972  kubectl get secrets --help
+  973  kubectl get secrets -A
+  974  cat > oauth2-keycloak-values.yaml <<'EOF'
+  975  config:
+  976    existingSecret: mio-oauth2-keycloak
+  977  extraArgs:
+  978    provider: "keycloak-oidc"
+  979    oidc-issuer-url: "http://192.168.49.2:32622/realms/progetto"
+  980    redirect-url: "http://localhost:8081/oauth2/callback"
+  981    skip-provider-button: "true"
+  982    reverse-proxy: "true"
+  983    cookie-secure: "false"
+  984  podAnnotations:
+  985    linkerd.io/inject: "enabled"
+  986  EOF
+  987  helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy   --version 10.7.1   -n progetto   --reuse-values   -f oauth2-keycloak-values.yaml   --wait --timeout 5m
+  988  helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy   --version 10.7.1   -n progetto   --reuse-values   -f oauth2-keycloak-values.yaml   --dry-run
+  989  helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy   --version 10.7.1   -n progetto   --reuse-values   -f oauth2-keycloak-values.yaml   --wait --timeout 5m
+  990  helm status mio-oauth2 -n progetto
+  991  kubectl get deployment,pod -n progetto -o wide
+  992  kubectl get events -n progetto   --sort-by=.metadata.creationTimestamp | tail -30
+  993  kubectl describe deployment mio-oauth2-oauth2-proxy -n progetto
+  994  kubectl logs deployment/mio-oauth2-oauth2-proxy   -n progetto -c oauth2-proxy --tail=100
+  995  kubectl get pods -n progetto   -l app.kubernetes.io/instance=mio-oauth2   -o custom-columns='NAME:.metadata.name,PHASE:.status.phase,READY:.status.containerStatuses[*].ready,DELETING:.metadata.deletionTimestamp,NODE:.spec.nodeName'
+  996  kubectl get rs -n progetto -l app.kubernetes.io/instance=mio-oauth2
+  997  kubectl get nodes
+  998  kubectl get events -n progetto --sort-by=.metadata.creationTimestamp | tail -25
+  999  kubectl describe pod -n progetto mio-oauth2-oauth2-proxy-89db65d6b-kqs2g
+ 1000  kubectl logs -n progetto   mio-oauth2-oauth2-proxy-89db65d6b-kqs2g   -c oauth2-proxy --previous --tail=100
+ 1001  COOKIE_SECRET="$(openssl rand -hex 16)"
+ 1002  COOKIE_SECRET_B64="$(printf '%s' "$COOKIE_SECRET" | base64 -w0)"
+ 1003  kubectl patch secret mio-oauth2-keycloak -n progetto   --type=merge   -p "{\"data\":{\"cookie-secret\":\"${COOKIE_SECRET_B64}\"}}"
+ 1004  unset COOKIE_SECRET COOKIE_SECRET_B64
+ 1005  kubectl rollout restart deployment/mio-oauth2-oauth2-proxy -n progetto
+ 1006  kubectl rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s
+ 1007  helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy   --version 10.7.1   -n progetto   --reuse-values   -f oauth2-keycloak-values.yaml   --dry-run
+ 1008  helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy   --version 10.7.1   -n progetto   --reuse-values   -f oauth2-keycloak-values.yaml   --wait --timeout 5m
+ 1009  kubectl --namespace=progetto get pods -l "app=oauth2-proxy"
+ 1010  kubectl port-forward -n progetto pod/traefik-67b766b758-xthwf  8081:8000
+ 1011  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+ 1012  kubectl port-forward -n progetto pod/traefik-67b766b758-xthwf  8081:8000
+ 1013  kubectl logs -f deployment/mio-oauth2-oauth2-proxy   -n progetto -c oauth2-proxy --since=2m
+ 1014  helm upgrade mio-oauth2 oauth2-proxy/oauth2-proxy   --version 10.7.1   -n progetto   --reuse-values   -f oauth2-keycloak-values.yaml   --set-string 'extraArgs.whitelist-domain=localhost:8081'   --wait --timeout 5m
+ 1015  [200~/opt/keycloak/bin/kcadm.sh config credentials   --server http://localhost:8080   --realm master   --user admin   --password Admin1234!
+ 1016  /opt/keycloak/bin/kcadm.sh config credentials   --server http://localhost:8080   --realm master   --user admin   --password Admin1234!
+ 1017  /opt/keycloak/bin/kcadm.sh config credentials   --server http://localhost:8082   --realm master   --user admin   --password Admin1234!
+ 1018  cd /
+ 1019  ls
+ 1020  history | grep "linkerd install | kubectl apply -f -
+ 1021  "
+ 1022  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+ 1023  minikube start
+ 1024  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+ 1025  kubectl get pod -a
+ 1026  kubectl get pod -A
+ 1027  kubectl get pod -A -w
+ 1028  kubectl get pod -A
+ 1029  kubectl get pod -A -w
+ 1030  kubectl get pod -A
+ 1031  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+ 1032  kubectl exec -it -n progetto mio-keycloak-0 -c mio-keycloak -- bash
+ 1033  kubectl get container -a
+ 1034  kubectl get container -A
+ 1035  kubectl get svc -A
+ 1036  kubectl get pods -n progetto | grep -i keycloak
+ 1037  kubectl get pod NOME_POD -n progetto -o jsonpath='{.spec.containers[*].name}{"\n"}'
+ 1038  kubectl exec -it -n progetto mio-keycloak-0 -c mio-keycloak-0 -- bash
+ 1039  kubectl exec -it -n progetto mio-keycloak-0 -c mio-keycloak-postgresql-0 -- bash
+ 1040  kubectl exec -it -n progetto mio-keycloak-0  -- bash
+ 1041  echo | read -r -s -p 'Client secret Keycloak: ' KC_CLIENT_SECRET
+ 1042  echo $(read -r -s -p 'Client secret Keycloak: ' KC_CLIENT_SECRET)
+ 1043  [200~
+ 1044  kubectl port-forward -n progetto svc/mio-keycloak 8082:80~
+ 1045  minikube start
+ 1046  kubectl port-forward -n progetto svc/mio-keycloak 8082:80~
+ 1047  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+ 1048  kubectl get pods -A
+ 1049  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+ 1050  sudo apt-get update
+ 1051  sudo apt-get install git-all
+ 1052  sudo apt install git-all
+ 1053  sudo dpkg --configure -a
+ 1054  sudo apt-get install git-all
+ 1055  git clone progetto-virtualizzazione
+ 1056  git login
+ 1057  git -h
+ 1058  git clone https://github.com/emanuele-fabricat/progetto-virtualizzazione.git
+ 1059  git add
+ 1060  ls
+ 1061  cd progetto-virtualizzazione/
+ 1062  git add
+ 1063  git add .
+ 1064  git status
+ 1065  git commit -m "add script folder with script"
+ 1066  gi tpush
+ 1067  git push
+ 1068  git config --global crediential.helper manager
+ 1069  git push
+ 1070  git config --global credential.helper manager
+ 1071  git push
+ 1072  git config --global credential_helper manager
+ 1073  git config --global credential.helper manager
+ 1074  git credential reject
+ 1075  git push
+ 1076  cd progetto-virtualizzazione/
+ 1077  git push
+ 1078  git pull
+ 1079  git push
+ 1080  minikube start
+ 1081  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+ 1082  kubectl get pod -A
+ 1083  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+ 1084  minikube stop
+ 1085  minikube start
+ 1086  mysql ?
+ 1087  kubectl mysql ?
+ 1088  ls
+ 1089  cd Scrivania/
+ 1090  ls
+ 1091  ./createDb.sh
+ 1092  sudo su
+ 1093  ls 
+ 1094  kubectl port-forward -n progetto svc/mio-mariadb 3307:3306
+ 1095  ls ./progetto-virtualizzazione/
+ 1096  ls ./progetto-virtualizzazione/Script/
+ 1097  sudo su
+ 1098  ./progetto-virtualizzazione/Script/createDb.sh 
+ 1099  wich kubectl
+ 1100  which kubectl
+ 1101  kubectl --version
+ 1102  kubectl get pod -A
+ 1103  ./progetto-virtualizzazione/Script/createDb.sh 
+ 1104  minikube kubectl -- exec -i -n progetto mio-mariadb-0 --
+ 1105  kubectl -- exec -i -n progetto mio-mariadb-0 --
+ 1106  kubectl exec -i -n progetto mio-mariadb-0 --
+ 1107  kubectl exec -i -n progetto mio-mariadb-0 
+ 1108  kubectl exec -it -n progetto mio-mariadb-0  -- mariadb -u root -p
+ 1109  cd ./progetto-virtualizzazione/
+ 1110  kubectl create configmap apache-content   -n progetto   --from-file=./html/scriptHtml.php   --dry-run=client -o yaml | kubectl apply -f -
+ 1111  --set-string htdocsConfigMap=apache-content
+ 1112  helm list -n progetto
+ 1113  helm upgrade mio-apache oci://registry-1.docker.io/bitnamicharts/apache   --version 11.4.29   -n progetto   --reuse-values   --set-string htdocsConfigMap=apache-content   --wait --timeout 5m
+ 1114  kubectl rollout status deployment/mio-apache -n progetto --timeout=180s
+ 1115  nano ./index.html
+ 1116  kubectl create configmap apache-content -n progetto   --from-file=index.html=./html/index.php   --dry-run=client -o yaml | kubectl apply -f -
+ 1117  kubectl create configmap apache-content -n progetto   --from-file=./html/index.php   --dry-run=client -o yaml | kubectl apply -f -
+ 1118  kubectl rollout status deployment/mio-apache -n progetto --timeout=180s
+ 1119  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1120  kubectl create configmap apache-content -n progetto   --from-file=./html/index.php   --dry-run=client -o yaml | kubectl apply -f -
+ 1121  kubectl rollout status deployment/mio-apache -n progetto --timeout=180s
+ 1122  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1123  kubectl create configmap apache-content -n progetto   --from-file=./html/index.php   --dry-run=client -o yaml | kubectl apply -f -
+ 1124  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1125  kubectl rollout status deployment/mio-apache -n progetto --timeout=180s
+ 1126  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1127  kubectl create configmap apache-content -n progetto   --from-file=./html/index.php   --dry-run=client -o yaml | kubectl apply -f -
+ 1128  kubectl rollout status deployment/mio-apache -n progetto --timeout=180s
+ 1129  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1130  kubectl create configmap apache-content -n progetto   --from-file=./html/index.php   --dry-run=client -o yaml | kubectl apply -f -
+ 1131  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1132  kubectl create configmap apache-content -n progetto   --from-file=./html/index.php   --dry-run=client -o yaml | kubectl apply -f -
+ 1133  kubectl rollout status deployment/mio-apache -n progetto --timeout=180s
+ 1134  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1135  kubectl create configmap apache-content -n progetto   --from-file=./html/index.php   --dry-run=client -o yaml | kubectl apply -f -
+ 1136  kubectl rollout status deployment/mio-apache -n progetto --timeout=180s
+ 1137  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1138  linkerd viz edges deployment -n progetto
+ 1139  kubectl port-forward -n progetto pod/traefik-67b766b758-xthwf  8081:8000
+ 1140  minikube start
+ 1141  linkerd viz dashboard &
+ 1142  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+ 1143  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1144  pwd 
+ 1145  ls -ld . “$HOME”
+ 1146  df -h “$HOME”
+ 1147  df -i “$HOME”
+ 1148  df -hT / /home /var/lib/docker
+ 1149  lsblk -o NAME,SIZE,FSTYPE,MOUNTPOINTS
+ 1150  sudo du -xhd1 / 2>/dev/null | sort -h | tail -n 15
+ 1151  sudo docker system df
+ 1152  minikube start
+ 1153  helm get values mio-keycloak -n progetto
+ 1154  minikube get pods -A
+ 1155  kubectl get pods -A
+ 1156  helm get values mio-keycloak -n progetto
+ 1157  helm get manifest mio-keycloak -n progetto | grep -A20 -B20 app-quarkus-dir
+ 1158  minikube version
+ 1159  kubectl version
+ 1160  docker version
+ 1161  helm get values mio-keycloak -n progetto
+ 1162  kubectl get pod mio-keycloak-0 -n progetto -o yaml > ok.yaml
+ 1163  diff ok.yaml bad.yaml
+ 1164  minikube start
+ 1165  minikube get pods -A
+ 1166  kuubectl get pod -A
+ 1167  kubectl get pod -A
+ 1168  minikube start
+ 1169  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1170  kubectl port-forward -n progetto svc/mio-keycloak 8082:80
+ 1171  kubectl port-forward -n progetto svc/traefik 8081:80
+ 1172  history
+ 1173  minkube start
+ 1174  minikube start
+ 1175  history
+ 1176  history > history.txt
