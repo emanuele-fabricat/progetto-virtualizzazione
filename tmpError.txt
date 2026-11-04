@@ -1,0 +1,77 @@
+GET
+http://192.168.49.2:32622/realms/progetto/protocol/openid-connect/auth?approval_prompt=force&client_id=oauth2-proxy&redirect_uri=http://localhost:8081/oauth2/callback&response_type=code&scope=openid+email+profile&state=prOh-noJfLe_WKxvoRuiWdlb5g5Kxq2ZAHqwNTEmNvQ:http://localhost:8081/
+[HTTP/1.1 500 Internal Server Error 2029ms]
+
+	
+GET
+	http://192.168.49.2:32622/realms/progetto/protocol/openid-connect/auth?approval_prompt=force&client_id=oauth2-proxy&redirect_uri=http://localhost:8081/oauth2/callback&response_type=code&scope=openid email profile&state=prOh-noJfLe_WKxvoRuiWdlb5g5Kxq2ZAHqwNTEmNvQ:http://localhost:8081/
+Status
+500
+Internal Server Error
+VersionHTTP/1.1
+Transferred435 B (299 B size)
+Request PriorityHighest
+DNS ResolutionSystem
+
+    	
+    content-length
+    	299
+    content-type
+    	text/html; charset=utf-8
+    date
+    	Wed, 04 Nov 2026 13:21:24 GMT
+    	
+    Accept
+    	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+    Accept-Encoding
+    	gzip, deflate
+    Accept-Language
+    	it,en-US;q=0.9,en;q=0.8
+    Connection
+    	keep-alive
+    Host
+    	192.168.49.2:32622
+    Priority
+    	u=0, i
+    Upgrade-Insecure-Requests
+    	1
+    User-Agent
+    	Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:158.0) Gecko/20100101 Firefox/158.0
+
+GET
+http://192.168.49.2:32622/favicon.ico
+[HTTP/1.1 404 Not Found 0ms]
+
+	
+GET
+	http://192.168.49.2:32622/favicon.ico
+Status
+404
+Not Found
+VersionHTTP/1.1
+Transferred58 B (58 B size)
+Referrer Policystrict-origin-when-cross-origin
+DNS ResolutionSystem
+
+    	
+    content-length
+    	58
+    content-type
+    	application/json
+    date
+    	Fri, 30 Oct 2026 15:54:40 GMT
+    	
+    Accept
+    	image/avif,image/jxl,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5
+    Accept-Encoding
+    	gzip, deflate
+    Accept-Language
+    	it,en-US;q=0.9,en;q=0.8
+    Connection
+    	keep-alive
+    Host
+    	192.168.49.2:32622
+    Referer
+    	http://192.168.49.2:32622/realms/progetto/protocol/openid-connect/auth?approval_prompt=force&client_id=oauth2-proxy&redirect_uri=http%3A%2F%2Flocalhost%3A8081%2Foauth2%2Fcallback&response_type=code&scope=openid+email+profile&state=prOh-noJfLe_WKxvoRuiWdlb5g5Kxq2ZAHqwNTEmNvQ%3Ahttp%3A%2F%2Flocalhost%3A8081%2F
+    User-Agent
+    	Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:158.0) Gecko/20100101 Firefox/158.0
