@@ -66,8 +66,8 @@ MODIFICA PERSISTENZA SESSIONE UTENTE
 Click Realm Settings
 Click Session field
 Settare:
-	SSO Session Max: 30 minutes;
-	Offilne Sesson Idle: 1 hour;
+	SSO Session Max: 1 hour;
+	Offilne Sesson Idle: 90 minutes;
 	Salvare tutto  
 
 Click sul proprio nome utente in alto a destra
