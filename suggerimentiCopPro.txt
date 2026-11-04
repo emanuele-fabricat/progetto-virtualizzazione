@@ -1,1 +1,14 @@
-Get-ChildItem -Force | Select-Object Name,Length,Mode; Write-Output '--- tracked files ---'; git ls-files; Write-Output '--- auxiliary files (redacted scan) ---'; foreach ($f in @('settingKeycloak.txt','tmpError.txt')) { if (Test-Path $f) { Write-Output ($f + ': ' + (Get-Item $f).Length + ' bytes'); Select-String -Path $f -Pattern '(?i)(password|secret|token|credential|error|exception|failed)' | ForEach-Object { $line=$_.Line -replace '(?i)(password|secret|token|credential)(\s*[:=]\s*)\S+','$1$2[REDACTED]'; $line } } }
+printf '%s\n' '--- files ---'
+find . -mindepth 1 -maxdepth 1 -printf '%f\t%s bytes\t%M\n'
+
+printf '%s\n' '--- tracked files ---'
+git ls-files
+
+printf '%s\n' '--- auxiliary files (redacted scan) ---'
+for f in settingKeycloak.txt tmpError.txt; do
+  if [[ -f "$f" ]]; then
+    stat -c '%n: %s bytes' "$f"
+    grep -Ein '(password|secret|token|credential|error|exception|failed)' "$f" |
+      sed -E 's/(password|secret|token|credential)([[:space:]]*[:=][[:space:]]*)[^[:space:]]+/\1\2[REDACTED]/Ig'
+  fi
+done
