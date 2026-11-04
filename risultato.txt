@@ -1,0 +1,291 @@
+df -h
+Filesystem                         Size  Used Avail Use% Mounted on
+tmpfs                              1.6G  2.0M  1.6G   1% /run
+/dev/mapper/ubuntu--vg-ubuntu--lv   61G   19G   41G  31% /
+tmpfs                              7.9G     0  7.9G   0% /dev/shm
+tmpfs                              5.0M     0  5.0M   0% /run/lock
+/dev/sda2                          2.0G  111M  1.7G   7% /boot
+tmpfs                              1.6G  144K  1.6G   1% /run/user/1000
+/dev/sr0                           550M  550M     0 100% /media/lele/GParted-live
+lele@leleserver:~$ minikube kubectl -- get pods -n progetto -o wide
+minikube kubectl -- describe pod -n progetto mio-keycloak-postgresql-0
+minikube kubectl -- logs -n progetto mio-keycloak-postgresql-0 \
+  -c postgresql --previous --tail=200
+minikube kubectl -- get events -n progetto \
+  --sort-by=.metadata.creationTimestamp
+NAME                                       READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+mio-apache-69454bd84c-tpgqt                2/2     Running   0          72m   10.244.0.17   minikube   <none>           <none>
+mio-keycloak-0                             2/2     Running   0          72m   10.244.0.18   minikube   <none>           <none>
+mio-keycloak-postgresql-0                  2/2     Running   0          68m   10.244.0.21   minikube   <none>           <none>
+mio-mariadb-0                              2/2     Running   0          69m   10.244.0.20   minikube   <none>           <none>
+mio-oauth2-oauth2-proxy-56645fbdbd-jw77w   1/1     Running   0          75m   10.244.0.8    minikube   <none>           <none>
+traefik-55668c8f85-8f9bx                   2/2     Running   0          69m   10.244.0.19   minikube   <none>           <none>
+Name:             mio-keycloak-postgresql-0
+Namespace:        progetto
+Priority:         0
+Service Account:  mio-keycloak-postgresql
+Node:             minikube/192.168.49.2
+Start Time:       Wed, 04 Nov 2026 13:19:19 +0000
+Labels:           app.kubernetes.io/component=primary
+                  app.kubernetes.io/instance=mio-keycloak
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=postgresql
+                  app.kubernetes.io/version=17.6.0
+                  apps.kubernetes.io/pod-index=0
+                  controller-revision-hash=mio-keycloak-postgresql-c87dbb7bd
+                  helm.sh/chart=postgresql-16.7.26
+                  linkerd.io/control-plane-ns=linkerd
+                  linkerd.io/proxy-statefulset=mio-keycloak-postgresql
+                  linkerd.io/workload-ns=progetto
+                  statefulset.kubernetes.io/pod-name=mio-keycloak-postgresql-0
+Annotations:      config.linkerd.io/opaque-ports: 5432
+                  linkerd.io/created-by: linkerd/proxy-injector edge-26.10.1
+                  linkerd.io/inject: enabled
+                  linkerd.io/proxy-version: edge-26.10.1
+                  linkerd.io/trust-root-sha256: f431205a640c67bb0974a0b38401cc90e6e99824796c7ce7b1ca10c27078757e
+                  viz.linkerd.io/tap-enabled: true
+Status:           Running
+IP:               10.244.0.21
+IPs:
+  IP:           10.244.0.21
+Controlled By:  StatefulSet/mio-keycloak-postgresql
+Init Containers:
+  linkerd-init:
+    Container ID:    containerd://6e619a1be92350282cd02faf03f1bb333bfabe8f4b178227995930f5ec53175f
+    Image:           cr.l5d.io/linkerd/proxy:edge-26.10.1
+    Image ID:        cr.l5d.io/linkerd/proxy@sha256:f2add36071cfca33754d2930800860785aaed672590bc0207be2f4da9889eb11
+    Port:            <none>
+    Host Port:       <none>
+    SeccompProfile:  RuntimeDefault
+    Command:
+      /usr/lib/linkerd/linkerd2-proxy-init
+    Args:
+      --firewall-bin-path
+      iptables-nft
+      --firewall-save-bin-path
+      iptables-nft-save
+      --ipv6=false
+      --incoming-proxy-port
+      4143
+      --outgoing-proxy-port
+      4140
+      --proxy-uid
+      2102
+      --inbound-ports-to-ignore
+      4190,4191,4567,4568
+      --outbound-ports-to-ignore
+      4567,4568
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Wed, 04 Nov 2026 13:19:20 +0000
+      Finished:     Wed, 04 Nov 2026 13:19:20 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /run from linkerd-proxy-init-xtables-lock (rw)
+  linkerd-proxy:
+    Container ID:    containerd://7dec08160830df8858a7fa8699757f1075a140b2c12fb8f07940bac15c0ec13a
+    Image:           cr.l5d.io/linkerd/proxy:edge-26.10.1
+    Image ID:        cr.l5d.io/linkerd/proxy@sha256:f2add36071cfca33754d2930800860785aaed672590bc0207be2f4da9889eb11
+    Ports:           4143/TCP (linkerd-proxy), 4191/TCP (linkerd-admin)
+    Host Ports:      0/TCP (linkerd-proxy), 0/TCP (linkerd-admin)
+    SeccompProfile:  RuntimeDefault
+    State:           Running
+      Started:       Wed, 04 Nov 2026 13:19:21 +0000
+    Ready:           True
+    Restart Count:   0
+    Liveness:        http-get http://:4191/live delay=10s timeout=1s period=10s #success=1 #failure=3
+    Readiness:       http-get http://:4191/ready delay=2s timeout=1s period=10s #success=1 #failure=3
+    Startup:         http-get http://:4191/ready delay=0s timeout=1s period=1s #success=1 #failure=120
+    Environment:
+      _pod_name:                                                 mio-keycloak-postgresql-0 (v1:metadata.name)
+      _pod_ns:                                                   progetto (v1:metadata.namespace)
+      _pod_uid:                                                   (v1:metadata.uid)
+      _pod_ip:                                                    (v1:status.podIP)
+      _pod_nodeName:                                              (v1:spec.nodeName)
+      _pod_containerName:                                        linkerd-proxy
+      LINKERD2_PROXY_CORES:                                      1
+      LINKERD2_PROXY_CORES_MIN:                                  1
+      LINKERD2_PROXY_SHUTDOWN_ENDPOINT_ENABLED:                  false
+      LINKERD2_PROXY_LOG:                                        warn,linkerd=info,hickory=error,[{headers}]=off,[{request}]=off
+      LINKERD2_PROXY_LOG_FORMAT:                                 plain
+      LINKERD2_PROXY_DESTINATION_SVC_ADDR:                       linkerd-dst-headless.linkerd.svc.cluster.local.:8086
+      LINKERD2_PROXY_DESTINATION_PROFILE_NETWORKS:               10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16,fd00::/8
+      LINKERD2_PROXY_POLICY_SVC_ADDR:                            linkerd-policy.linkerd.svc.cluster.local.:8090
+      LINKERD2_PROXY_POLICY_WORKLOAD:                            {"ns":"$(_pod_ns)", "pod":"$(_pod_name)"}
+                                                                 
+      LINKERD2_PROXY_INBOUND_DEFAULT_POLICY:                     all-unauthenticated
+      LINKERD2_PROXY_POLICY_CLUSTER_NETWORKS:                    10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16,fd00::/8
+      LINKERD2_PROXY_CONTROL_STREAM_INITIAL_TIMEOUT:             3s
+      LINKERD2_PROXY_CONTROL_STREAM_IDLE_TIMEOUT:                5m
+      LINKERD2_PROXY_CONTROL_STREAM_LIFETIME:                    1h
+      LINKERD2_PROXY_INBOUND_CONNECT_TIMEOUT:                    100ms
+      LINKERD2_PROXY_OUTBOUND_CONNECT_TIMEOUT:                   1000ms
+      LINKERD2_PROXY_OUTBOUND_DISCOVERY_IDLE_TIMEOUT:            5s
+      LINKERD2_PROXY_INBOUND_DISCOVERY_IDLE_TIMEOUT:             90s
+      LINKERD2_PROXY_CONTROL_LISTEN_ADDR:                        0.0.0.0:4190
+      LINKERD2_PROXY_ADMIN_LISTEN_ADDR:                          0.0.0.0:4191
+      LINKERD2_PROXY_OUTBOUND_LISTEN_ADDR:                       127.0.0.1:4140
+      LINKERD2_PROXY_OUTBOUND_LISTEN_ADDRS:                      127.0.0.1:4140
+      LINKERD2_PROXY_INBOUND_LISTEN_ADDR:                        0.0.0.0:4143
+      LINKERD2_PROXY_INBOUND_IPS:                                 (v1:status.podIPs)
+      LINKERD2_PROXY_INBOUND_PORTS:                              5432
+      LINKERD2_PROXY_DESTINATION_PROFILE_SUFFIXES:               svc.cluster.local.
+      LINKERD2_PROXY_INBOUND_ACCEPT_KEEPALIVE:                   10000ms
+      LINKERD2_PROXY_OUTBOUND_CONNECT_KEEPALIVE:                 10000ms
+      LINKERD2_PROXY_INBOUND_ACCEPT_USER_TIMEOUT:                30s
+      LINKERD2_PROXY_OUTBOUND_CONNECT_USER_TIMEOUT:              30s
+      LINKERD2_PROXY_OUTBOUND_METRICS_HOSTNAME_LABELS:           false
+      LINKERD2_PROXY_INBOUND_SERVER_HTTP2_KEEP_ALIVE_INTERVAL:   10s
+      LINKERD2_PROXY_INBOUND_SERVER_HTTP2_KEEP_ALIVE_TIMEOUT:    3s
+      LINKERD2_PROXY_OUTBOUND_SERVER_HTTP2_KEEP_ALIVE_INTERVAL:  10s
+      LINKERD2_PROXY_OUTBOUND_SERVER_HTTP2_KEEP_ALIVE_TIMEOUT:   3s
+      LINKERD2_PROXY_INBOUND_PORTS_DISABLE_PROTOCOL_DETECTION:   5432
+      LINKERD2_PROXY_DESTINATION_CONTEXT:                        {"ns":"$(_pod_ns)", "nodeName":"$(_pod_nodeName)", "pod":"$(_pod_name)"}
+                                                                 
+      _pod_sa:                                                    (v1:spec.serviceAccountName)
+      _l5d_ns:                                                   linkerd
+      _l5d_trustdomain:                                          cluster.local
+      LINKERD2_PROXY_IDENTITY_DIR:                               /var/run/linkerd/identity/end-entity
+      LINKERD2_PROXY_IDENTITY_TRUST_ANCHORS:                     -----BEGIN CERTIFICATE-----
+                                                                 MIIBiDCCAS6gAwIBAgIBATAKBggqhkjOPQQDAjAcMRowGAYDVQQDExFpZGVudGl0
+                                                                 eS5saW5rZXJkLjAeFw0yNjExMDQxMzEyMzRaFw0yNzExMDQxMzEyNTRaMBwxGjAY
+                                                                 BgNVBAMTEWlkZW50aXR5LmxpbmtlcmQuMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD
+                                                                 QgAEG7EFH/lZzi2jwgl+olMY2un3qkBaQeNe/evsTAEAvnepmx32JnCPI8dVbYxr
+                                                                 DZUNi6lHtMVNgabc6C8itAPjW6NhMF8wDgYDVR0PAQH/BAQDAgEGMB0GA1UdJQQW
+                                                                 MBQGCCsGAQUFBwMBBggrBgEFBQcDAjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW
+                                                                 BBQonnHQnWDQkIpCcWNyBOX9PnX7+jAKBggqhkjOPQQDAgNIADBFAiAuXsWuVUyb
+                                                                 mTycsMBoLoge5odFFPZC3cAzIob90PlI1QIhALr8Y5nzoYNnDy+ElWNDpzVzkUXQ
+                                                                 Py8PRbpc20/aVhFM
+                                                                 -----END CERTIFICATE-----
+                                                                 
+      LINKERD2_PROXY_IDENTITY_TOKEN_FILE:                        /var/run/secrets/tokens/linkerd-identity-token
+      LINKERD2_PROXY_IDENTITY_SVC_ADDR:                          linkerd-identity-headless.linkerd.svc.cluster.local.:8080
+      LINKERD2_PROXY_IDENTITY_LOCAL_NAME:                        $(_pod_sa).$(_pod_ns).serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_IDENTITY_SVC_NAME:                          linkerd-identity.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_DESTINATION_SVC_NAME:                       linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_POLICY_SVC_NAME:                            linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_TAP_SVC_NAME:                               tap.linkerd-viz.serviceaccount.identity.linkerd.cluster.local
+    Mounts:
+      /var/run/linkerd/identity/end-entity from linkerd-identity-end-entity (rw)
+      /var/run/secrets/tokens from linkerd-identity-token (rw)
+Containers:
+  postgresql:
+    Container ID:    containerd://278830e5113bf5749f63181aff919776684467d106bbe8e44a5db1a627fdef93
+    Image:           docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0
+    Image ID:        docker.io/bitnamilegacy/postgresql@sha256:de520acd66fc954d538faa997771ca791f9fcba8b837419a8bc4d08a08df3762
+    Port:            5432/TCP (tcp-postgresql)
+    Host Port:       0/TCP (tcp-postgresql)
+    SeccompProfile:  RuntimeDefault
+    State:           Running
+      Started:       Wed, 04 Nov 2026 13:19:23 +0000
+    Ready:           True
+    Restart Count:   0
+    Limits:
+      cpu:                150m
+      ephemeral-storage:  2Gi
+      memory:             192Mi
+    Requests:
+      cpu:                100m
+      ephemeral-storage:  50Mi
+      memory:             128Mi
+    Liveness:             exec [/bin/sh -c exec pg_isready -U "admin" -d "dbname=keycloak_db" -h 127.0.0.1 -p 5432] delay=30s timeout=5s period=10s #success=1 #failure=6
+    Readiness:            exec [/bin/sh -c -e exec pg_isready -U "admin" -d "dbname=keycloak_db" -h 127.0.0.1 -p 5432
+[ -f /opt/bitnami/postgresql/tmp/.initialized ] || [ -f /bitnami/postgresql/.initialized ]
+] delay=5s timeout=5s period=10s #success=1 #failure=6
+    Environment:
+      BITNAMI_DEBUG:                        false
+      POSTGRESQL_PORT_NUMBER:               5432
+      POSTGRESQL_VOLUME_DIR:                /bitnami/postgresql
+      PGDATA:                               /bitnami/postgresql/data
+      POSTGRES_USER:                        admin
+      POSTGRES_PASSWORD_FILE:               /opt/bitnami/postgresql/secrets/password
+      POSTGRES_POSTGRES_PASSWORD_FILE:      /opt/bitnami/postgresql/secrets/postgres-password
+      POSTGRES_DATABASE:                    keycloak_db
+      POSTGRESQL_ENABLE_LDAP:               no
+      POSTGRESQL_ENABLE_TLS:                no
+      POSTGRESQL_LOG_HOSTNAME:              false
+      POSTGRESQL_LOG_CONNECTIONS:           false
+      POSTGRESQL_LOG_DISCONNECTIONS:        false
+      POSTGRESQL_PGAUDIT_LOG_CATALOG:       off
+      POSTGRESQL_CLIENT_MIN_MESSAGES:       error
+      POSTGRESQL_SHARED_PRELOAD_LIBRARIES:  pgaudit
+    Mounts:
+      /bitnami/postgresql from data (rw)
+      /dev/shm from dshm (rw)
+      /opt/bitnami/postgresql/conf from empty-dir (rw,path="app-conf-dir")
+      /opt/bitnami/postgresql/secrets/ from postgresql-password (rw)
+      /opt/bitnami/postgresql/tmp from empty-dir (rw,path="app-tmp-dir")
+      /tmp from empty-dir (rw,path="tmp-dir")
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       True 
+  ContainersReady             True 
+  PodScheduled                True 
+Volumes:
+  data:
+    Type:       PersistentVolumeClaim (a reference to a PersistentVolumeClaim in the same namespace)
+    ClaimName:  data-mio-keycloak-postgresql-0
+    ReadOnly:   false
+  empty-dir:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  postgresql-password:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  mio-keycloak-postgresql
+    Optional:    false
+  dshm:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     Memory
+    SizeLimit:  <unset>
+  linkerd-proxy-init-xtables-lock:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  linkerd-identity-end-entity:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     Memory
+    SizeLimit:  <unset>
+  linkerd-identity-token:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  86400
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:                      <none>
+Error from server (BadRequest): previous terminated container "postgresql" in pod "mio-keycloak-postgresql-0" not found
+No resources found in progetto namespace.
+lele@leleserver:~$ minikube kubectl -- get svc,endpoints -n progetto
+minikube kubectl -- get ingressroute -n progetto
+Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
+NAME                                 TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+service/mio-apache                   ClusterIP      10.107.187.67    <none>        80/TCP,443/TCP               88m
+service/mio-keycloak                 NodePort       10.97.51.177     <none>        80:32622/TCP                 87m
+service/mio-keycloak-headless        ClusterIP      None             <none>        8080/TCP                     87m
+service/mio-keycloak-postgresql      ClusterIP      10.102.235.207   <none>        5432/TCP                     87m
+service/mio-keycloak-postgresql-hl   ClusterIP      None             <none>        5432/TCP                     87m
+service/mio-mariadb                  ClusterIP      10.102.163.0     <none>        3306/TCP                     87m
+service/mio-mariadb-headless         ClusterIP      None             <none>        3306/TCP                     87m
+service/mio-oauth2-oauth2-proxy      ClusterIP      10.107.26.182    <none>        80/TCP,44180/TCP             75m
+service/traefik                      LoadBalancer   10.106.252.105   <pending>     80:30816/TCP,443:32766/TCP   87m
+
+NAME                                   ENDPOINTS                           AGE
+endpoints/mio-apache                   10.244.0.17:8080,10.244.0.17:8443   88m
+endpoints/mio-keycloak                 10.244.0.18:8080                    87m
+endpoints/mio-keycloak-headless        10.244.0.18:8080                    87m
+endpoints/mio-keycloak-postgresql      10.244.0.21:5432                    87m
+endpoints/mio-keycloak-postgresql-hl   10.244.0.21:5432                    87m
+endpoints/mio-mariadb                  10.244.0.20:3306                    87m
+endpoints/mio-mariadb-headless         10.244.0.20:3306                    87m
+endpoints/mio-oauth2-oauth2-proxy      10.244.0.8:4180,10.244.0.8:44180    75m
+endpoints/traefik                      10.244.0.19:8443,10.244.0.19:8000   87m
+NAME               AGE
+apache-protetto    87m
+keycloak-public    87m
+oauth2-endpoints   87m
