@@ -1,0 +1,4 @@
+minikube kubectl -- get pods -n progetto
+minikube kubectl -- logs deployment/traefik -n progetto --all-containers=true --since=10m
+minikube kubectl -- logs deployment/mio-oauth2-oauth2-proxy -n progetto --all-containers=true --since=10m
+minikube kubectl -- logs statefulset/mio-keycloak -n progetto --all-containers=true --since=10m
