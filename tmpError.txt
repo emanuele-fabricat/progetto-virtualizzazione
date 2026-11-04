@@ -1,77 +1,798 @@
-GET
-http://192.168.49.2:32622/realms/progetto/protocol/openid-connect/auth?approval_prompt=force&client_id=oauth2-proxy&redirect_uri=http://localhost:8081/oauth2/callback&response_type=code&scope=openid+email+profile&state=prOh-noJfLe_WKxvoRuiWdlb5g5Kxq2ZAHqwNTEmNvQ:http://localhost:8081/
-[HTTP/1.1 500 Internal Server Error 2029ms]
+./resetMacchina.sh 
+rm: cannot remove './get_helm.sh': No such file or directory
+rm: cannot remove './oauth2-keycloak-values.yaml': No such file or directory
+Cloning into 'progetto-virtualizzazione'...
+remote: Enumerating objects: 215, done.
+remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects: 100% (8/8), done.
+remote: Total 215 (delta 3), reused 4 (delta 1), pack-reused 206 (from 1)
+Receiving objects: 100% (215/215), 77.70 KiB | 1.85 MiB/s, done.
+Resolving deltas: 100% (115/115), done.
+🔥  Deleting "minikube" in docker ...
+🔥  Removing /home/lele/.minikube/machines/minikube ...
+💀  Removed all traces of the "minikube" cluster.
+rm: cannot remove '/usr/local/bin/helm': No such file or directory
+Stopping 'docker.service', but its triggering units are still active:
+docker.socket
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages were automatically installed and are no longer required:
+  bridge-utils containerd pigz runc ubuntu-fan
+Use 'sudo apt autoremove' to remove them.
+The following packages will be REMOVED:
+  docker.io*
+0 upgraded, 0 newly installed, 1 to remove and 29 not upgraded.
+After this operation, 137 MB disk space will be freed.
+(Reading database ... 176647 files and directories currently installed.)
+Removing docker.io (29.1.3-0ubuntu3~24.04.2) ...
+'/usr/share/docker.io/contrib/nuke-graph-directory.sh' -> '/var/lib/docker/nuke-graph-directory.sh'
+Processing triggers for man-db (2.12.0-4build2) ...
+(Reading database ... 176431 files and directories currently installed.)
+Purging configuration files for docker.io (29.1.3-0ubuntu3~24.04.2) ...
 
-	
-GET
-	http://192.168.49.2:32622/realms/progetto/protocol/openid-connect/auth?approval_prompt=force&client_id=oauth2-proxy&redirect_uri=http://localhost:8081/oauth2/callback&response_type=code&scope=openid email profile&state=prOh-noJfLe_WKxvoRuiWdlb5g5Kxq2ZAHqwNTEmNvQ:http://localhost:8081/
-Status
-500
-Internal Server Error
-VersionHTTP/1.1
-Transferred435 B (299 B size)
-Request PriorityHighest
-DNS ResolutionSystem
+Nuking /var/lib/docker ...
+  (if this is wrong, press Ctrl+C NOW!)
 
-    	
-    content-length
-    	299
-    content-type
-    	text/html; charset=utf-8
-    date
-    	Wed, 04 Nov 2026 13:21:24 GMT
-    	
-    Accept
-    	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-    Accept-Encoding
-    	gzip, deflate
-    Accept-Language
-    	it,en-US;q=0.9,en;q=0.8
-    Connection
-    	keep-alive
-    Host
-    	192.168.49.2:32622
-    Priority
-    	u=0, i
-    Upgrade-Insecure-Requests
-    	1
-    User-Agent
-    	Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:158.0) Gecko/20100101 Firefox/158.0
++ sleep 10
 
-GET
-http://192.168.49.2:32622/favicon.ico
-[HTTP/1.1 404 Not Found 0ms]
++ rm -rf /var/lib/docker/buildkit /var/lib/docker/containers /var/lib/docker/engine-id /var/lib/docker/network /var/lib/
+docker/nuke-graph-directory.sh /var/lib/docker/plugins /var/lib/docker/runtimes /var/lib/docker/swarm /var/lib/docker/tm
+p /var/lib/docker/volumes
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following packages will be REMOVED:
+  bridge-utils containerd pigz runc ubuntu-fan
+0 upgraded, 0 newly installed, 5 to remove and 29 not upgraded.
+After this operation, 141 MB disk space will be freed.
+(Reading database ... 176431 files and directories currently installed.)
+Removing ubuntu-fan (0.12.16+24.04.1) ...
+ubuntu-fan: removing default /etc/network/fan configuration
+Removing bridge-utils (1.7.1-1ubuntu2) ...
+Removing containerd (2.2.1-0ubuntu1~24.04.4) ...
+Removing pigz (2.8-1) ...
+Removing runc (1.3.4-0ubuntu1~24.04.1) ...
+Processing triggers for man-db (2.12.0-4build2) ...
+./progetto-virtualizzazione/eliminaInfrastruttura.sh: line 43: /usr/local/bin/minikube: No such file or directory
+./progetto-virtualizzazione/eliminaInfrastruttura.sh: line 44: helm: command not found
+./progetto-virtualizzazione/eliminaInfrastruttura.sh: line 45: docker: command not found
+Hit:1 http://it.archive.ubuntu.com/ubuntu noble InRelease
+Hit:2 http://it.archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:3 http://it.archive.ubuntu.com/ubuntu noble-backports InRelease
+Hit:4 http://security.ubuntu.com/ubuntu noble-security InRelease
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+29 packages can be upgraded. Run 'apt list --upgradable' to see them.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  bridge-utils containerd pigz runc ubuntu-fan
+Suggested packages:
+  ifupdown aufs-tools cgroupfs-mount | cgroup-lite debootstrap docker-buildx docker-compose-v2 docker-doc rinse
+  zfs-fuse | zfsutils
+The following NEW packages will be installed:
+  bridge-utils containerd docker.io pigz runc ubuntu-fan
+0 upgraded, 6 newly installed, 0 to remove and 29 not upgraded.
+Need to get 73.4 MB of archives.
+After this operation, 278 MB of additional disk space will be used.
+Get:1 http://it.archive.ubuntu.com/ubuntu noble/universe amd64 pigz amd64 2.8-1 [65.6 kB]
+Get:2 http://it.archive.ubuntu.com/ubuntu noble/main amd64 bridge-utils amd64 1.7.1-1ubuntu2 [33.9 kB]
+Get:3 http://it.archive.ubuntu.com/ubuntu noble-updates/main amd64 runc amd64 1.3.4-0ubuntu1~24.04.1 [9,574 kB]
+Get:4 http://it.archive.ubuntu.com/ubuntu noble-updates/main amd64 containerd amd64 2.2.1-0ubuntu1~24.04.4 [28.2 MB]   
+Get:5 http://it.archive.ubuntu.com/ubuntu noble-updates/universe amd64 docker.io amd64 29.1.3-0ubuntu3~24.04.2 [35.6 MB]
+Get:6 http://it.archive.ubuntu.com/ubuntu noble-updates/universe amd64 ubuntu-fan all 0.12.16+24.04.1 [34.2 kB]        
+Fetched 73.4 MB in 29s (2,518 kB/s)                                                                                    
+Preconfiguring packages ...
+Selecting previously unselected package pigz.
+(Reading database ... 176315 files and directories currently installed.)
+Preparing to unpack .../0-pigz_2.8-1_amd64.deb ...
+Unpacking pigz (2.8-1) ...
+Selecting previously unselected package bridge-utils.
+Preparing to unpack .../1-bridge-utils_1.7.1-1ubuntu2_amd64.deb ...
+Unpacking bridge-utils (1.7.1-1ubuntu2) ...
+Selecting previously unselected package runc.
+Preparing to unpack .../2-runc_1.3.4-0ubuntu1~24.04.1_amd64.deb ...
+Unpacking runc (1.3.4-0ubuntu1~24.04.1) ...
+Selecting previously unselected package containerd.
+Preparing to unpack .../3-containerd_2.2.1-0ubuntu1~24.04.4_amd64.deb ...
+Unpacking containerd (2.2.1-0ubuntu1~24.04.4) ...
+Selecting previously unselected package docker.io.
+Preparing to unpack .../4-docker.io_29.1.3-0ubuntu3~24.04.2_amd64.deb ...
+Unpacking docker.io (29.1.3-0ubuntu3~24.04.2) ...
+Selecting previously unselected package ubuntu-fan.
+Preparing to unpack .../5-ubuntu-fan_0.12.16+24.04.1_all.deb ...
+Unpacking ubuntu-fan (0.12.16+24.04.1) ...
+Setting up runc (1.3.4-0ubuntu1~24.04.1) ...
+Setting up bridge-utils (1.7.1-1ubuntu2) ...
+Setting up pigz (2.8-1) ...
+Setting up containerd (2.2.1-0ubuntu1~24.04.4) ...
+Setting up ubuntu-fan (0.12.16+24.04.1) ...
+Setting up docker.io (29.1.3-0ubuntu3~24.04.2) ...
+info: Selecting GID from range 100 to 999 ...
+info: Adding group `docker' (GID 126) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/docker.service → /usr/lib/systemd/system/docker.service.
+Created symlink /etc/systemd/system/sockets.target.wants/docker.socket → /usr/lib/systemd/system/docker.socket.
+Processing triggers for man-db (2.12.0-4build2) ...
+Scanning processes...                                                                                                   
+Scanning linux images...                                                                                                
 
-	
-GET
-	http://192.168.49.2:32622/favicon.ico
-Status
-404
-Not Found
-VersionHTTP/1.1
-Transferred58 B (58 B size)
-Referrer Policystrict-origin-when-cross-origin
-DNS ResolutionSystem
+Running kernel seems to be up-to-date.
 
-    	
-    content-length
-    	58
-    content-type
-    	application/json
-    date
-    	Fri, 30 Oct 2026 15:54:40 GMT
-    	
-    Accept
-    	image/avif,image/jxl,image/webp,image/png,image/svg+xml,image/*;q=0.8,*/*;q=0.5
-    Accept-Encoding
-    	gzip, deflate
-    Accept-Language
-    	it,en-US;q=0.9,en;q=0.8
-    Connection
-    	keep-alive
-    Host
-    	192.168.49.2:32622
-    Referer
-    	http://192.168.49.2:32622/realms/progetto/protocol/openid-connect/auth?approval_prompt=force&client_id=oauth2-proxy&redirect_uri=http%3A%2F%2Flocalhost%3A8081%2Foauth2%2Fcallback&response_type=code&scope=openid+email+profile&state=prOh-noJfLe_WKxvoRuiWdlb5g5Kxq2ZAHqwNTEmNvQ%3Ahttp%3A%2F%2Flocalhost%3A8081%2F
-    User-Agent
-    	Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:158.0) Gecko/20100101 Firefox/158.0
+No services need to be restarted.
+
+No containers need to be restarted.
+
+No user sessions are running outdated binaries.
+
+No VM guests are running outdated hypervisor (qemu) binaries on this host.
+INSTALLAZIONE DOCKER AVVENUTA CON SUCCESSO
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100  136M  100  136M    0     0  29.6M      0  0:00:04  0:00:04 --:--:-- 38.6M
+Hit:1 http://it.archive.ubuntu.com/ubuntu noble InRelease
+Hit:2 http://security.ubuntu.com/ubuntu noble-security InRelease
+Hit:3 http://it.archive.ubuntu.com/ubuntu noble-updates InRelease
+Hit:4 http://it.archive.ubuntu.com/ubuntu noble-backports InRelease
+Reading package lists... Done
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+docker.io is already the newest version (29.1.3-0ubuntu3~24.04.2).
+0 upgraded, 0 newly installed, 0 to remove and 29 not upgraded.
+❗  These changes will take effect upon a minikube delete and then a minikube start
+😄  minikube v1.39.0 on Ubuntu 24.04 (kvm/amd64)
+✨  Using the docker driver based on user configuration
+📌  Using Docker driver with root privileges
+👍  Starting "minikube" primary control-plane node in "minikube" cluster
+🚜  Pulling base image v0.0.51 ...
+💾  Downloading Kubernetes v1.35.1 preload ...
+    > gcr.io/k8s-minikube/kicbase:  507.60 MiB / 507.61 MiB  100.00% 30.75 MiB 
+    > preloaded-images-k8s-v18-v1...:  325.26 MiB / 325.26 MiB  100.00% 11.17 M
+🔥  Creating docker container (CPUs=2, Memory=3900MB) ...
+📦  Preparing Kubernetes v1.35.1 on containerd 2.3.4 ...
+🔗  Configuring CNI (Container Networking Interface) ...
+🔎  Verifying Kubernetes components...
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+🌟  Enabled addons: storage-provisioner, default-storageclass
+💡  kubectl not found. If you need it, try: 'minikube kubectl -- get pods -A'
+🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+
+    > kubectl.sha256:  64 B / 64 B [-------------------------] 100.00% ? p/s 0s
+    > kubectl:  55.88 MiB / 55.88 MiB [--------------] 100.00% 4.26 MiB p/s 13s
+NAME       STATUS     ROLES           AGE   VERSION
+minikube   NotReady   control-plane   22s   v1.35.1
+INSTALLAZIONE MINIKUBE AVVENUTA CON SUCCESSO
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 12252  100 12252    0     0  12517      0 --:--:-- --:--:-- --:--:-- 12514
+Downloading https://get.helm.sh/helm-v4.3.1-linux-amd64.tar.gz
+Verifying checksum... Done.
+Preparing to install helm into /usr/local/bin
+helm installed into /usr/local/bin/helm
+INSTALLAZIONE HELM AVVENUTA CON SUCCESSO
+namespace/progetto created
+"bitnami" has been added to your repositories
+INSTALLAZIONE REPO BITNAMI AVVENUTA CON SOCCESSO
+Pulled: registry-1.docker.io/bitnamicharts/apache:11.4.29
+Digest: sha256:fa6dbac6ea30fe7adb9bee2407593090863ae711feb9dec13cd6275642aaa94a
+NAME: mio-apache
+LAST DEPLOYED: Wed Nov  4 12:59:51 2026
+NAMESPACE: progetto
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+CHART NAME: apache
+CHART VERSION: 11.4.29
+APP VERSION: 2.4.65
+
+⚠ WARNING: Since August 28th, 2025, only a limited subset of images/charts are available for free.
+    Subscribe to Bitnami Secure Images to receive continued support and security updates.
+    More info at https://bitnami.com and https://github.com/bitnami/containers/issues/83267
+
+** Please be patient while the chart is being deployed **
+
+1. Get the Apache URL by running:
+  kubectl port-forward --namespace progetto svc/mio-apache 8080:80
+  echo URL            : http://127.0.0.1:8080/
+
+
+WARNING: You did not provide a custom web application. Apache will be deployed with a default page. Check the README section "Deploying your custom web application" in https://github.com/bitnami/charts/blob/main/bitnami/apache/README.md#deploying-a-custom-web-application.
+
+WARNING: There are "resources" sections in the chart not set. Using "resourcesPreset" is not recommended for production. For production installations, please set the following values according to your workload needs:
+  - resources
++info https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+⚠ SECURITY WARNING: Original containers have been substituted. This Helm chart was designed, tested, and validated on multiple platforms using a specific set of Bitnami and Tanzu Application Catalog containers. Substituting other containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+
+Substituted images detected:
+  - docker.io/bitnamilegacy/apache:latest
+
+⚠ WARNING: Original containers have been substituted for unrecognized ones. Deploying this chart with non-standard containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+
+Unrecognized images:
+  - docker.io/bitnamilegacy/apache:latest
+INSTALLAZIONE APACHE AVVENUTA CON SUCCESSO
+NAME: mio-mariadb
+LAST DEPLOYED: Wed Nov  4 12:59:59 2026
+NAMESPACE: progetto
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+CHART NAME: mariadb
+CHART VERSION: 28.1.5
+APP VERSION: 13.1.1
+
+** Please be patient while the chart is being deployed **
+
+Tip:
+
+  Watch the deployment status using the command: kubectl get pods -w --namespace progetto -l app.kubernetes.io/instance=mio-mariadb
+
+Services:
+
+  echo Primary: mio-mariadb.progetto.svc.cluster.local:3306
+
+To get the admin credentials (username "root"), run:
+
+    export MARIADB_ROOT_PASSWORD=$(kubectl get secret --namespace "progetto" mio-mariadb -o jsonpath="{.data.mariadb-root-password}" | base64 -d)
+
+To connect to your database, create a client pod:
+
+    kubectl run mio-mariadb-client --rm --tty -i --restart='Never' --image  registry-1.docker.io/bitnamilegacy/mariadb:latest --env MARIADB_ROOT_PASSWORD=$MARIADB_ROOT_PASSWORD --namespace progetto --command -- bash
+
+To connect to primary service (read/write):
+
+    mysql -h mio-mariadb.progetto.svc.cluster.local -uroot -p miodb
+WARNING: Rolling tag detected (bitnami/mysqld-exporter:latest), please note that it is strongly recommended to avoid using rolling tags in a production environment.
++info https://techdocs.broadcom.com/us/en/vmware-tanzu/bitnami-secure-images/bitnami-secure-images/services/bsi-doc/apps-tutorials-understand-rolling-tags-containers-index.html
+WARNING: Rolling tag detected (bitnami/os-shell:latest), please note that it is strongly recommended to avoid using rolling tags in a production environment.
++info https://techdocs.broadcom.com/us/en/vmware-tanzu/bitnami-secure-images/bitnami-secure-images/services/bsi-doc/apps-tutorials-understand-rolling-tags-containers-index.html
+
+WARNING: There are "resources" sections in the chart not set. Using "resourcesPreset" is not recommended for production. For production installations, please set the following values according to your workload needs:
+  - primary.resources
+  - secondary.resources
++info https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+⚠ SECURITY WARNING: Original containers have been substituted. This Helm chart was designed, tested, and validated on multiple platforms using a specific set of Bitnami and Tanzu Application Catalog containers. Substituting other containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+
+Substituted images detected:
+  - registry-1.docker.io/bitnamilegacy/mariadb:latest
+
+⚠ SECURITY WARNING: Verifying original container images was skipped. Please note this Helm chart was designed, tested, and validated on multiple platforms using a specific set of Bitnami and Bitnami Secure Images containers. Substituting other containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+INSTALLAZIONE MARIADB AVVENUTA CON SUCCESSO
+level=INFO msg="warning: destination for postgresql.tls.autoGenerated is a table. Ignoring non-table value (false)"
+NAME: mio-keycloak
+LAST DEPLOYED: Wed Nov  4 13:00:08 2026
+NAMESPACE: progetto
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+CHART NAME: keycloak
+CHART VERSION: 25.2.0
+APP VERSION: 26.3.3
+
+⚠ WARNING: Since August 28th, 2025, only a limited subset of images/charts are available for free.
+    Subscribe to Bitnami Secure Images to receive continued support and security updates.
+    More info at https://bitnami.com and https://github.com/bitnami/containers/issues/83267
+
+** Please be patient while the chart is being deployed **
+
+Keycloak can be accessed through the following DNS name from within your cluster:
+
+    mio-keycloak.progetto.svc.cluster.local (port 80)
+
+To access Keycloak from outside the cluster execute the following commands:
+
+1. Get the Keycloak URL by running these commands:
+
+    export NODE_PORT=$(kubectl get --namespace progetto -o jsonpath="{.spec.ports[?(@.name=='http')].nodePort}" services mio-keycloak)
+    export NODE_IP=$(kubectl get nodes --namespace progetto -o jsonpath="{.items[0].status.addresses[0].address}")
+
+    echo "http://${NODE_IP}:${NODE_PORT}/"
+
+2. Access Keycloak using the obtained URL.
+3. Access the Administration Console using the following credentials:
+
+  echo Username: admin
+  echo Password: $(kubectl get secret --namespace progetto mio-keycloak -o jsonpath="{.data.admin-password}" | base64 -d)
+
+WARNING: There are "resources" sections in the chart not set. Using "resourcesPreset" is not recommended for production. For production installations, please set the following values according to your workload needs:
+  - resources
++info https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+
+⚠ SECURITY WARNING: Original containers have been substituted. This Helm chart was designed, tested, and validated on multiple platforms using a specific set of Bitnami and Tanzu Application Catalog containers. Substituting other containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+
+Substituted images detected:
+  - docker.io/bitnamilegacy/keycloak:26.3.3-debian-12-r0
+
+⚠ SECURITY WARNING: Verifying original container images was skipped. Please note this Helm chart was designed, tested, and validated on multiple platforms using a specific set of Bitnami and Bitnami Secure Images containers. Substituting other containers is likely to cause degraded security and performance, broken chart features, and missing environment variables.
+INSTALLAZIONE KEYCLOAK AVVENUTA CON SUCCESSO
+"traefik" has been added to your repositories
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "traefik" chart repository
+...Successfully got an update from the "bitnami" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Release "traefik" does not exist. Installing it now.
+NAME: traefik
+LAST DEPLOYED: Wed Nov  4 13:00:23 2026
+NAMESPACE: progetto
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+traefik with docker.io/traefik:v3.7.17 has been deployed successfully on progetto namespace!
+INSTALLAZIONE TRAEFIK AVVENUTA CON SUCCESSO
+middleware.traefik.io/oauth2-forwardauth created
+middleware.traefik.io/oauth2-errors created
+ingressroute.traefik.io/oauth2-endpoints created
+ingressroute.traefik.io/apache-protetto created
+ingressroute.traefik.io/keycloak-public created
+ MODIFICA DELLO YAML DI TRAEFIK AVVENUTE CON SUCCESSO
+😄  minikube v1.39.0 on Ubuntu 24.04 (kvm/amd64)
+🆕  Kubernetes 1.37.0 is now available. If you would like to upgrade, specify: --kubernetes-version=v1.37.0
+✨  Using the docker driver based on existing profile
+👍  Starting "minikube" primary control-plane node in "minikube" cluster
+🚜  Pulling base image v0.0.51 ...
+🏃  Updating the running docker "minikube" container ...
+📦  Preparing Kubernetes v1.35.1 on containerd 2.3.4 ...
+🔎  Verifying Kubernetes components...
+    ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+🌟  Enabled addons: storage-provisioner, default-storageclass
+💡  kubectl not found. If you need it, try: 'minikube kubectl -- get pods -A'
+🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+QUANDO TUTTI I POD RISULTANO IN STATO RUNNING e NELLA COLONNA READY 1/1 APRIRE IL FILE settingKeycloak.txt ED ESEGUIRE PASSO PASSO I COMANDI ALL'INTENRO
+NOTA BENE: il fatto che alcuni pod risultino in READY = 0/1 dopo diversi restarts non è un prblema, basta attendere qualche tentativo in fine quando tutto risulta in stato 1/1 premere ctrl+C
+NAME                         READY   STATUS              RESTARTS   AGE
+mio-apache-d997d7c56-d4698   1/1     Running             0          71s
+mio-keycloak-0               0/1     Init:ErrImagePull   0          53s
+mio-keycloak-postgresql-0    0/1     ErrImagePull        0          53s
+mio-mariadb-0                0/1     Running             0          62s
+traefik-55c4977dd5-2xrt8     0/1     ErrImagePull        0          38s
+mio-mariadb-0                1/1     Running             0          66s
+mio-keycloak-0               0/1     Init:ImagePullBackOff   0          61s
+traefik-55c4977dd5-2xrt8     0/1     ImagePullBackOff        0          48s
+mio-keycloak-postgresql-0    0/1     ImagePullBackOff        0          65s
+mio-keycloak-0               0/1     Init:0/1                0          76s
+mio-keycloak-0               0/1     PodInitializing         0          80s
+mio-keycloak-0               0/1     Running                 0          81s
+traefik-55c4977dd5-2xrt8     0/1     Running                 0          72s
+traefik-55c4977dd5-2xrt8     1/1     Running                 0          73s
+mio-keycloak-postgresql-0    0/1     Running                 0          107s
+mio-keycloak-postgresql-0    1/1     Running                 0          2m8s
+mio-keycloak-0               0/1     Running                 1 (1s ago)   3m53s
+mio-keycloak-0               0/1     Running                 2 (1s ago)   6m5s
+mio-keycloak-0               1/1     Running                 2 (53s ago)   6m57s
+^Clele@leleserver:~minikube kubectl -- port-forward -n progetto svc/mio-keycloak 8082:80
+Forwarding from 127.0.0.1:8082 -> 8080
+Forwarding from [::1]:8082 -> 8080
+Handling connection for 8082
+Handling connection for 8082
+Handling connection for 8082
+Handling connection for 8082
+Handling connection for 8082
+Handling connection for 8082
+Handling connection for 8082
+^C
+lele@leleserver:~$ ./progetto-virtualizzazione/installaProgettoDue.sh 
+Nel prossimo comando sarà richiesta il client secret, immettere quello salvato nel passo precedente
+Client secret Keycloak: 
+secret/mio-oauth2-keycloak created
+CREAZIONE SECRET AVVENUTA CON SUCCESSO
+MIDIFICA YAML DEL SECRET AVVENUTA CON SUCCESSO
+"oauth2-proxy" has been added to your repositories
+Hang tight while we grab the latest from your chart repositories...
+...Successfully got an update from the "traefik" chart repository
+...Successfully got an update from the "oauth2-proxy" chart repository
+...Successfully got an update from the "bitnami" chart repository
+Update Complete. ⎈Happy Helming!⎈
+Release "mio-oauth2" does not exist. Installing it now.
+NAME: mio-oauth2
+LAST DEPLOYED: Wed Nov  4 13:12:30 2026
+NAMESPACE: progetto
+STATUS: deployed
+REVISION: 1
+DESCRIPTION: Install complete
+TEST SUITE: None
+NOTES:
+To verify that oauth2-proxy has started, run:
+
+  kubectl --namespace=progetto get pods -l "app=oauth2-proxy"
+INSTALLAZIONE OAUTH2-PROXY AVVENUTA CON SUCCESSO
+
+Linkerd edge-26.10.1 was already downloaded; making it the default 🎉
+
+To force re-downloading, delete '/home/lele/.linkerd2/bin/linkerd-edge-26.10.1' then run me again.
+
+Add the linkerd CLI to your path with:
+
+  export PATH=$PATH:/home/lele/.linkerd2/bin
+
+Now run:
+
+  # install the GatewayAPI CRDs
+  kubectl apply -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.2.1/standard-install.yaml
+
+  linkerd check --pre                         # validate that Linkerd can be installed
+  linkerd install --crds | kubectl apply -f - # install the Linkerd CRDs
+  linkerd install | kubectl apply -f -        # install the control plane into the 'linkerd' namespace
+  linkerd check                               # validate everything worked!
+
+You can also obtain observability features by installing the viz extension:
+
+  linkerd viz install | kubectl apply -f -  # install the viz extension into the 'linkerd-viz' namespace
+  linkerd viz check                         # validate the extension works!
+  linkerd viz dashboard                     # launch the dashboard
+
+Looking for more? Visit https://linkerd.io/2/tasks
+
+customresourcedefinition.apiextensions.k8s.io/backendtlspolicies.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/gatewayclasses.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/gateways.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/grpcroutes.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/httproutes.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/listenersets.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/referencegrants.gateway.networking.k8s.io serverside-applied
+customresourcedefinition.apiextensions.k8s.io/tlsroutes.gateway.networking.k8s.io serverside-applied
+validatingadmissionpolicy.admissionregistration.k8s.io/safe-upgrades.gateway.networking.k8s.io serverside-applied
+validatingadmissionpolicybinding.admissionregistration.k8s.io/safe-upgrades.gateway.networking.k8s.io serverside-applied
+kubernetes-api
+--------------
+√ can initialize the client
+√ can query the Kubernetes API
+
+kubernetes-version
+------------------
+√ is running the minimum Kubernetes API version
+
+gateway-api-crd
+---------------
+√ Gateway API CRDs are installed
+
+pre-kubernetes-setup
+--------------------
+√ control plane namespace does not already exist
+√ can create non-namespaced resources
+√ can create ServiceAccounts
+√ can create Services
+√ can create Deployments
+√ can create CronJobs
+√ can create ConfigMaps
+√ can create Secrets
+√ can read Secrets
+√ can read extension-apiserver-authentication configmap
+√ no clock skew detected
+
+linkerd-version
+---------------
+√ can determine the latest version
+‼ cli is up-to-date
+    is running version 26.10.1 but the latest edge version is 26.11.1
+    see https://linkerd.io/2/checks/#l5d-version-cli for hints
+
+Status check results are √
+Rendering Linkerd CRDs...
+Next, run `linkerd install | kubectl apply -f -` to install the control plane.
+
+customresourcedefinition.apiextensions.k8s.io/authorizationpolicies.policy.linkerd.io created
+customresourcedefinition.apiextensions.k8s.io/egressnetworks.policy.linkerd.io created
+customresourcedefinition.apiextensions.k8s.io/httplocalratelimitpolicies.policy.linkerd.io created
+customresourcedefinition.apiextensions.k8s.io/httproutes.policy.linkerd.io created
+customresourcedefinition.apiextensions.k8s.io/meshtlsauthentications.policy.linkerd.io created
+customresourcedefinition.apiextensions.k8s.io/networkauthentications.policy.linkerd.io created
+customresourcedefinition.apiextensions.k8s.io/serverauthorizations.policy.linkerd.io created
+customresourcedefinition.apiextensions.k8s.io/servers.policy.linkerd.io created
+customresourcedefinition.apiextensions.k8s.io/serviceprofiles.linkerd.io created
+customresourcedefinition.apiextensions.k8s.io/externalworkloads.workload.linkerd.io created
+namespace/linkerd created
+clusterrole.rbac.authorization.k8s.io/linkerd-linkerd-identity created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-linkerd-identity created
+serviceaccount/linkerd-identity created
+clusterrole.rbac.authorization.k8s.io/linkerd-linkerd-destination created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-linkerd-destination created
+serviceaccount/linkerd-destination created
+secret/linkerd-sp-validator-k8s-tls created
+validatingwebhookconfiguration.admissionregistration.k8s.io/linkerd-sp-validator-webhook-config created
+secret/linkerd-policy-validator-k8s-tls created
+validatingwebhookconfiguration.admissionregistration.k8s.io/linkerd-policy-validator-webhook-config created
+clusterrole.rbac.authorization.k8s.io/linkerd-policy created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-destination-policy created
+role.rbac.authorization.k8s.io/remote-discovery created
+rolebinding.rbac.authorization.k8s.io/linkerd-destination-remote-discovery created
+role.rbac.authorization.k8s.io/linkerd-heartbeat created
+rolebinding.rbac.authorization.k8s.io/linkerd-heartbeat created
+clusterrole.rbac.authorization.k8s.io/linkerd-heartbeat created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-heartbeat created
+serviceaccount/linkerd-heartbeat created
+clusterrole.rbac.authorization.k8s.io/linkerd-linkerd-proxy-injector created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-linkerd-proxy-injector created
+serviceaccount/linkerd-proxy-injector created
+secret/linkerd-proxy-injector-k8s-tls created
+mutatingwebhookconfiguration.admissionregistration.k8s.io/linkerd-proxy-injector-webhook-config created
+configmap/linkerd-config created
+role.rbac.authorization.k8s.io/ext-namespace-metadata-linkerd-config created
+secret/linkerd-identity-issuer created
+configmap/linkerd-identity-trust-roots created
+service/linkerd-identity created
+service/linkerd-identity-headless created
+deployment.apps/linkerd-identity created
+service/linkerd-dst created
+service/linkerd-dst-headless created
+service/linkerd-sp-validator created
+service/linkerd-policy created
+service/linkerd-policy-validator created
+deployment.apps/linkerd-destination created
+cronjob.batch/linkerd-heartbeat created
+deployment.apps/linkerd-proxy-injector created
+service/linkerd-proxy-injector created
+secret/linkerd-config-overrides created
+Waiting for control plane to become available
+Waiting for control plane to become available
+Waiting for control plane to become available
+Waiting for control plane to become available
+Waiting for control plane to become available
+Waiting for control plane to become available
+Waiting for control plane to become available
+Waiting for control plane to become available
+Waiting for control plane to become available
+Waiting for control plane to become available
+Waiting for control plane to become available
+namespace/linkerd-viz created
+clusterrole.rbac.authorization.k8s.io/linkerd-linkerd-viz-metrics-api created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-linkerd-viz-metrics-api created
+serviceaccount/metrics-api created
+clusterrole.rbac.authorization.k8s.io/linkerd-linkerd-viz-prometheus created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-linkerd-viz-prometheus created
+serviceaccount/prometheus created
+clusterrole.rbac.authorization.k8s.io/linkerd-linkerd-viz-tap created
+clusterrole.rbac.authorization.k8s.io/linkerd-linkerd-viz-tap-admin created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-linkerd-viz-tap created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-linkerd-viz-tap-auth-delegator created
+serviceaccount/tap created
+rolebinding.rbac.authorization.k8s.io/linkerd-linkerd-viz-tap-auth-reader created
+secret/tap-k8s-tls created
+apiservice.apiregistration.k8s.io/v1alpha1.tap.linkerd.io created
+role.rbac.authorization.k8s.io/web created
+rolebinding.rbac.authorization.k8s.io/web created
+clusterrole.rbac.authorization.k8s.io/linkerd-linkerd-viz-web-check created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-linkerd-viz-web-check created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-linkerd-viz-web-admin created
+clusterrole.rbac.authorization.k8s.io/linkerd-linkerd-viz-web-api created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-linkerd-viz-web-api created
+serviceaccount/web created
+service/metrics-api created
+deployment.apps/metrics-api created
+server.policy.linkerd.io/metrics-api created
+authorizationpolicy.policy.linkerd.io/metrics-api created
+meshtlsauthentication.policy.linkerd.io/metrics-api-web created
+networkauthentication.policy.linkerd.io/kubelet created
+configmap/prometheus-config created
+service/prometheus created
+deployment.apps/prometheus created
+server.policy.linkerd.io/prometheus-admin created
+authorizationpolicy.policy.linkerd.io/prometheus-admin created
+service/tap created
+deployment.apps/tap created
+server.policy.linkerd.io/tap-api created
+authorizationpolicy.policy.linkerd.io/tap created
+clusterrole.rbac.authorization.k8s.io/linkerd-tap-injector created
+clusterrolebinding.rbac.authorization.k8s.io/linkerd-tap-injector created
+serviceaccount/tap-injector created
+secret/tap-injector-k8s-tls created
+mutatingwebhookconfiguration.admissionregistration.k8s.io/linkerd-tap-injector-webhook-config created
+service/tap-injector created
+deployment.apps/tap-injector created
+server.policy.linkerd.io/tap-injector-webhook created
+authorizationpolicy.policy.linkerd.io/tap-injector created
+networkauthentication.policy.linkerd.io/kube-api-server created
+service/web created
+deployment.apps/web created
+serviceprofile.linkerd.io/metrics-api.linkerd-viz.svc.cluster.local created
+serviceprofile.linkerd.io/prometheus.linkerd-viz.svc.cluster.local created
+kubernetes-api
+--------------
+√ can initialize the client
+√ can query the Kubernetes API
+
+kubernetes-version
+------------------
+√ is running the minimum Kubernetes API version
+
+gateway-api-crd
+---------------
+√ Gateway API CRDs are installed
+
+linkerd-existence
+-----------------
+√ 'linkerd-config' config map exists
+√ heartbeat ServiceAccount exist
+√ control plane replica sets are ready
+√ no unschedulable pods
+√ control plane pods are ready
+√ cluster networks contains all node podCIDRs
+√ cluster networks contains all pods
+√ cluster networks contains all services
+
+linkerd-config
+--------------
+√ control plane Namespace exists
+√ control plane ClusterRoles exist
+√ control plane ClusterRoleBindings exist
+√ control plane ServiceAccounts exist
+√ control plane CustomResourceDefinitions exist
+√ control plane MutatingWebhookConfigurations exist
+√ control plane ValidatingWebhookConfigurations exist
+√ proxy-init container runs as root user if docker container runtime is used
+
+linkerd-identity
+----------------
+√ certificate config is valid
+√ trust anchors are using supported crypto algorithm
+√ trust anchors are within their validity period
+√ trust anchors are valid for at least 60 days
+√ issuer cert is using supported crypto algorithm
+√ issuer cert is within its validity period
+√ issuer cert is valid for at least 60 days
+√ issuer cert is issued by the trust anchor
+
+linkerd-webhooks-and-apisvc-tls
+-------------------------------
+√ proxy-injector webhook has valid cert
+√ proxy-injector cert is valid for at least 60 days
+√ sp-validator webhook has valid cert
+√ sp-validator cert is valid for at least 60 days
+√ policy-validator webhook has valid cert
+√ policy-validator cert is valid for at least 60 days
+
+linkerd-version
+---------------
+√ can determine the latest version
+‼ cli is up-to-date
+    is running version 26.10.1 but the latest edge version is 26.11.1
+    see https://linkerd.io/2/checks/#l5d-version-cli for hints
+
+control-plane-version
+---------------------
+√ can retrieve the control plane version
+‼ control plane is up-to-date
+    is running version 26.10.1 but the latest edge version is 26.11.1
+    see https://linkerd.io/2/checks/#l5d-version-control for hints
+√ control plane and cli versions match
+
+linkerd-control-plane-proxy
+---------------------------
+√ control plane proxies are healthy
+‼ control plane proxies are up-to-date
+    some proxies are not running the current version:
+	* linkerd-destination-7d9bf89c59-pn6k6 (edge-26.10.1)
+	* linkerd-identity-77c8987f57-qjjf5 (edge-26.10.1)
+	* linkerd-proxy-injector-d9b48489b-zxh79 (edge-26.10.1)
+    see https://linkerd.io/2/checks/#l5d-cp-proxy-version for hints
+√ control plane proxies and cli versions match
+
+linkerd-extension-checks
+------------------------
+√ namespace configuration for extensions
+
+linkerd-viz
+-----------
+√ linkerd-viz Namespace exists
+√ can initialize the client
+√ linkerd-viz ClusterRoles exist
+√ linkerd-viz ClusterRoleBindings exist
+√ tap API server has valid cert
+√ tap API server cert is valid for at least 60 days
+√ tap API service is running
+√ linkerd-viz pods are injected
+√ viz extension pods are running
+√ viz extension proxies are healthy
+‼ viz extension proxies are up-to-date
+    some proxies are not running the current version:
+	* metrics-api-5bd8c9b784-mxxn8 (edge-26.10.1)
+	* prometheus-75d9954f4f-8xg6d (edge-26.10.1)
+	* tap-795df89b85-f4bm5 (edge-26.10.1)
+	* tap-injector-865db44f99-kgvcd (edge-26.10.1)
+	* web-7dc8949488-gnl7w (edge-26.10.1)
+    see https://linkerd.io/2/checks/#l5d-viz-proxy-cp-version for hints
+√ viz extension proxies and cli versions match
+√ prometheus is installed and configured correctly
+√ viz extension self-check
+
+Status check results are √
+INSTALLAZIONE LINKERD AVVENUTA CON SUCCESSO
+
+deployment "mio-apache" injected
+
+Warning: resource deployments/mio-apache is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+deployment.apps/mio-apache configured
+Waiting for deployment "mio-apache" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "mio-apache" rollout to finish: 1 old replicas are pending termination...
+deployment "mio-apache" successfully rolled out
+INIEZIONE DI APACHE IN LINKERD AVVENUTA CON SUCCESSO
+
+deployment "mio-oauth2-oauth2-proxy" injected
+
+Warning: resource deployments/mio-oauth2-oauth2-proxy is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+deployment.apps/mio-oauth2-oauth2-proxy configured
+deployment "mio-oauth2-oauth2-proxy" successfully rolled out
+INIEZIONE DI OAUTH2-PROXY IN LINKERD AVVENUTA CON SUCCESSO
+
+statefulset "mio-keycloak" injected
+
+Warning: resource statefulsets/mio-keycloak is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+statefulset.apps/mio-keycloak configured
+waiting for statefulset rolling update to complete 0 pods at revision mio-keycloak-5c879d766...
+Waiting for 1 pods to be ready...
+Waiting for 1 pods to be ready...
+Waiting for 1 pods to be ready...
+statefulset rolling update complete 1 pods at revision mio-keycloak-5c879d766...
+INIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO
+
+deployment "traefik" injected
+
+Warning: resource deployments/traefik is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+deployment.apps/traefik configured
+Waiting for deployment "traefik" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "traefik" rollout to finish: 1 old replicas are pending termination...
+deployment "traefik" successfully rolled out
+INIEZIONE DI TRAEFIK IN LINKERD AVVENUTA CON SUCCESSO
+
+statefulset "mio-mariadb" injected
+
+Warning: resource statefulsets/mio-mariadb is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+statefulset.apps/mio-mariadb configured
+waiting for statefulset rolling update to complete 0 pods at revision mio-mariadb-7b66c946c6...
+Waiting for 1 pods to be ready...
+Waiting for 1 pods to be ready...
+Waiting for 1 pods to be ready...
+statefulset rolling update complete 1 pods at revision mio-mariadb-7b66c946c6...
+INIEZIONE DI MARIA-DB IN LINKERD AVVENUTA CON SUCCESSO
+
+statefulset "mio-keycloak-postgresql" injected
+
+Warning: resource statefulsets/mio-keycloak-postgresql is missing the kubectl.kubernetes.io/last-applied-configuration annotation which is required by kubectl apply. kubectl apply should only be used on resources created declaratively by either kubectl create --save-config or kubectl apply. The missing annotation will be patched automatically.
+statefulset.apps/mio-keycloak-postgresql configured
+Waiting for partitioned roll out to finish: 0 out of 1 new pods have been updated...
+Waiting for 1 pods to be ready...
+Waiting for 1 pods to be ready...
+Waiting for 1 pods to be ready...
+partitioned roll out complete: 1 new pods have been updated...
+INIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO
+lele@leleserver:~$ minikube kubectl -- port-forward -n progetto svc/traefik 8081:80
+Forwarding from 127.0.0.1:8081 -> 8000
+Forwarding from [::1]:8081 -> 8000
+Handling connection for 8081
+^C
+lele@leleserver:~$ minikube kubectl -- port-forward -n progetto svc/mio-keycloak 8082:80
+Forwarding from 127.0.0.1:8082 -> 8080
+Forwarding from [::1]:8082 -> 8080
+Handling connection for 8082
+Handling connection for 8082
+Handling connection for 8082
+Handling connection for 8082
+^C
+lele@leleserver:~$ minikube kubectl -- logs statefullset/mio-keycloak -n progetto
+error: the server doesn't have a resource type "statefullset"
+lele@leleserver:~$ minikube kubectl -- logs deployment/mio-oauth2-oauth2 -n progetto --since=10min
+error: invalid argument "10min" for "--since" flag: time: unknown unit "min" in duration "10min"
+See 'kubectl logs --help' for usage.
+lele@leleserver:~$ minikube kubectl -- logs deployment/mio-oauth2-oauth2 -n progetto --since=10m
+error: error from server (NotFound): deployments.apps "mio-oauth2-oauth2" not found in namespace "progetto"
+lele@leleserver:~$ 
