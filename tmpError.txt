@@ -1,33 +1,45 @@
- minikube kubectl -- logs -n progetto mio-keycloak-0 -c linkerd-proxy --since=15m
-[  3630.907670s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3648.937331s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3695.583000s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3717.356403s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3743.182270s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3773.323455s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3806.829207s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3825.343290s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3850.817184s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3894.301863s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3933.696619s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3959.287246s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3984.506649s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4007.526018s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4026.148208s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4045.881887s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4087.150225s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4123.328430s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4151.614345s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4187.921741s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4216.082702s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4249.903832s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4284.409511s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4325.371700s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4368.557205s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4411.928296s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4451.154496s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4497.589008s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-lele@leleserver:~$ minikube kubectl -- logs -n progetto mio-keycloak-0 -c postgresql --since=15m
-error: container postgresql is not valid for pod mio-keycloak-0
-lele@leleserver:~$ minikube kubectl -- logs -n progetto mio-keycloak-postgresql-0 -c linkerd-proxy --since=15m
-lele@leleserver:~$ minikube kubectl -- logs -n progetto mio-keycloak-postgresql-0 -c postgresql --since=15m
+printf '%s\n' '--- files ---'
+find . -mindepth 1 -maxdepth 1 -printf '%f\t%s bytes\t%M\n'
+
+printf '%s\n' '--- tracked files ---'
+git ls-files
+
+printf '%s\n' '--- auxiliary files (redacted scan) ---'
+for f in settingKeycloak.txt tmpError.txt; do
+  if [[ -f "$f" ]]; then
+    stat -c '%n: %s bytes' "$f"
+    grep -Ein '(password|secret|token|credential|error|exception|failed)' "$f" |
+      sed -E 's/(password|secret|token|credential)([[:space:]]*[:=][[:space:]]*)[^[:space:]]+/\1\2[REDACTED]/Ig'
+  fi
+done
+--- files ---
+.kube	4096 bytes	drwxr-xr-x
+.cache	4096 bytes	drwx------
+Public	4096 bytes	drwxr-xr-x
+snap	4096 bytes	drwx------
+.sudo_as_admin_successful	0 bytes	-rw-r--r--
+.local	4096 bytes	drwx------
+.minikube	4096 bytes	drwxr-xr-x
+get_helm.sh	12252 bytes	-rwx------
+.config	4096 bytes	drwx------
+Templates	4096 bytes	drwxr-xr-x
+.profile	807 bytes	-rw-r--r--
+progetto-virtualizzazione	4096 bytes	drwxrwxr-x
+Videos	4096 bytes	drwxr-xr-x
+.gitconfig	63 bytes	-rw-rw-r--
+Music	4096 bytes	drwxr-xr-x
+.bashrc	3812 bytes	-rw-r--r--
+resetMacchina.sh	311 bytes	-rwx------
+Pictures	4096 bytes	drwxr-xr-x
+.viminfo	2187 bytes	-rw-------
+.bash_history	24383 bytes	-rw-------
+Documents	4096 bytes	drwxr-xr-x
+.ssh	4096 bytes	drwx------
+Desktop	4096 bytes	drwxr-xr-x
+.bash_logout	220 bytes	-rw-r--r--
+.linkerd2	4096 bytes	drwxrwxr-x
+oauth2-keycloak-values.yaml	396 bytes	-rw-rw-r--
+Downloads	4096 bytes	drwxr-xr-x
+--- tracked files ---
+fatal: not a git repository (or any of the parent directories): .git
+--- auxiliary files (redacted scan) ---
