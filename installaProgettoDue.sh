@@ -10,7 +10,13 @@ printf '\n'
 COOKIE_SECRET="$(openssl rand -hex 16)"
 COOKIE_SECRET_B64="$(printf '%s' "$COOKIE_SECRET" | base64 -w0)"
 MINIKUBE_IP="$(minikube ip)" || exit 1
-KEYCLOAK_ISSUER_URL="http://${MINIKUBE_IP}:32622/realms/progetto"
+KEYCLOAK_NODE_PORT="$(minikube kubectl -- get service mio-keycloak -n progetto \
+  -o jsonpath='{.spec.ports[?(@.name=="http")].nodePort}')" || exit 1
+if [[ -z "$KEYCLOAK_NODE_PORT" ]]; then
+  echo "Impossibile determinare la porta NodePort assegnata a Keycloak" >&2
+  exit 1
+fi
+KEYCLOAK_ISSUER_URL="http://${MINIKUBE_IP}:${KEYCLOAK_NODE_PORT}/realms/progetto"
 
 minikube kubectl -- create secret generic mio-oauth2-keycloak \
   -n progetto \
@@ -133,4 +139,3 @@ minikube kubectl -- get statefulset mio-keycloak-postgresql -n progetto -o yaml 
 minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s || exit 1
 
 echo -e "\033[32mINIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
-
