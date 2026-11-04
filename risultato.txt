@@ -1,12 +1,4 @@
-minikube kubectl -- annotate svc mio-keycloak-postgresql \
-  -n progetto config.linkerd.io/opaque-ports="5432" --overwrite
-
-minikube kubectl -- annotate svc mio-keycloak-postgresql-hl \
-  -n progetto config.linkerd.io/opaque-ports="5432" --overwrite
-
-minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
-minikube kubectl -- rollout status statefulset/mio-keycloak \
-  -n progetto --timeout=300s
-
-minikube kubectl -- logs -n progetto mio-keycloak-0 \
-  -c keycloak --since=5m
+minikube kubectl -- get ingressroute keycloak-public -n progetto -o yaml
+minikube kubectl -- get endpoints mio-keycloak -n progetto
+minikube kubectl -- get pods mio-keycloak-0 -n progetto -o wide
+minikube kubectl -- logs -n progetto deploy/traefik --tail=100
