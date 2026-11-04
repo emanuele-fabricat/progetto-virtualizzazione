@@ -1,0 +1,12 @@
+  df -h /
+
+minikube kubectl -- get pods -n progetto -o wide
+minikube kubectl -- describe pod -n progetto mio-keycloak-postgresql-0
+minikube kubectl -- logs -n progetto mio-keycloak-postgresql-0 \
+  -c postgresql --previous --tail=200
+minikube kubectl -- get events -n progetto \
+  --sort-by=.metadata.creationTimestamp
+
+
+  minikube kubectl -- get svc,endpoints -n progetto
+minikube kubectl -- get ingressroute -n progetto
