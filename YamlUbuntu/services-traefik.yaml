@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: traefik
+    meta.helm.sh/release-namespace: progetto
+  creationTimestamp: "2026-11-05T13:51:17Z"
+  labels:
+    app.kubernetes.io/instance: traefik-progetto
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: traefik
+    app.kubernetes.io/version: v3.7.17
+    helm.sh/chart: traefik-42.3.0
+  name: traefik
+  namespace: progetto
+  resourceVersion: "686"
+  uid: 6e8b0821-8ea3-4d8a-bd04-16e642b2326a
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 10.106.20.254
+  clusterIPs:
+  - 10.106.20.254
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: web
+    nodePort: 30125
+    port: 80
+    protocol: TCP
+    targetPort: web
+  - name: websecure
+    nodePort: 32504
+    port: 443
+    protocol: TCP
+    targetPort: websecure
+  selector:
+    app.kubernetes.io/instance: traefik-progetto
+    app.kubernetes.io/name: traefik
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
