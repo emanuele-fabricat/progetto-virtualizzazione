@@ -10,8 +10,10 @@ printf '\n'
 COOKIE_SECRET="$(openssl rand -hex 16)"
 COOKIE_SECRET_B64="$(printf '%s' "$COOKIE_SECRET" | base64 -w0)"
 MINIKUBE_IP="$(minikube ip)" || exit 1
+minikube kubectl -- patch service mio-keycloak -n progetto \
+  --type=merge -p '{"spec":{"type":"NodePort"}}' || exit 1
 KEYCLOAK_NODE_PORT="$(minikube kubectl -- get service mio-keycloak -n progetto \
-  -o jsonpath='{.spec.ports[?(@.name=="http")].nodePort}')" || exit 1
+  -o jsonpath='{.spec.ports[0].nodePort}')" || exit 1
 if [[ -z "$KEYCLOAK_NODE_PORT" ]]; then
   echo "Impossibile determinare la porta NodePort assegnata a Keycloak" >&2
   exit 1
