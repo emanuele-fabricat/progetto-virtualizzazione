@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: mio-keycloak
+    meta.helm.sh/release-namespace: progetto
+  creationTimestamp: "2026-10-01T15:36:09Z"
+  labels:
+    app.kubernetes.io/component: primary
+    app.kubernetes.io/instance: mio-keycloak
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/version: 17.6.0
+    helm.sh/chart: postgresql-16.7.26
+  name: mio-keycloak-postgresql
+  namespace: progetto
+  resourceVersion: "9008"
+  uid: ef29ee08-c755-4c75-a37f-520f72de42fa
+spec:
+  clusterIP: 10.104.240.71
+  clusterIPs:
+  - 10.104.240.71
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: tcp-postgresql
+    port: 5432
+    protocol: TCP
+    targetPort: tcp-postgresql
+  selector:
+    app.kubernetes.io/component: primary
+    app.kubernetes.io/instance: mio-keycloak
+    app.kubernetes.io/name: postgresql
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

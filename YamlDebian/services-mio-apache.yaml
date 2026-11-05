@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: mio-apache
+    meta.helm.sh/release-namespace: progetto
+  creationTimestamp: "2026-10-01T15:34:51Z"
+  labels:
+    app.kubernetes.io/instance: mio-apache
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: apache
+    app.kubernetes.io/version: 2.4.65
+    helm.sh/chart: apache-11.4.29
+  name: mio-apache
+  namespace: progetto
+  resourceVersion: "8823"
+  uid: 89ad1511-cfd2-4dd2-a78f-9dfcab018be0
+spec:
+  clusterIP: 10.111.81.167
+  clusterIPs:
+  - 10.111.81.167
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: https
+  selector:
+    app.kubernetes.io/instance: mio-apache
+    app.kubernetes.io/name: apache
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

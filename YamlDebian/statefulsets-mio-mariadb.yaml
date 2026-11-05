@@ -1,0 +1,257 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{"meta.helm.sh/release-name":"mio-mariadb","meta.helm.sh/release-namespace":"progetto"},"generation":1,"labels":{"app.kubernetes.io/component":"primary","app.kubernetes.io/instance":"mio-mariadb","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"mariadb","app.kubernetes.io/part-of":"mariadb","app.kubernetes.io/version":"13.1.1","helm.sh/chart":"mariadb-28.1.1"},"name":"mio-mariadb","namespace":"progetto","resourceVersion":"299634","uid":"70d5cd28-d021-4ba5-b83a-22a269119c38"},"spec":{"persistentVolumeClaimRetentionPolicy":{"whenDeleted":"Retain","whenScaled":"Retain"},"podManagementPolicy":"OrderedReady","replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/component":"primary","app.kubernetes.io/instance":"mio-mariadb","app.kubernetes.io/name":"mariadb","app.kubernetes.io/part-of":"mariadb"}},"serviceName":"mio-mariadb-headless","template":{"metadata":{"annotations":{"checksum/configuration":"4cb4d658d5a27ff897012abded76cfc6527ef920750eac00832d10c6f3a9f1f7","linkerd.io/inject":"enabled"},"labels":{"app.kubernetes.io/component":"primary","app.kubernetes.io/instance":"mio-mariadb","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"mariadb","app.kubernetes.io/part-of":"mariadb","app.kubernetes.io/version":"13.1.1","helm.sh/chart":"mariadb-28.1.1"}},"spec":{"affinity":{"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app.kubernetes.io/component":"primary","app.kubernetes.io/instance":"mio-mariadb","app.kubernetes.io/name":"mariadb"}},"topologyKey":"kubernetes.io/hostname"},"weight":1}]}},"automountServiceAccountToken":false,"containers":[{"env":[{"name":"BITNAMI_DEBUG","value":"false"},{"name":"MARIADB_ROOT_PASSWORD_FILE","value":"/opt/bitnami/mariadb/secrets/mariadb-root-password"},{"name":"MARIADB_DATABASE","value":"my_database"},{"name":"MARIADB_ENABLE_SSL","value":"no"},{"name":"OPENSSL_FIPS","value":"yes"}],"image":"registry-1.docker.io/bitnami/mariadb:latest","imagePullPolicy":"IfNotPresent","livenessProbe":{"exec":{"command":["/bin/bash","-ec","password_aux=\"${MARIADB_ROOT_PASSWORD:-}\"\nif [[ -f \"${MARIADB_ROOT_PASSWORD_FILE:-}\" ]]; then\n    password_aux=$(cat \"$MARIADB_ROOT_PASSWORD_FILE\")\nfi\nmariadb-admin status -uroot -p\"${password_aux}\"\n"]},"failureThreshold":3,"initialDelaySeconds":120,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"mariadb","ports":[{"containerPort":3306,"name":"mysql","protocol":"TCP"}],"readinessProbe":{"exec":{"command":["/bin/bash","-ec","password_aux=\"${MARIADB_ROOT_PASSWORD:-}\"\nif [[ -f \"${MARIADB_ROOT_PASSWORD_FILE:-}\" ]]; then\n    password_aux=$(cat \"$MARIADB_ROOT_PASSWORD_FILE\")\nfi\nmariadb-admin ping -uroot -p\"${password_aux}\"\n"]},"failureThreshold":3,"initialDelaySeconds":30,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"cpu":"750m","ephemeral-storage":"2Gi","memory":"768Mi"},"requests":{"cpu":"500m","ephemeral-storage":"50Mi","memory":"512Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001,"seLinuxOptions":{},"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/bitnami/mariadb","name":"data"},{"mountPath":"/opt/bitnami/mariadb/conf/my.cnf","name":"config","subPath":"my.cnf"},{"mountPath":"/opt/bitnami/mariadb/secrets/","name":"mariadb-credentials"},{"mountPath":"/tmp","name":"empty-dir","subPath":"tmp-dir"},{"mountPath":"/opt/bitnami/mariadb/conf","name":"empty-dir","subPath":"app-conf-dir"},{"mountPath":"/opt/bitnami/mariadb/tmp","name":"empty-dir","subPath":"app-tmp-dir"},{"mountPath":"/opt/bitnami/mariadb/logs","name":"empty-dir","subPath":"app-logs-dir"}]}],"dnsPolicy":"ClusterFirst","enableServiceLinks":true,"initContainers":[{"args":["-ec","#!/bin/bash\n\n. /opt/bitnami/scripts/libfs.sh\n# We copy the logs folder because it has symlinks to stdout and stderr\nif ! is_dir_empty /opt/bitnami/mariadb/logs; then\n  cp -r /opt/bitnami/mariadb/logs /emptydir/app-logs-dir\nfi\n"],"command":["/bin/bash"],"env":[{"name":"OPENSSL_FIPS","value":"yes"}],"image":"registry-1.docker.io/bitnami/mariadb:latest","imagePullPolicy":"IfNotPresent","name":"preserve-logs-symlinks","resources":{"limits":{"cpu":"750m","ephemeral-storage":"2Gi","memory":"768Mi"},"requests":{"cpu":"500m","ephemeral-storage":"50Mi","memory":"512Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001,"seLinuxOptions":{},"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/emptydir","name":"empty-dir"}]}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"fsGroup":1001,"fsGroupChangePolicy":"Always"},"serviceAccount":"mio-mariadb","serviceAccountName":"mio-mariadb","terminationGracePeriodSeconds":30,"volumes":[{"emptyDir":{},"name":"empty-dir"},{"configMap":{"defaultMode":420,"name":"mio-mariadb"},"name":"config"},{"name":"mariadb-credentials","secret":{"defaultMode":420,"items":[{"key":"mariadb-root-password","path":"mariadb-root-password"}],"secretName":"mio-mariadb"}}]}},"updateStrategy":{"type":"RollingUpdate"},"volumeClaimTemplates":[{"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"labels":{"app.kubernetes.io/component":"primary","app.kubernetes.io/instance":"mio-mariadb","app.kubernetes.io/name":"mariadb"},"name":"data"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"8Gi"}},"volumeMode":"Filesystem"},"status":{"phase":"Pending"}}]},"status":{"availableReplicas":1,"collisionCount":0,"currentReplicas":1,"currentRevision":"mio-mariadb-55787bc6df","observedGeneration":1,"readyReplicas":1,"replicas":1,"updateRevision":"mio-mariadb-55787bc6df","updatedReplicas":1}}
+    meta.helm.sh/release-name: mio-mariadb
+    meta.helm.sh/release-namespace: progetto
+  creationTimestamp: "2026-10-01T15:35:43Z"
+  generation: 2
+  labels:
+    app.kubernetes.io/component: primary
+    app.kubernetes.io/instance: mio-mariadb
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: mariadb
+    app.kubernetes.io/part-of: mariadb
+    app.kubernetes.io/version: 13.1.1
+    helm.sh/chart: mariadb-28.1.1
+  name: mio-mariadb
+  namespace: progetto
+  resourceVersion: "473668"
+  uid: 70d5cd28-d021-4ba5-b83a-22a269119c38
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: primary
+      app.kubernetes.io/instance: mio-mariadb
+      app.kubernetes.io/name: mariadb
+      app.kubernetes.io/part-of: mariadb
+  serviceName: mio-mariadb-headless
+  template:
+    metadata:
+      annotations:
+        checksum/configuration: 4cb4d658d5a27ff897012abded76cfc6527ef920750eac00832d10c6f3a9f1f7
+        linkerd.io/inject: enabled
+      labels:
+        app.kubernetes.io/component: primary
+        app.kubernetes.io/instance: mio-mariadb
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: mariadb
+        app.kubernetes.io/part-of: mariadb
+        app.kubernetes.io/version: 13.1.1
+        helm.sh/chart: mariadb-28.1.1
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: primary
+                  app.kubernetes.io/instance: mio-mariadb
+                  app.kubernetes.io/name: mariadb
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+      automountServiceAccountToken: false
+      containers:
+      - env:
+        - name: BITNAMI_DEBUG
+          value: "false"
+        - name: MARIADB_ROOT_PASSWORD_FILE
+          value: /opt/bitnami/mariadb/secrets/mariadb-root-password
+        - name: MARIADB_DATABASE
+          value: my_database
+        - name: MARIADB_ENABLE_SSL
+          value: "no"
+        - name: OPENSSL_FIPS
+          value: "yes"
+        image: registry-1.docker.io/bitnami/mariadb:latest
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -ec
+            - |
+              password_aux="${MARIADB_ROOT_PASSWORD:-}"
+              if [[ -f "${MARIADB_ROOT_PASSWORD_FILE:-}" ]]; then
+                  password_aux=$(cat "$MARIADB_ROOT_PASSWORD_FILE")
+              fi
+              mariadb-admin status -uroot -p"${password_aux}"
+          failureThreshold: 3
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: mariadb
+        ports:
+        - containerPort: 3306
+          name: mysql
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -ec
+            - |
+              password_aux="${MARIADB_ROOT_PASSWORD:-}"
+              if [[ -f "${MARIADB_ROOT_PASSWORD_FILE:-}" ]]; then
+                  password_aux=$(cat "$MARIADB_ROOT_PASSWORD_FILE")
+              fi
+              mariadb-admin ping -uroot -p"${password_aux}"
+          failureThreshold: 3
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: 750m
+            ephemeral-storage: 2Gi
+            memory: 768Mi
+          requests:
+            cpu: 500m
+            ephemeral-storage: 50Mi
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 1001
+          runAsNonRoot: true
+          runAsUser: 1001
+          seLinuxOptions: {}
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /bitnami/mariadb
+          name: data
+        - mountPath: /opt/bitnami/mariadb/conf/my.cnf
+          name: config
+          subPath: my.cnf
+        - mountPath: /opt/bitnami/mariadb/secrets/
+          name: mariadb-credentials
+        - mountPath: /tmp
+          name: empty-dir
+          subPath: tmp-dir
+        - mountPath: /opt/bitnami/mariadb/conf
+          name: empty-dir
+          subPath: app-conf-dir
+        - mountPath: /opt/bitnami/mariadb/tmp
+          name: empty-dir
+          subPath: app-tmp-dir
+        - mountPath: /opt/bitnami/mariadb/logs
+          name: empty-dir
+          subPath: app-logs-dir
+      dnsPolicy: ClusterFirst
+      enableServiceLinks: true
+      initContainers:
+      - args:
+        - -ec
+        - |
+          #!/bin/bash
+
+          . /opt/bitnami/scripts/libfs.sh
+          # We copy the logs folder because it has symlinks to stdout and stderr
+          if ! is_dir_empty /opt/bitnami/mariadb/logs; then
+            cp -r /opt/bitnami/mariadb/logs /emptydir/app-logs-dir
+          fi
+        command:
+        - /bin/bash
+        env:
+        - name: OPENSSL_FIPS
+          value: "yes"
+        image: registry-1.docker.io/bitnami/mariadb:latest
+        imagePullPolicy: IfNotPresent
+        name: preserve-logs-symlinks
+        resources:
+          limits:
+            cpu: 750m
+            ephemeral-storage: 2Gi
+            memory: 768Mi
+          requests:
+            cpu: 500m
+            ephemeral-storage: 50Mi
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 1001
+          runAsNonRoot: true
+          runAsUser: 1001
+          seLinuxOptions: {}
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /emptydir
+          name: empty-dir
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: Always
+      serviceAccount: mio-mariadb
+      serviceAccountName: mio-mariadb
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir: {}
+        name: empty-dir
+      - configMap:
+          defaultMode: 420
+          name: mio-mariadb
+        name: config
+      - name: mariadb-credentials
+        secret:
+          defaultMode: 420
+          items:
+          - key: mariadb-root-password
+            path: mariadb-root-password
+          secretName: mio-mariadb
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      labels:
+        app.kubernetes.io/component: primary
+        app.kubernetes.io/instance: mio-mariadb
+        app.kubernetes.io/name: mariadb
+      name: data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 8Gi
+      volumeMode: Filesystem
+    status:
+      phase: Pending
+status:
+  availableReplicas: 1
+  collisionCount: 0
+  currentReplicas: 1
+  currentRevision: mio-mariadb-544c876f6f
+  observedGeneration: 2
+  readyReplicas: 1
+  replicas: 1
+  updateRevision: mio-mariadb-544c876f6f
+  updatedReplicas: 1
