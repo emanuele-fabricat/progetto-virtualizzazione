@@ -10,15 +10,30 @@ printf '\n'
 COOKIE_SECRET="$(openssl rand -hex 16)"
 COOKIE_SECRET_B64="$(printf '%s' "$COOKIE_SECRET" | base64 -w0)"
 MINIKUBE_IP="$(minikube ip)" || exit 1
-minikube kubectl -- patch service mio-keycloak -n progetto \
-  --type=merge -p '{"spec":{"type":"NodePort"}}' || exit 1
-KEYCLOAK_NODE_PORT="$(minikube kubectl -- get service mio-keycloak -n progetto \
-  -o jsonpath='{.spec.ports[0].nodePort}')" || exit 1
-if [[ -z "$KEYCLOAK_NODE_PORT" ]]; then
-  echo "Impossibile determinare la porta NodePort assegnata a Keycloak" >&2
+TRAEFIK_NODE_PORT="$(minikube kubectl -- get service traefik -n progetto \
+  -o jsonpath='{.spec.ports[?(@.name=="web")].nodePort}')" || exit 1
+if [[ -z "$TRAEFIK_NODE_PORT" ]]; then
+  echo "Impossibile determinare la porta NodePort HTTP assegnata a Traefik" >&2
   exit 1
 fi
-KEYCLOAK_ISSUER_URL="http://${MINIKUBE_IP}:${KEYCLOAK_NODE_PORT}/realms/progetto"
+KEYCLOAK_ISSUER_URL="http://${MINIKUBE_IP}:${TRAEFIK_NODE_PORT}/realms/progetto"
+
+minikube kubectl -- apply -f - <<YAML || exit 1
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: keycloak-minikube-ip
+  namespace: progetto
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(\`${MINIKUBE_IP}\`)
+      kind: Rule
+      services:
+        - name: mio-keycloak
+          port: 80
+YAML
 
 minikube kubectl -- create secret generic mio-oauth2-keycloak \
   -n progetto \

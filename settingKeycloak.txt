@@ -2,7 +2,7 @@ Eseguire il seguente comando per aprire un tunnel alla porta 8082 e potersi conn
 
 minikube kubectl -- port-forward -n progetto svc/mio-keycloak 8082:80
 
-OAuth2 Proxy raggiunge Keycloak tramite il NodePort assegnato automaticamente da Kubernetes. L'indirizzo dell'issuer viene composto automaticamente usando l'IP corrente di Minikube e la porta assegnata al servizio.
+Keycloak rimane esposto nel cluster come ClusterIP. OAuth2 Proxy raggiunge Keycloak tramite la route pubblica di Traefik: lo script installaProgettoDue.sh ricava l'IP corrente di Minikube e il NodePort HTTP di Traefik, quindi compone automaticamente l'indirizzo dell'issuer e crea la route per quell'IP. Se l'IP o il NodePort cambia, rieseguire lo script per aggiornare la configurazione.
 
 Aprire la pagina web http://127.0.0.1:8082 e entrare nella dashboard digitando
 utente: admin
