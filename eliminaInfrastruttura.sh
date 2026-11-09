@@ -23,6 +23,7 @@ sudo systemctl stop docker.socket
 
 # Rimuovi pacchetti
 sudo apt purge -y docker.io
+sudo groupdel docker 
 
 # Pulizia dipendenze
 sudo apt autoremove -y
