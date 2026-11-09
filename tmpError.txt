@@ -16,3 +16,11 @@ for kind in deployments statefulsets services; do
       > "./progetto-virtualizzazione/YamlUbuntu/${kind}-${name}.yaml"
   done
 done
+
+😄  minikube v1.39.0 on Ubuntu 24.04 (kvm/amd64)
+🆕  Kubernetes 1.37.0 is now available. If you would like to upgrade, specify: --kubernetes-version=v1.37.0
+✨  Using the docker driver based on existing profile
+
+💣  Exiting due to PROVIDER_DOCKER_NEWGRP: "docker version --format <no value>-<no value>:<no value>" exit status 1: permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+💡  Suggestion: Add your user to the 'docker' group: 'sudo usermod -aG docker $USER && newgrp docker'
+📘  Documentation: https://docs.docker.com/engine/install/linux-postinstall/
