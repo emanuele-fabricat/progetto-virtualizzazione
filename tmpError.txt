@@ -1,26 +1,65 @@
-mkdir ./progetto-virtualizzazione/YamlDebian
+T
+http://192.168.49.2:32141/realms/progetto/protocol/openid-connect/auth?approval_prompt=force&client_id=oauth2-proxy&redirect_uri=http://localhost:8081/oauth2/callback&response_type=code&scope=openid+email+profile&state=dgzl6Jf2HGDUNxHj4okER0GiBCsZipzkH9BcVJoZGy0:http%3A%2F%2Flocalhost%3A8081%2F
+NS_ERROR_NET_ERROR_RESPONSE
 
-for kind in deployments statefulsets services; do
-  for name in $(minikube kubectl -- get "$kind" -n progetto -o jsonpath='{.items[*].metadata.name}'); do
-    minikube kubectl -- get "$kind" "$name" -n progetto -o yaml \
-      > "./progetto-virtualizzazione/YamlDebian/${kind}-${name}.yaml"
-  done
-done
+GET
+	
+scheme
+	http
+host
+	192.168.49.2:32141
+filename
+	/realms/progetto/protocol/openid-connect/auth
+approval_prompt
+	force
+client_id
+	oauth2-proxy
+redirect_uri
+	http://localhost:8081/oauth2/callback
+response_type
+	code
+scope
+	openid email profile
+state
+	dgzl6Jf2HGDUNxHj4okER0GiBCsZipzkH9BcVJoZGy0:http%3A%2F%2Flocalhost%3A8081%2F
+Address
+	192.168.49.2:32141
+Status
+504
+Gateway Timeout
+VersionHTTP/1.1
+Transferred239 B (0 B size)
+Request PriorityHighest
+DNS ResolutionSystem
 
+    	
+    content-length
+    	0
+    date
+    	Mon, 09 Nov 2026 18:44:39 GMT
+    l5d-proxy-connection
+    	close
+    l5d-proxy-error
+    	logical service 10.244.0.20:8080: route default.endpoint: backend default.unknown: service in fail-fast
+    	
+    Accept
+    	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+    Accept-Encoding
+    	gzip, deflate
+    Accept-Language
+    	it,en-US;q=0.9,en;q=0.8
+    Connection
+    	keep-alive
+    Host
+    	192.168.49.2:32141
+    Priority
+    	u=0, i
+    Upgrade-Insecure-Requests
+    	1
+    User-Agent
+    	Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:158.0) Gecko/20100101 Firefox/158.0
 
-mkdir ./progetto-virtualizzazione/YamlUbuntu
+​
 
-for kind in deployments statefulsets services; do
-  for name in $(minikube kubectl -- get "$kind" -n progetto -o jsonpath='{.items[*].metadata.name}'); do
-    minikube kubectl -- get "$kind" "$name" -n progetto -o yaml \
-      > "./progetto-virtualizzazione/YamlUbuntu/${kind}-${name}.yaml"
-  done
-done
-
-😄  minikube v1.39.0 on Ubuntu 24.04 (kvm/amd64)
-🆕  Kubernetes 1.37.0 is now available. If you would like to upgrade, specify: --kubernetes-version=v1.37.0
-✨  Using the docker driver based on existing profile
-
-💣  Exiting due to PROVIDER_DOCKER_NEWGRP: "docker version --format <no value>-<no value>:<no value>" exit status 1: permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
-💡  Suggestion: Add your user to the 'docker' group: 'sudo usermod -aG docker $USER && newgrp docker'
+ser to the 'docker' group: 'sudo usermod -aG docker $USER && newgrp docker'
 📘  Documentation: https://docs.docker.com/engine/install/linux-postinstall/
