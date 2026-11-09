@@ -79,6 +79,7 @@ echo -e "\033[32mINSTALLAZIONE MARIADB AVVENUTA CON SUCCESSO\033[0m"
 #Installazione keycloak con postgress
 helm install mio-keycloak bitnami/keycloak \
   -n progetto \
+  --set service.type=ClusterIP \
   --set image.repository=bitnamilegacy/keycloak \
   --set image.tag=26.3.3-debian-12-r0 \
   --set postgresql.image.repository=bitnamilegacy/postgresql \
