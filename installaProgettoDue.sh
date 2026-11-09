@@ -46,6 +46,34 @@ unset KC_CLIENT_SECRET COOKIE_SECRET COOKIE_SECRET_B64
 
 echo -e "\033[32mCREAZIONE SECRET AVVENUTA CON SUCCESSO\033[0m"
 
+#Preparazione valori Helm
+cat > oauth2-keycloak-values.yaml <<EOF
+config:
+  existingSecret: mio-oauth2-keycloak
+
+extraArgs:
+  provider: "keycloak-oidc"
+  oidc-issuer-url: "${KEYCLOAK_ISSUER_URL}"
+  redirect-url: "http://localhost:8081/oauth2/callback"
+  skip-provider-button: "true"
+  reverse-proxy: "true"
+  cookie-secure: "false"
+  whitelist-domain: "localhost:8081"
+  set-xauthrequest: "true"
+EOF
+
+echo -e "\033[32mMIDIFICA YAML DEL SECRET AVVENUTA CON SUCCESSO\033[0m"
+
+#Installazione Oauth2-proxy
+helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests || exit 1
+helm repo update || exit 1
+helm upgrade --install mio-oauth2 oauth2-proxy/oauth2-proxy \
+  -n progetto \
+  -f oauth2-keycloak-values.yaml || exit 1
+
+echo -e "\033[32mINSTALLAZIONE OAUTH2-PROXY AVVENUTA CON SUCCESSO\033[0m"
+
+
 #Installazione linkerd tramite guida ufficiale https://linkerd.io/docs/getting-started/
 # Setting LINKERD2_VERSION sets the version to install.
 # If unset, you'll get the latest available edge version.
@@ -73,46 +101,6 @@ linkerd check || exit 1
 
 echo -e "\033[32mINSTALLAZIONE LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
-echo -e "\033[32mMIDIFICA YAML DEL SECRET AVVENUTA CON SUCCESSO\033[0m"
-
-#Preparazione valori Helm
-cat > oauth2-keycloak-values.yaml <<EOF
-config:
-  existingSecret: mio-oauth2-keycloak
-
-extraArgs:
-  provider: "keycloak-oidc"
-  oidc-issuer-url: "${KEYCLOAK_ISSUER_URL}"
-  redirect-url: "http://localhost:8081/oauth2/callback"
-  skip-provider-button: "true"
-  reverse-proxy: "true"
-  cookie-secure: "false"
-  whitelist-domain: "localhost:8081"
-  set-xauthrequest: "true"
-podAnnotations:
-  linkerd.io/inject: "enabled"
-EOF
-
-#Installazione Oauth2-proxy
-helm repo add oauth2-proxy https://oauth2-proxy.github.io/manifests || exit 1
-helm repo update || exit 1
-helm upgrade --install mio-oauth2 oauth2-proxy/oauth2-proxy \
-  -n progetto \
-  -f oauth2-keycloak-values.yaml || exit 1
-
-minikube kubectl -- rollout restart deployment/mio-oauth2-oauth2-proxy -n progetto || exit 1
-minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s || exit 1
-
-
-OAUTH2_PROXY_CONTAINERS="$(minikube kubectl -- get pods -n progetto \
-  -l app.kubernetes.io/instance=mio-oauth2,app.kubernetes.io/name=oauth2-proxy \
-  -o jsonpath='{.items[0].spec.containers[*].name}')" || exit 1
-if [[ " $OAUTH2_PROXY_CONTAINERS " != *" linkerd-proxy "* ]]; then
-  echo "Il Pod di OAuth2 Proxy non contiene il sidecar linkerd-proxy" >&2
-  exit 1
-fi
-
-echo -e "\033[32mINSTALLAZIONE OAUTH2-PROXY AVVENUTA CON SUCCESSO\033[0m"
 
 #Mashing di apache
 minikube kubectl -- get deploy mio-apache -n progetto -o yaml \
@@ -123,6 +111,17 @@ minikube kubectl -- rollout restart deployment/mio-apache -n progetto
 minikube kubectl -- rollout status deployment/mio-apache -n progetto || exit 1
 
 echo -e "\033[32mINIEZIONE DI APACHE IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
+
+#Mashing Oauth2-Proxy
+minikube kubectl -- get deployment mio-oauth2-oauth2-proxy -n progetto -o yaml \
+  | linkerd --linkerd-namespace linkerd inject - \
+  | minikube kubectl -- apply -f - || exit 1
+
+minikube kubectl -- rollout restart deployment/mio-oauth2-oauth2-proxy -n progetto
+minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s || exit 1
+
+echo -e "\033[32mINIEZIONE DI OAUTH2-PROXY IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
+
 
 #Mashing Keycloak
 minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
