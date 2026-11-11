@@ -168,3 +168,6 @@ postgresql 18:49:24.23 INFO  ==> ** Starting PostgreSQL **
 [  1305.645170s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
 [  1333.299454s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
 [  1336.637379s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:45468}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+
+
+minikube kubectl -- logs mio-keycloak-postgresql-0 -n progetto -c linkerd-proxy --since=30m
