@@ -83,3 +83,7 @@ Caused by: java.net.SocketException: Connection reset
 2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: The connection attempt failed.
 2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Connection reset
 2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) For more details run the same command passing the '--verbose' option. Also you can use '--help' to see the details about the usage of the particular command.
+
+
+kubectl logs mio-keycloak-postgresql-0 -n progetto -c postgresql --since=30m
+kubectl logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=30m
