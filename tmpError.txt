@@ -184,3 +184,5 @@ minikube kubectl -- logs mio-keycloak-postgresql-0 -n progetto -c linkerd-proxy 
 [     0.010218s]  INFO ThreadId(02) identity:identity{server.addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}:controller{addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.9:8080
 [     0.086031s]  INFO ThreadId(01) dst:controller{addr=linkerd-dst-headless.linkerd.svc.cluster.local:8086}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8086
 [     0.096150s]  INFO ThreadId(02) daemon:identity: linkerd_app: Certified identity id=mio-keycloak-postgresql.progetto.serviceaccount.identity.linkerd.cluster.local
+
+minikube kubectl -- get configmap mio-keycloak-env-vars -n progetto -o yaml
