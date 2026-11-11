@@ -1,74 +1,85 @@
-========================================================================
-APPENDICE - INTERPRETAZIONE DEL 504 E PROVA DI ESCLUSIONE DI KEYCLOAK
-========================================================================
+minikube kubectl -- logs mio-keycloak-0 -n progetto
+Defaulted container "keycloak" out of: keycloak, linkerd-init (init), linkerd-proxy (init), prepare-write-dirs (init)
+keycloak 18:56:52.26 INFO  ==> 
+keycloak 18:56:52.26 INFO  ==> Welcome to the Bitnami keycloak container
+keycloak 18:56:52.27 INFO  ==> Subscribe to project updates by watching https://github.com/bitnami/containers
+keycloak 18:56:52.27 INFO  ==> NOTICE: Starting August 28th, 2025, only a limited subset of images/charts will remain available for free. Backup will be available for some time at the 'Bitnami Legacy' repository. More info at https://github.com/bitnami/containers/issues/83267
+keycloak 18:56:52.28 INFO  ==> 
+keycloak 18:56:52.28 INFO  ==> ** Starting keycloak setup **
+keycloak 18:56:52.31 INFO  ==> Validating settings in KEYCLOAK_*,KC_* env vars...
+keycloak 18:56:52.38 INFO  ==> Trying to connect to PostgreSQL server mio-keycloak-postgresql...
+keycloak 18:56:52.39 INFO  ==> Found PostgreSQL server listening at mio-keycloak-postgresql:5432
+keycloak 18:56:52.41 INFO  ==> Configuring database settings
+keycloak 18:56:52.42 INFO  ==> ** keycloak setup finished! **
 
-Questa sezione e' separata dai controlli generali qui sopra e si riferisce
-all'errore riportato in tmpError.txt:
+keycloak 18:56:52.47 INFO  ==> ** Starting Keycloak **
+Appending additional Java properties to JAVA_OPTS
+Running the server in development mode. DO NOT use this configuration in production.
+2026-11-11 18:57:21,188 WARN  [io.agroal.pool] (agroal-11) Datasource '<default>': The connection attempt failed.
+2026-11-11 18:57:21,191 WARN  [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator] (JPA Startup Thread) HHH000342: Could not obtain connection to query metadata: org.hibernate.exception.JDBCConnectionException: unable to obtain isolated JDBC connection [The connection attempt failed.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doTheWork(JtaIsolationDelegate.java:206)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.lambda$delegateWork$3(JtaIsolationDelegate.java:91)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doInSuspendedTransaction(JtaIsolationDelegate.java:125)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.delegateWork(JtaIsolationDelegate.java:88)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:336)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68)
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:52)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:136)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:247)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68)
+	at org.hibernate.boot.internal.SessionFactoryOptionsBuilder.<init>(SessionFactoryOptionsBuilder.java:290)
+	at io.quarkus.hibernate.orm.runtime.recording.PrevalidatedQuarkusMetadata.buildSessionFactoryOptionsBuilder(PrevalidatedQuarkusMetadata.java:72)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:84)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:163)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:63)
+	at java.base/java.lang.Thread.run(Unknown Source)
+Caused by: org.postgresql.util.PSQLException: The connection attempt failed.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:385)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:277)
+	at org.postgresql.Driver.makeConnection(Driver.java:448)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:225)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:585)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:566)
+	at java.base/java.util.concurrent.FutureTask.run(Unknown Source)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:75)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	... 1 more
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at org.postgresql.core.VisibleBufferedInputStream.readMore(VisibleBufferedInputStream.java:192)
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:159)
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:144)
+	at org.postgresql.core.VisibleBufferedInputStream.read(VisibleBufferedInputStream.java:76)
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:477)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.enableSSL(ConnectionFactoryImpl.java:627)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:207)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289)
+	... 12 more
 
-  HTTP 504 Gateway Timeout
-  l5d-proxy-error: logical service 10.244.0.20:8080:
-  route default.endpoint: backend default.unknown: service in fail-fast
-
-Il messaggio indica che la richiesta raggiunge il proxy Linkerd, ma il proxy
-non riesce a inoltrarla a un endpoint backend utilizzabile. L'indirizzo
-10.244.0.20:8080 e' quello riportato dal log e puo' cambiare: non va
-considerato un indirizzo fisso. Il 504, da solo, non dimostra che siano
-errati il client secret o la redirect URI OAuth2.
-
-IMPORTANTE: gli esempi di questa appendice usano "minikube kubectl --",
-come gli script di installazione del progetto, per interrogare il cluster
-Minikube corretto. I comandi kubectl nella sezione precedente funzionano
-solo se il contesto kubectl attivo punta gia' a Minikube.
-
-1. Verificare che Keycloak sia pronto e che il Service abbia endpoint
-
-minikube kubectl -- get pods -n progetto -o wide
-minikube kubectl -- get statefulset mio-keycloak -n progetto
-minikube kubectl -- get service mio-keycloak -n progetto -o wide
-minikube kubectl -- get endpoints mio-keycloak -n progetto -o wide
-minikube kubectl -- get endpointslices -n progetto -l kubernetes.io/service-name=mio-keycloak -o wide
-
-Il pod mio-keycloak deve risultare Ready e il Service deve avere almeno un
-endpoint pronto. Se non ci sono endpoint, controllare prima il pod e il
-database: il Service senza endpoint non ha un backend a cui instradare le
-richieste.
-
-2. Esaminare i log applicativi e del proxy Linkerd
-
-minikube kubectl -- logs mio-keycloak-0 -n progetto -c keycloak --since=15m
-minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=15m
-minikube kubectl -- logs statefulset/mio-keycloak-postgresql -n progetto --since=15m
-linkerd check
-
-Se Keycloak non e' pronto o i log mostrano problemi di avvio/connessione al
-database, correggere prima quella causa. Se Keycloak e' Ready, il Service ha
-endpoint e il proxy continua a segnalare fail-fast, si puo' fare la prova
-diagnostica seguente.
-
-3. Prova diagnostica reversibile: escludere solo Keycloak dal mesh
-
-L'annotazione deve essere applicata al template dei pod dello StatefulSet,
-non solo ai metadati dello StatefulSet. La patch seguente aggiorna il
-template e Kubernetes avvia automaticamente un nuovo pod:
-
-minikube kubectl -- patch statefulset mio-keycloak -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"linkerd.io/inject":"disabled"}}}}}'
-minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s
-minikube kubectl -- get pod mio-keycloak-0 -n progetto -o jsonpath='{.spec.containers[*].name}'; echo
-
-Verificare nell'ultimo comando che tra i container del pod non compaia
-"linkerd-proxy", quindi riprovare il login OAuth2. Se il 504 scompare, il
-problema e' probabilmente legato all'intercettazione o all'instradamento di
-Linkerd verso Keycloak; se resta, riabilitare il mesh e proseguire con la
-diagnosi del Service, degli endpoint e dei log.
-
-Questa e' una prova, non una correzione definitiva: mentre e' attiva,
-Keycloak non e' incluso nel mesh Linkerd. Per ripristinare il comportamento
-precedente e lasciare che Linkerd inietti il sidecar:
-
-minikube kubectl -- patch statefulset mio-keycloak -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"}}}}}'
-minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s
-
-Se si riesegue installaProgettoDue.sh, il blocco "Mashing Keycloak" inietta
-nuovamente Linkerd: tenere conto di questo quando si ripete la prova.
-========================================================================
-
+2026-11-11 18:57:25,778 WARN  [io.agroal.pool] (agroal-11) Datasource '<default>': The connection attempt failed.
+2026-11-11 18:57:25,779 INFO  [com.arjuna.ats.jbossatx] (main) ARJUNA032014: Stopping transaction recovery manager
+2026-11-11 18:57:25,832 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to start server in (development) mode
+2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to obtain JDBC connection
+2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: The connection attempt failed.
+2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Connection reset
+2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) For more details run the same command passing the '--verbose' option. Also you can use '--help' to see the details about the usage of the particular command.
