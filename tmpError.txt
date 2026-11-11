@@ -170,4 +170,17 @@ postgresql 18:49:24.23 INFO  ==> ** Starting PostgreSQL **
 [  1336.637379s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:45468}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
 
 
-minikube kubectl -- logs mio-keycloak-postgresql-0 -n progetto -c linkerd-proxy --since=30m
+minikube kubectl -- logs mio-keycloak-postgresql-0 -n progetto -c linkerd-proxy --since=3h
+[     0.000311s]  INFO ThreadId(01) linkerd2_proxy: release 2.370.0 (0cdcc07) by linkerd on 2026-09-23T08:50:17Z
+[     0.006110s]  INFO ThreadId(01) linkerd2_proxy::rt: Using single-threaded proxy runtime
+[     0.007826s]  INFO ThreadId(01) linkerd2_proxy: Admin interface on 0.0.0.0:4191
+[     0.007850s]  INFO ThreadId(01) linkerd2_proxy: Inbound interface on 0.0.0.0:4143
+[     0.007855s]  INFO ThreadId(01) linkerd2_proxy: Outbound interface on 127.0.0.1:4140
+[     0.007860s]  INFO ThreadId(01) linkerd2_proxy: Tap interface on 0.0.0.0:4190
+[     0.007864s]  INFO ThreadId(01) linkerd2_proxy: SNI is mio-keycloak-postgresql.progetto.serviceaccount.identity.linkerd.cluster.local
+[     0.007869s]  INFO ThreadId(01) linkerd2_proxy: Local identity is mio-keycloak-postgresql.progetto.serviceaccount.identity.linkerd.cluster.local
+[     0.007874s]  INFO ThreadId(01) linkerd2_proxy: Destinations resolved via linkerd-dst-headless.linkerd.svc.cluster.local:8086 (linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local)
+[     0.009480s]  INFO ThreadId(01) policy:controller{addr=linkerd-policy.linkerd.svc.cluster.local:8090}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8090
+[     0.010218s]  INFO ThreadId(02) identity:identity{server.addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}:controller{addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.9:8080
+[     0.086031s]  INFO ThreadId(01) dst:controller{addr=linkerd-dst-headless.linkerd.svc.cluster.local:8086}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8086
+[     0.096150s]  INFO ThreadId(02) daemon:identity: linkerd_app: Certified identity id=mio-keycloak-postgresql.progetto.serviceaccount.identity.linkerd.cluster.local
