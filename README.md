@@ -1,4 +1,11 @@
-# progetto-virtualizzazione Creazione di un infrastruttura multi servizio con al centro un service mash che si occupa di crittografare le comunicazioni tra i servizi 
-Unzippare la cartella e mettersi in una bash all'interno
-Eseguire  script "installazioneProgettoUno.sh", se andato a buon fine seguire istruzioni di "settingKeycloak.txt", in seguito ritornare nella shell ed eseguire il file "installazioneProgettoDue.sh"
-Se tutto è andato a buon fine (come dovrebbe), seguire "utilizzoSistema.sh" per testare l'infrastruttura
+# progetto-virtualizzazione
+
+Creazione di un'infrastruttura multi-servizio con un service mesh che cifra le
+comunicazioni tra i servizi.
+
+1. Decomprimere la cartella e aprire una shell al suo interno.
+2. Eseguire `installaProgettoUno.sh`.
+3. Seguire le istruzioni di `settingKeycloak.txt`.
+4. Tornare nella shell ed eseguire `installaProgettoDue.sh`.
+5. Per provare l'applicazione, avviare `utilizzoSistema.sh` e aprire
+   `http://localhost:8081` nel browser.

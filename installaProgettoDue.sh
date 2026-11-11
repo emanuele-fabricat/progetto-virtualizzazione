@@ -123,16 +123,6 @@ minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progett
 echo -e "\033[32mINIEZIONE DI OAUTH2-PROXY IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 
-#Mashing Keycloak
-minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
-  | linkerd --linkerd-namespace linkerd inject - \
-  | minikube kubectl -- apply -f - || exit 1
-
-minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
-minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s || exit 1
-
-echo -e "\033[32mINIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
-
 #Mashing treafik
 minikube kubectl -- get deployment traefik -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
@@ -162,3 +152,13 @@ minikube kubectl -- rollout restart statefulset/mio-keycloak-postgresql -n proge
 minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s || exit 1
 
 echo -e "\033[32mINIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
+
+# Riavvia Keycloak dopo PostgreSQL, così non resta con connessioni DB interrotte.
+minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
+  | linkerd --linkerd-namespace linkerd inject - \
+  | minikube kubectl -- apply -f - || exit 1
+
+minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s || exit 1
+
+echo -e "\033[32mINIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
