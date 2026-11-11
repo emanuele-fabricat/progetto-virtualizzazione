@@ -2,13 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    deployment.kubernetes.io/revision: "2"
+    deployment.kubernetes.io/revision: "3"
     kubectl.kubernetes.io/last-applied-configuration: |
-      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1","meta.helm.sh/release-name":"mio-apache","meta.helm.sh/release-namespace":"progetto"},"generation":1,"labels":{"app.kubernetes.io/instance":"mio-apache","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"apache","app.kubernetes.io/version":"2.4.65","helm.sh/chart":"apache-11.4.29"},"name":"mio-apache","namespace":"progetto","resourceVersion":"745","uid":"8ff36169-0860-4d19-bef6-9297dc391291"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/instance":"mio-apache","app.kubernetes.io/name":"apache"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"},"labels":{"app.kubernetes.io/instance":"mio-apache","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"apache","app.kubernetes.io/version":"2.4.65","helm.sh/chart":"apache-11.4.29"}},"spec":{"affinity":{"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app.kubernetes.io/instance":"mio-apache","app.kubernetes.io/name":"apache"}},"topologyKey":"kubernetes.io/hostname"},"weight":1}]}},"automountServiceAccountToken":false,"containers":[{"env":[{"name":"BITNAMI_DEBUG","value":"false"},{"name":"APACHE_HTTP_PORT_NUMBER","value":"8080"},{"name":"APACHE_HTTPS_PORT_NUMBER","value":"8443"}],"image":"docker.io/bitnamilegacy/apache:latest","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":6,"initialDelaySeconds":180,"periodSeconds":20,"successThreshold":1,"tcpSocket":{"port":"http"},"timeoutSeconds":5},"name":"apache","ports":[{"containerPort":8080,"name":"http","protocol":"TCP"},{"containerPort":8443,"name":"https","protocol":"TCP"}],"readinessProbe":{"failureThreshold":6,"httpGet":{"path":"/","port":"http","scheme":"HTTP"},"initialDelaySeconds":30,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":5},"resources":{"limits":{"cpu":"150m","ephemeral-storage":"2Gi","memory":"192Mi"},"requests":{"cpu":"100m","ephemeral-storage":"50Mi","memory":"128Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001,"seLinuxOptions":{},"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/opt/bitnami/apache/conf","name":"empty-dir","subPath":"app-conf-dir"},{"mountPath":"/opt/bitnami/apache/logs","name":"empty-dir","subPath":"app-logs-dir"},{"mountPath":"/tmp","name":"empty-dir","subPath":"tmp-dir"},{"mountPath":"/opt/bitnami/apache/var/run","name":"empty-dir","subPath":"app-tmp-dir"}]}],"dnsPolicy":"ClusterFirst","hostAliases":[{"hostnames":["status.localhost"],"ip":"127.0.0.1"}],"initContainers":[{"args":["-ec","#!/bin/bash\n\n. /opt/bitnami/scripts/libfs.sh\n# We copy the logs folder because it has symlinks to stdout and stderr\nif ! is_dir_empty /opt/bitnami/apache/logs; then\n  cp -r /opt/bitnami/apache/logs /emptydir/app-logs-dir\nfi\n"],"command":["/bin/bash"],"image":"docker.io/bitnamilegacy/apache:latest","imagePullPolicy":"IfNotPresent","name":"preserve-logs-symlinks","resources":{"limits":{"cpu":"150m","ephemeral-storage":"2Gi","memory":"192Mi"},"requests":{"cpu":"100m","ephemeral-storage":"50Mi","memory":"128Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001,"seLinuxOptions":{},"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/emptydir","name":"empty-dir"}]}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"fsGroup":1001,"fsGroupChangePolicy":"Always"},"serviceAccount":"mio-apache","serviceAccountName":"mio-apache","terminationGracePeriodSeconds":30,"volumes":[{"emptyDir":{},"name":"empty-dir"}]}}},"status":{"availableReplicas":1,"conditions":[{"message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"message":"ReplicaSet \"mio-apache-d997d7c56\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":1,"readyReplicas":1,"replicas":1,"terminatingReplicas":0,"updatedReplicas":1}}
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1","meta.helm.sh/release-name":"mio-apache","meta.helm.sh/release-namespace":"progetto"},"generation":1,"labels":{"app.kubernetes.io/instance":"mio-apache","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"apache","app.kubernetes.io/version":"2.4.65","helm.sh/chart":"apache-11.4.29"},"name":"mio-apache","namespace":"progetto","resourceVersion":"798","uid":"1f35da7a-1c39-4053-b474-105006baaef4"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/instance":"mio-apache","app.kubernetes.io/name":"apache"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"},"labels":{"app.kubernetes.io/instance":"mio-apache","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"apache","app.kubernetes.io/version":"2.4.65","helm.sh/chart":"apache-11.4.29"}},"spec":{"affinity":{"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app.kubernetes.io/instance":"mio-apache","app.kubernetes.io/name":"apache"}},"topologyKey":"kubernetes.io/hostname"},"weight":1}]}},"automountServiceAccountToken":false,"containers":[{"env":[{"name":"BITNAMI_DEBUG","value":"false"},{"name":"APACHE_HTTP_PORT_NUMBER","value":"8080"},{"name":"APACHE_HTTPS_PORT_NUMBER","value":"8443"}],"image":"docker.io/bitnamilegacy/apache:latest","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":6,"initialDelaySeconds":180,"periodSeconds":20,"successThreshold":1,"tcpSocket":{"port":"http"},"timeoutSeconds":5},"name":"apache","ports":[{"containerPort":8080,"name":"http","protocol":"TCP"},{"containerPort":8443,"name":"https","protocol":"TCP"}],"readinessProbe":{"failureThreshold":6,"httpGet":{"path":"/","port":"http","scheme":"HTTP"},"initialDelaySeconds":30,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":5},"resources":{"limits":{"cpu":"150m","ephemeral-storage":"2Gi","memory":"192Mi"},"requests":{"cpu":"100m","ephemeral-storage":"50Mi","memory":"128Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001,"seLinuxOptions":{},"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/opt/bitnami/apache/conf","name":"empty-dir","subPath":"app-conf-dir"},{"mountPath":"/opt/bitnami/apache/logs","name":"empty-dir","subPath":"app-logs-dir"},{"mountPath":"/tmp","name":"empty-dir","subPath":"tmp-dir"},{"mountPath":"/opt/bitnami/apache/var/run","name":"empty-dir","subPath":"app-tmp-dir"}]}],"dnsPolicy":"ClusterFirst","hostAliases":[{"hostnames":["status.localhost"],"ip":"127.0.0.1"}],"initContainers":[{"args":["-ec","#!/bin/bash\n\n. /opt/bitnami/scripts/libfs.sh\n# We copy the logs folder because it has symlinks to stdout and stderr\nif ! is_dir_empty /opt/bitnami/apache/logs; then\n  cp -r /opt/bitnami/apache/logs /emptydir/app-logs-dir\nfi\n"],"command":["/bin/bash"],"image":"docker.io/bitnamilegacy/apache:latest","imagePullPolicy":"IfNotPresent","name":"preserve-logs-symlinks","resources":{"limits":{"cpu":"150m","ephemeral-storage":"2Gi","memory":"192Mi"},"requests":{"cpu":"100m","ephemeral-storage":"50Mi","memory":"128Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001,"seLinuxOptions":{},"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/emptydir","name":"empty-dir"}]}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"fsGroup":1001,"fsGroupChangePolicy":"Always"},"serviceAccount":"mio-apache","serviceAccountName":"mio-apache","terminationGracePeriodSeconds":30,"volumes":[{"emptyDir":{},"name":"empty-dir"}]}}},"status":{"availableReplicas":1,"conditions":[{"message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"message":"ReplicaSet \"mio-apache-d997d7c56\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":1,"readyReplicas":1,"replicas":1,"terminatingReplicas":0,"updatedReplicas":1}}
     meta.helm.sh/release-name: mio-apache
     meta.helm.sh/release-namespace: progetto
-  creationTimestamp: "2026-11-05T13:50:47Z"
-  generation: 2
+  creationTimestamp: "2026-11-11T18:32:34Z"
+  generation: 3
   labels:
     app.kubernetes.io/instance: mio-apache
     app.kubernetes.io/managed-by: Helm
@@ -17,8 +17,8 @@ metadata:
     helm.sh/chart: apache-11.4.29
   name: mio-apache
   namespace: progetto
-  resourceVersion: "3029"
-  uid: 8ff36169-0860-4d19-bef6-9297dc391291
+  resourceVersion: "2353"
+  uid: 1f35da7a-1c39-4053-b474-105006baaef4
 spec:
   progressDeadlineSeconds: 600
   replicas: 1
@@ -35,6 +35,7 @@ spec:
   template:
     metadata:
       annotations:
+        kubectl.kubernetes.io/restartedAt: "2026-11-11T18:47:06Z"
         linkerd.io/inject: enabled
       labels:
         app.kubernetes.io/instance: mio-apache
@@ -189,19 +190,19 @@ spec:
 status:
   availableReplicas: 1
   conditions:
-  - lastTransitionTime: "2026-11-05T13:51:37Z"
-    lastUpdateTime: "2026-11-05T13:51:37Z"
+  - lastTransitionTime: "2026-11-11T18:34:01Z"
+    lastUpdateTime: "2026-11-11T18:34:01Z"
     message: Deployment has minimum availability.
     reason: MinimumReplicasAvailable
     status: "True"
     type: Available
-  - lastTransitionTime: "2026-11-05T13:50:47Z"
-    lastUpdateTime: "2026-11-05T14:21:13Z"
-    message: ReplicaSet "mio-apache-69454bd84c" has successfully progressed.
+  - lastTransitionTime: "2026-11-11T18:32:34Z"
+    lastUpdateTime: "2026-11-11T18:47:53Z"
+    message: ReplicaSet "mio-apache-648854dc89" has successfully progressed.
     reason: NewReplicaSetAvailable
     status: "True"
     type: Progressing
-  observedGeneration: 2
+  observedGeneration: 3
   readyReplicas: 1
   replicas: 1
   terminatingReplicas: 0

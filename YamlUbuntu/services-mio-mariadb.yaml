@@ -4,7 +4,7 @@ metadata:
   annotations:
     meta.helm.sh/release-name: mio-mariadb
     meta.helm.sh/release-namespace: progetto
-  creationTimestamp: "2026-11-05T13:50:55Z"
+  creationTimestamp: "2026-11-11T18:32:41Z"
   labels:
     app.kubernetes.io/component: primary
     app.kubernetes.io/instance: mio-mariadb
@@ -15,12 +15,12 @@ metadata:
     helm.sh/chart: mariadb-28.1.6
   name: mio-mariadb
   namespace: progetto
-  resourceVersion: "475"
-  uid: b2f40508-d53a-4dcf-b1b5-6adf9807139b
+  resourceVersion: "450"
+  uid: 640a0411-8a4a-4180-81fa-c2655d2ee28d
 spec:
-  clusterIP: 10.98.196.154
+  clusterIP: 10.110.56.198
   clusterIPs:
-  - 10.98.196.154
+  - 10.110.56.198
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4

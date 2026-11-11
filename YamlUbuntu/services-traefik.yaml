@@ -4,22 +4,22 @@ metadata:
   annotations:
     meta.helm.sh/release-name: traefik
     meta.helm.sh/release-namespace: progetto
-  creationTimestamp: "2026-11-05T13:51:17Z"
+  creationTimestamp: "2026-11-11T18:33:00Z"
   labels:
     app.kubernetes.io/instance: traefik-progetto
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: traefik
     app.kubernetes.io/version: v3.7.17
-    helm.sh/chart: traefik-42.3.0
+    helm.sh/chart: traefik-42.3.2
   name: traefik
   namespace: progetto
-  resourceVersion: "686"
-  uid: 6e8b0821-8ea3-4d8a-bd04-16e642b2326a
+  resourceVersion: "667"
+  uid: 2594bf19-809c-474c-a3ae-5c8b04a8037a
 spec:
   allocateLoadBalancerNodePorts: true
-  clusterIP: 10.106.20.254
+  clusterIP: 10.96.197.168
   clusterIPs:
-  - 10.106.20.254
+  - 10.96.197.168
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
   ipFamilies:
@@ -27,12 +27,12 @@ spec:
   ipFamilyPolicy: SingleStack
   ports:
   - name: web
-    nodePort: 30125
+    nodePort: 32423
     port: 80
     protocol: TCP
     targetPort: web
   - name: websecure
-    nodePort: 32504
+    nodePort: 30831
     port: 443
     protocol: TCP
     targetPort: websecure

@@ -4,7 +4,7 @@ metadata:
   annotations:
     meta.helm.sh/release-name: mio-keycloak
     meta.helm.sh/release-namespace: progetto
-  creationTimestamp: "2026-11-05T13:51:04Z"
+  creationTimestamp: "2026-11-11T18:32:50Z"
   labels:
     app.kubernetes.io/component: keycloak
     app.kubernetes.io/instance: mio-keycloak
@@ -15,20 +15,18 @@ metadata:
     helm.sh/chart: keycloak-25.2.0
   name: mio-keycloak
   namespace: progetto
-  resourceVersion: "2087"
-  uid: e1c49769-6347-4336-9dcd-0eb77c96eccc
+  resourceVersion: "524"
+  uid: 8a8f0847-a317-4727-8a21-a1f22197765d
 spec:
-  clusterIP: 10.104.174.58
+  clusterIP: 10.101.45.232
   clusterIPs:
-  - 10.104.174.58
-  externalTrafficPolicy: Cluster
+  - 10.101.45.232
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
   ipFamilyPolicy: SingleStack
   ports:
   - name: http
-    nodePort: 31119
     port: 80
     protocol: TCP
     targetPort: http
@@ -38,6 +36,6 @@ spec:
     app.kubernetes.io/name: keycloak
     app.kubernetes.io/part-of: keycloak
   sessionAffinity: None
-  type: NodePort
+  type: ClusterIP
 status:
   loadBalancer: {}

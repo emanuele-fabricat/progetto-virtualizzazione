@@ -4,7 +4,7 @@ metadata:
   annotations:
     meta.helm.sh/release-name: mio-apache
     meta.helm.sh/release-namespace: progetto
-  creationTimestamp: "2026-11-05T13:50:47Z"
+  creationTimestamp: "2026-11-11T18:32:34Z"
   labels:
     app.kubernetes.io/instance: mio-apache
     app.kubernetes.io/managed-by: Helm
@@ -13,12 +13,12 @@ metadata:
     helm.sh/chart: apache-11.4.29
   name: mio-apache
   namespace: progetto
-  resourceVersion: "440"
-  uid: 9a06b789-d5c3-4ddb-ba90-c5f6fc40cc20
+  resourceVersion: "398"
+  uid: e7f67e45-98a2-4130-8d1d-0274665f1c06
 spec:
-  clusterIP: 10.109.84.110
+  clusterIP: 10.110.179.145
   clusterIPs:
-  - 10.109.84.110
+  - 10.110.179.145
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4

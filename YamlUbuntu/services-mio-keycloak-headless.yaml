@@ -4,7 +4,7 @@ metadata:
   annotations:
     meta.helm.sh/release-name: mio-keycloak
     meta.helm.sh/release-namespace: progetto
-  creationTimestamp: "2026-11-05T13:51:04Z"
+  creationTimestamp: "2026-11-11T18:32:50Z"
   labels:
     app.kubernetes.io/component: keycloak
     app.kubernetes.io/instance: mio-keycloak
@@ -15,8 +15,8 @@ metadata:
     helm.sh/chart: keycloak-25.2.0
   name: mio-keycloak-headless
   namespace: progetto
-  resourceVersion: "535"
-  uid: b8a4948c-31d0-469c-a3d8-a93e63736651
+  resourceVersion: "514"
+  uid: 57a8414a-fc02-4f07-8a01-dda362753231
 spec:
   clusterIP: None
   clusterIPs:

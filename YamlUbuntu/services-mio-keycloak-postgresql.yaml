@@ -4,7 +4,7 @@ metadata:
   annotations:
     meta.helm.sh/release-name: mio-keycloak
     meta.helm.sh/release-namespace: progetto
-  creationTimestamp: "2026-11-05T13:51:04Z"
+  creationTimestamp: "2026-11-11T18:32:50Z"
   labels:
     app.kubernetes.io/component: primary
     app.kubernetes.io/instance: mio-keycloak
@@ -14,12 +14,12 @@ metadata:
     helm.sh/chart: postgresql-16.7.26
   name: mio-keycloak-postgresql
   namespace: progetto
-  resourceVersion: "546"
-  uid: 4dccd1f1-fa41-470a-b994-8b481932bb8a
+  resourceVersion: "518"
+  uid: 7a337755-f07f-4a33-95fc-a380138911b2
 spec:
-  clusterIP: 10.102.50.138
+  clusterIP: 10.106.164.145
   clusterIPs:
-  - 10.102.50.138
+  - 10.106.164.145
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
