@@ -7,6 +7,7 @@ sudo apt update || exit 1
 sudo apt install -y docker.io || exit 1
 sudo systemctl enable --now docker || exit 1
 sudo usermod -aG docker "$USER" || exit 1
+newgrp docker
 
 echo -e "\033[32mINSTALLAZIONE DOCKER AVVENUTA CON SUCCESSO\033[0m"
 
