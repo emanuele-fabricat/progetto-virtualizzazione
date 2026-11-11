@@ -1,0 +1,125 @@
+Controlli Kubernetes per l'errore 504 (namespace: progetto)
+
+1. Contesto e nodi
+kubectl config current-context
+kubectl get nodes -o wide
+
+2. Pod, servizi ed eventi
+kubectl -n progetto get pods -o wide
+kubectl -n progetto get statefulsets,deployments,services -o wide
+kubectl -n progetto get events --sort-by=.lastTimestamp
+
+3. Keycloak
+kubectl -n progetto describe statefulset mio-keycloak
+kubectl -n progetto get pods -l app.kubernetes.io/instance=mio-keycloak -o wide
+kubectl -n progetto logs statefulset/mio-keycloak -c keycloak --tail=100
+
+4. Database di Keycloak
+kubectl -n progetto get pods -l app.kubernetes.io/instance=mio-keycloak-postgresql -o wide
+kubectl -n progetto logs statefulset/mio-keycloak-postgresql --tail=100
+
+5. Endpoint del Service Keycloak
+kubectl -n progetto get service mio-keycloak -o wide
+kubectl -n progetto get endpoints mio-keycloak -o wide
+kubectl -n progetto get endpointslices -l kubernetes.io/service-name=mio-keycloak -o wide
+
+6. Prova di accesso a Keycloak dall'interno del cluster
+kubectl -n progetto run test-keycloak --rm -i --restart=Never --image=curlimages/curl -- curl -sv --max-time 8 http://mio-keycloak/realms/progetto/.well-known/openid-configuration
+
+Se il pod temporaneo non parte:
+kubectl -n progetto get pods
+kubectl -n progetto describe pod test-keycloak
+
+7. oauth2-proxy
+kubectl -n progetto describe deployment mio-oauth2-oauth2-proxy
+kubectl -n progetto logs deployment/mio-oauth2-oauth2-proxy -c oauth2-proxy --tail=100
+kubectl -n progetto get endpoints mio-oauth2-oauth2-proxy -o wide
+
+8. Porte dei servizi e test degli indirizzi usati
+kubectl -n progetto get services -o wide
+minikube ip
+curl -sv --max-time 8 http://192.168.49.2:32141/realms/progetto/.well-known/openid-configuration
+curl -sv --max-time 8 http://192.168.49.2:32622/realms/progetto/.well-known/openid-configuration
+
+Se minikube ip restituisce un IP diverso da 192.168.49.2, sostituire quell'IP nei due comandi curl.
+
+9. Linkerd
+linkerd check
+kubectl -n progetto get pods -o wide
+kubectl -n progetto logs statefulset/mio-keycloak -c linkerd-proxy --tail=100
+linkerd viz stat deploy -n progetto
+
+
+========================================================================
+APPENDICE - INTERPRETAZIONE DEL 504 E PROVA DI ESCLUSIONE DI KEYCLOAK
+========================================================================
+
+Questa sezione e' separata dai controlli generali qui sopra e si riferisce
+all'errore riportato in tmpError.txt:
+
+  HTTP 504 Gateway Timeout
+  l5d-proxy-error: logical service 10.244.0.20:8080:
+  route default.endpoint: backend default.unknown: service in fail-fast
+
+Il messaggio indica che la richiesta raggiunge il proxy Linkerd, ma il proxy
+non riesce a inoltrarla a un endpoint backend utilizzabile. L'indirizzo
+10.244.0.20:8080 e' quello riportato dal log e puo' cambiare: non va
+considerato un indirizzo fisso. Il 504, da solo, non dimostra che siano
+errati il client secret o la redirect URI OAuth2.
+
+IMPORTANTE: gli esempi di questa appendice usano "minikube kubectl --",
+come gli script di installazione del progetto, per interrogare il cluster
+Minikube corretto. I comandi kubectl nella sezione precedente funzionano
+solo se il contesto kubectl attivo punta gia' a Minikube.
+
+1. Verificare che Keycloak sia pronto e che il Service abbia endpoint
+
+minikube kubectl -- get pods -n progetto -o wide
+minikube kubectl -- get statefulset mio-keycloak -n progetto
+minikube kubectl -- get service mio-keycloak -n progetto -o wide
+minikube kubectl -- get endpoints mio-keycloak -n progetto -o wide
+minikube kubectl -- get endpointslices -n progetto -l kubernetes.io/service-name=mio-keycloak -o wide
+
+Il pod mio-keycloak deve risultare Ready e il Service deve avere almeno un
+endpoint pronto. Se non ci sono endpoint, controllare prima il pod e il
+database: il Service senza endpoint non ha un backend a cui instradare le
+richieste.
+
+2. Esaminare i log applicativi e del proxy Linkerd
+
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c keycloak --since=15m
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=15m
+minikube kubectl -- logs statefulset/mio-keycloak-postgresql -n progetto --since=15m
+linkerd check
+
+Se Keycloak non e' pronto o i log mostrano problemi di avvio/connessione al
+database, correggere prima quella causa. Se Keycloak e' Ready, il Service ha
+endpoint e il proxy continua a segnalare fail-fast, si puo' fare la prova
+diagnostica seguente.
+
+3. Prova diagnostica reversibile: escludere solo Keycloak dal mesh
+
+L'annotazione deve essere applicata al template dei pod dello StatefulSet,
+non solo ai metadati dello StatefulSet. La patch seguente aggiorna il
+template e Kubernetes avvia automaticamente un nuovo pod:
+
+minikube kubectl -- patch statefulset mio-keycloak -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"linkerd.io/inject":"disabled"}}}}}'
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s
+minikube kubectl -- get pod mio-keycloak-0 -n progetto -o jsonpath='{.spec.containers[*].name}'; echo
+
+Verificare nell'ultimo comando che tra i container del pod non compaia
+"linkerd-proxy", quindi riprovare il login OAuth2. Se il 504 scompare, il
+problema e' probabilmente legato all'intercettazione o all'instradamento di
+Linkerd verso Keycloak; se resta, riabilitare il mesh e proseguire con la
+diagnosi del Service, degli endpoint e dei log.
+
+Questa e' una prova, non una correzione definitiva: mentre e' attiva,
+Keycloak non e' incluso nel mesh Linkerd. Per ripristinare il comportamento
+precedente e lasciare che Linkerd inietti il sidecar:
+
+minikube kubectl -- patch statefulset mio-keycloak -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"}}}}}'
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s
+
+Se si riesegue installaProgettoDue.sh, il blocco "Mashing Keycloak" inietta
+nuovamente Linkerd: tenere conto di questo quando si ripete la prova.
+========================================================================
