@@ -2,7 +2,7 @@ Eseguire il seguente comando per aprire un tunnel alla porta 8082 e potersi conn
 
 minikube kubectl -- port-forward -n progetto svc/mio-keycloak 8082:80
 
-OAuth2 Proxy raggiunge Keycloak tramite il NodePort 32622, configurato dallo script di installazione. L'indirizzo dell'issuer viene composto automaticamente usando l'IP corrente di Minikube.
+Keycloak rimane esposto nel cluster come ClusterIP. OAuth2 Proxy raggiunge Keycloak tramite la route pubblica di Traefik: lo script installaProgettoDue.sh ricava l'IP corrente di Minikube e il NodePort HTTP di Traefik, quindi compone automaticamente l'indirizzo dell'issuer e crea la route per quell'IP. Se l'IP o il NodePort cambia, rieseguire lo script per aggiornare la configurazione.
 
 Aprire la pagina web http://127.0.0.1:8082 e entrare nella dashboard digitando
 utente: admin
@@ -66,12 +66,11 @@ MODIFICA PERSISTENZA SESSIONE UTENTE
 Click Realm Settings
 Click Session field
 Settare:
-	SSO Session Max: 30 minutes;
-	Offilne Sesson Idle: 1 hour;
+	SSO Session Max: 1 hour;
+	Offilne Sesson Idle: 90 minutes;
 	Salvare tutto  
 
 Click sul proprio nome utente in alto a destra
 Click su Sign out
 Chiudere il tunnel con ctrl+c
 	
-

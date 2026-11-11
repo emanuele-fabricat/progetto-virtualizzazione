@@ -1,0 +1,230 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{"meta.helm.sh/release-name":"mio-keycloak","meta.helm.sh/release-namespace":"progetto"},"generation":1,"labels":{"app.kubernetes.io/component":"keycloak","app.kubernetes.io/instance":"mio-keycloak","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"keycloak","app.kubernetes.io/part-of":"keycloak","app.kubernetes.io/version":"26.3.3","helm.sh/chart":"keycloak-25.2.0"},"name":"mio-keycloak","namespace":"progetto","resourceVersion":"1115","uid":"60e2398a-e9d3-4c48-bdf2-af19b6651432"},"spec":{"persistentVolumeClaimRetentionPolicy":{"whenDeleted":"Retain","whenScaled":"Retain"},"podManagementPolicy":"Parallel","replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/component":"keycloak","app.kubernetes.io/instance":"mio-keycloak","app.kubernetes.io/name":"keycloak","app.kubernetes.io/part-of":"keycloak"}},"serviceName":"mio-keycloak-headless","template":{"metadata":{"annotations":{"checksum/configmap-env-vars":"f81e84fa751e5688fd8a05ebfd754b949896135a70eb1b88856e0a43539c634a","checksum/secrets":"e47655bfec9cf9b1b060726a1528ff6704698b5e7f2b1bf449103724bfeb9e27","linkerd.io/inject":"enabled"},"labels":{"app.kubernetes.io/component":"keycloak","app.kubernetes.io/instance":"mio-keycloak","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"keycloak","app.kubernetes.io/part-of":"keycloak","app.kubernetes.io/version":"26.3.3","helm.sh/chart":"keycloak-25.2.0"}},"spec":{"affinity":{"podAntiAffinity":{"preferredDuringSchedulingIgnoredDuringExecution":[{"podAffinityTerm":{"labelSelector":{"matchLabels":{"app.kubernetes.io/component":"keycloak","app.kubernetes.io/instance":"mio-keycloak","app.kubernetes.io/name":"keycloak"}},"topologyKey":"kubernetes.io/hostname"},"weight":1}]}},"automountServiceAccountToken":true,"containers":[{"env":[{"name":"KUBERNETES_NAMESPACE","valueFrom":{"fieldRef":{"apiVersion":"v1","fieldPath":"metadata.namespace"}}}],"envFrom":[{"configMapRef":{"name":"mio-keycloak-env-vars"}}],"image":"docker.io/bitnamilegacy/keycloak:26.3.3-debian-12-r0","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"initialDelaySeconds":120,"periodSeconds":1,"successThreshold":1,"tcpSocket":{"port":"http"},"timeoutSeconds":5},"name":"keycloak","ports":[{"containerPort":8080,"name":"http","protocol":"TCP"},{"containerPort":7800,"name":"discovery","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/realms/master","port":"http","scheme":"HTTP"},"initialDelaySeconds":30,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"resources":{"limits":{"cpu":"750m","ephemeral-storage":"2Gi","memory":"768Mi"},"requests":{"cpu":"500m","ephemeral-storage":"50Mi","memory":"512Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001,"seLinuxOptions":{},"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/tmp","name":"empty-dir","subPath":"tmp-dir"},{"mountPath":"/bitnami/keycloak","name":"empty-dir","subPath":"app-volume-dir"},{"mountPath":"/opt/bitnami/keycloak/conf","name":"empty-dir","subPath":"app-conf-dir"},{"mountPath":"/opt/bitnami/keycloak/lib/quarkus","name":"empty-dir","subPath":"app-quarkus-dir"},{"mountPath":"/opt/bitnami/keycloak/data","name":"empty-dir","subPath":"app-data-dir"},{"mountPath":"/opt/bitnami/keycloak/providers","name":"empty-dir","subPath":"app-providers-dir"},{"mountPath":"/opt/bitnami/keycloak/themes","name":"empty-dir","subPath":"app-themes-dir"},{"mountPath":"/opt/bitnami/keycloak/secrets","name":"keycloak-secrets"}]}],"dnsPolicy":"ClusterFirst","enableServiceLinks":true,"initContainers":[{"args":["-ec",". /opt/bitnami/scripts/liblog.sh\n\ninfo \"Copying writable dirs to empty dir\"\n# In order to not break the application functionality we need to make some\n# directories writable, so we need to copy it to an empty dir volume\ncp -r --preserve=mode,timestamps /opt/bitnami/keycloak/lib/quarkus /emptydir/app-quarkus-dir\ncp -r --preserve=mode,timestamps /opt/bitnami/keycloak/data /emptydir/app-data-dir\ncp -r --preserve=mode,timestamps /opt/bitnami/keycloak/providers /emptydir/app-providers-dir\ncp -r --preserve=mode,timestamps /opt/bitnami/keycloak/themes /emptydir/app-themes-dir\ninfo \"Copy operation completed\"\n"],"command":["/bin/bash"],"image":"docker.io/bitnamilegacy/keycloak:26.3.3-debian-12-r0","imagePullPolicy":"IfNotPresent","name":"prepare-write-dirs","resources":{"limits":{"cpu":"150m","ephemeral-storage":"2Gi","memory":"192Mi"},"requests":{"cpu":"100m","ephemeral-storage":"50Mi","memory":"128Mi"}},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"privileged":false,"readOnlyRootFilesystem":true,"runAsGroup":1001,"runAsNonRoot":true,"runAsUser":1001,"seLinuxOptions":{},"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/emptydir","name":"empty-dir"}]}],"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{"fsGroup":1001,"fsGroupChangePolicy":"Always"},"serviceAccount":"mio-keycloak","serviceAccountName":"mio-keycloak","terminationGracePeriodSeconds":30,"volumes":[{"emptyDir":{},"name":"empty-dir"},{"name":"keycloak-secrets","projected":{"defaultMode":420,"sources":[{"secret":{"name":"mio-keycloak"}},{"secret":{"items":[{"key":"password","path":"db-password"}],"name":"mio-keycloak-postgresql"}}]}}]}},"updateStrategy":{"type":"RollingUpdate"}},"status":{"availableReplicas":1,"collisionCount":0,"currentReplicas":1,"currentRevision":"mio-keycloak-74f7b858b","observedGeneration":1,"readyReplicas":1,"replicas":1,"updateRevision":"mio-keycloak-74f7b858b","updatedReplicas":1}}
+    meta.helm.sh/release-name: mio-keycloak
+    meta.helm.sh/release-namespace: progetto
+  creationTimestamp: "2026-11-11T18:32:50Z"
+  generation: 3
+  labels:
+    app.kubernetes.io/component: keycloak
+    app.kubernetes.io/instance: mio-keycloak
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: keycloak
+    app.kubernetes.io/version: 26.3.3
+    helm.sh/chart: keycloak-25.2.0
+  name: mio-keycloak
+  namespace: progetto
+  resourceVersion: "2778"
+  uid: 60e2398a-e9d3-4c48-bdf2-af19b6651432
+spec:
+  persistentVolumeClaimRetentionPolicy:
+    whenDeleted: Retain
+    whenScaled: Retain
+  podManagementPolicy: Parallel
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: keycloak
+      app.kubernetes.io/instance: mio-keycloak
+      app.kubernetes.io/name: keycloak
+      app.kubernetes.io/part-of: keycloak
+  serviceName: mio-keycloak-headless
+  template:
+    metadata:
+      annotations:
+        checksum/configmap-env-vars: f81e84fa751e5688fd8a05ebfd754b949896135a70eb1b88856e0a43539c634a
+        checksum/secrets: e47655bfec9cf9b1b060726a1528ff6704698b5e7f2b1bf449103724bfeb9e27
+        kubectl.kubernetes.io/restartedAt: "2026-11-11T18:49:33Z"
+        linkerd.io/inject: enabled
+      labels:
+        app.kubernetes.io/component: keycloak
+        app.kubernetes.io/instance: mio-keycloak
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: keycloak
+        app.kubernetes.io/part-of: keycloak
+        app.kubernetes.io/version: 26.3.3
+        helm.sh/chart: keycloak-25.2.0
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app.kubernetes.io/component: keycloak
+                  app.kubernetes.io/instance: mio-keycloak
+                  app.kubernetes.io/name: keycloak
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+      automountServiceAccountToken: true
+      containers:
+      - env:
+        - name: KUBERNETES_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        envFrom:
+        - configMapRef:
+            name: mio-keycloak-env-vars
+        image: docker.io/bitnamilegacy/keycloak:26.3.3-debian-12-r0
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 120
+          periodSeconds: 1
+          successThreshold: 1
+          tcpSocket:
+            port: http
+          timeoutSeconds: 5
+        name: keycloak
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 7800
+          name: discovery
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /realms/master
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        resources:
+          limits:
+            cpu: 750m
+            ephemeral-storage: 2Gi
+            memory: 768Mi
+          requests:
+            cpu: 500m
+            ephemeral-storage: 50Mi
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 1001
+          runAsNonRoot: true
+          runAsUser: 1001
+          seLinuxOptions: {}
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /tmp
+          name: empty-dir
+          subPath: tmp-dir
+        - mountPath: /bitnami/keycloak
+          name: empty-dir
+          subPath: app-volume-dir
+        - mountPath: /opt/bitnami/keycloak/conf
+          name: empty-dir
+          subPath: app-conf-dir
+        - mountPath: /opt/bitnami/keycloak/lib/quarkus
+          name: empty-dir
+          subPath: app-quarkus-dir
+        - mountPath: /opt/bitnami/keycloak/data
+          name: empty-dir
+          subPath: app-data-dir
+        - mountPath: /opt/bitnami/keycloak/providers
+          name: empty-dir
+          subPath: app-providers-dir
+        - mountPath: /opt/bitnami/keycloak/themes
+          name: empty-dir
+          subPath: app-themes-dir
+        - mountPath: /opt/bitnami/keycloak/secrets
+          name: keycloak-secrets
+      dnsPolicy: ClusterFirst
+      enableServiceLinks: true
+      initContainers:
+      - args:
+        - -ec
+        - |
+          . /opt/bitnami/scripts/liblog.sh
+
+          info "Copying writable dirs to empty dir"
+          # In order to not break the application functionality we need to make some
+          # directories writable, so we need to copy it to an empty dir volume
+          cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/lib/quarkus /emptydir/app-quarkus-dir
+          cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/data /emptydir/app-data-dir
+          cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/providers /emptydir/app-providers-dir
+          cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/themes /emptydir/app-themes-dir
+          info "Copy operation completed"
+        command:
+        - /bin/bash
+        image: docker.io/bitnamilegacy/keycloak:26.3.3-debian-12-r0
+        imagePullPolicy: IfNotPresent
+        name: prepare-write-dirs
+        resources:
+          limits:
+            cpu: 150m
+            ephemeral-storage: 2Gi
+            memory: 192Mi
+          requests:
+            cpu: 100m
+            ephemeral-storage: 50Mi
+            memory: 128Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          readOnlyRootFilesystem: true
+          runAsGroup: 1001
+          runAsNonRoot: true
+          runAsUser: 1001
+          seLinuxOptions: {}
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /emptydir
+          name: empty-dir
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext:
+        fsGroup: 1001
+        fsGroupChangePolicy: Always
+      serviceAccount: mio-keycloak
+      serviceAccountName: mio-keycloak
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - emptyDir: {}
+        name: empty-dir
+      - name: keycloak-secrets
+        projected:
+          defaultMode: 420
+          sources:
+          - secret:
+              name: mio-keycloak
+          - secret:
+              items:
+              - key: password
+                path: db-password
+              name: mio-keycloak-postgresql
+  updateStrategy:
+    type: RollingUpdate
+status:
+  availableReplicas: 0
+  collisionCount: 0
+  currentRevision: mio-keycloak-74f7b858b
+  observedGeneration: 3
+  replicas: 1
+  updateRevision: mio-keycloak-b64fddb88
+  updatedReplicas: 1

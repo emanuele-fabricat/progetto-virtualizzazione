@@ -1,33 +1,228 @@
- minikube kubectl -- logs -n progetto mio-keycloak-0 -c linkerd-proxy --since=15m
-[  3630.907670s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3648.937331s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3695.583000s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3717.356403s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3743.182270s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3773.323455s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3806.829207s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3825.343290s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3850.817184s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3894.301863s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3933.696619s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3959.287246s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  3984.506649s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4007.526018s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4026.148208s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4045.881887s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4087.150225s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4123.328430s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4151.614345s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4187.921741s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4216.082702s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4249.903832s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4284.409511s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4325.371700s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4368.557205s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4411.928296s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4451.154496s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-[  4497.589008s]  INFO ThreadId(01) outbound:proxy{addr=10.100.175.78:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.21:5432
-lele@leleserver:~$ minikube kubectl -- logs -n progetto mio-keycloak-0 -c postgresql --since=15m
-error: container postgresql is not valid for pod mio-keycloak-0
-lele@leleserver:~$ minikube kubectl -- logs -n progetto mio-keycloak-postgresql-0 -c linkerd-proxy --since=15m
-lele@leleserver:~$ minikube kubectl -- logs -n progetto mio-keycloak-postgresql-0 -c postgresql --since=15m
+minikube kubectl -- logs mio-keycloak-0 -n progetto
+Defaulted container "keycloak" out of: keycloak, linkerd-init (init), linkerd-proxy (init), prepare-write-dirs (init)
+keycloak 18:56:52.26 INFO  ==> 
+keycloak 18:56:52.26 INFO  ==> Welcome to the Bitnami keycloak container
+keycloak 18:56:52.27 INFO  ==> Subscribe to project updates by watching https://github.com/bitnami/containers
+keycloak 18:56:52.27 INFO  ==> NOTICE: Starting August 28th, 2025, only a limited subset of images/charts will remain available for free. Backup will be available for some time at the 'Bitnami Legacy' repository. More info at https://github.com/bitnami/containers/issues/83267
+keycloak 18:56:52.28 INFO  ==> 
+keycloak 18:56:52.28 INFO  ==> ** Starting keycloak setup **
+keycloak 18:56:52.31 INFO  ==> Validating settings in KEYCLOAK_*,KC_* env vars...
+keycloak 18:56:52.38 INFO  ==> Trying to connect to PostgreSQL server mio-keycloak-postgresql...
+keycloak 18:56:52.39 INFO  ==> Found PostgreSQL server listening at mio-keycloak-postgresql:5432
+keycloak 18:56:52.41 INFO  ==> Configuring database settings
+keycloak 18:56:52.42 INFO  ==> ** keycloak setup finished! **
+
+keycloak 18:56:52.47 INFO  ==> ** Starting Keycloak **
+Appending additional Java properties to JAVA_OPTS
+Running the server in development mode. DO NOT use this configuration in production.
+2026-11-11 18:57:21,188 WARN  [io.agroal.pool] (agroal-11) Datasource '<default>': The connection attempt failed.
+2026-11-11 18:57:21,191 WARN  [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator] (JPA Startup Thread) HHH000342: Could not obtain connection to query metadata: org.hibernate.exception.JDBCConnectionException: unable to obtain isolated JDBC connection [The connection attempt failed.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doTheWork(JtaIsolationDelegate.java:206)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.lambda$delegateWork$3(JtaIsolationDelegate.java:91)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doInSuspendedTransaction(JtaIsolationDelegate.java:125)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.delegateWork(JtaIsolationDelegate.java:88)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:336)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68)
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:52)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:136)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:247)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68)
+	at org.hibernate.boot.internal.SessionFactoryOptionsBuilder.<init>(SessionFactoryOptionsBuilder.java:290)
+	at io.quarkus.hibernate.orm.runtime.recording.PrevalidatedQuarkusMetadata.buildSessionFactoryOptionsBuilder(PrevalidatedQuarkusMetadata.java:72)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:84)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:163)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:63)
+	at java.base/java.lang.Thread.run(Unknown Source)
+Caused by: org.postgresql.util.PSQLException: The connection attempt failed.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:385)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:277)
+	at org.postgresql.Driver.makeConnection(Driver.java:448)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:225)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:585)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:566)
+	at java.base/java.util.concurrent.FutureTask.run(Unknown Source)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:75)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	... 1 more
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at org.postgresql.core.VisibleBufferedInputStream.readMore(VisibleBufferedInputStream.java:192)
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:159)
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:144)
+	at org.postgresql.core.VisibleBufferedInputStream.read(VisibleBufferedInputStream.java:76)
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:477)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.enableSSL(ConnectionFactoryImpl.java:627)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:207)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289)
+	... 12 more
+
+2026-11-11 18:57:25,778 WARN  [io.agroal.pool] (agroal-11) Datasource '<default>': The connection attempt failed.
+2026-11-11 18:57:25,779 INFO  [com.arjuna.ats.jbossatx] (main) ARJUNA032014: Stopping transaction recovery manager
+2026-11-11 18:57:25,832 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to start server in (development) mode
+2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to obtain JDBC connection
+2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: The connection attempt failed.
+2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Connection reset
+2026-11-11 18:57:25,833 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) For more details run the same command passing the '--verbose' option. Also you can use '--help' to see the details about the usage of the particular command.
+
+
+minikube kubectl -- logs mio-keycloak-postgresql-0 -n progetto -c postgresql --since=30m
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=30m
+postgresql 18:49:21.13 INFO  ==> 
+postgresql 18:49:21.13 INFO  ==> Welcome to the Bitnami postgresql container
+postgresql 18:49:21.22 INFO  ==> Subscribe to project updates by watching https://github.com/bitnami/containers
+postgresql 18:49:21.23 INFO  ==> NOTICE: Starting August 28th, 2025, only a limited subset of images/charts will remain available for free. Backup will be available for some time at the 'Bitnami Legacy' repository. More info at https://github.com/bitnami/containers/issues/83267
+postgresql 18:49:21.23 INFO  ==> 
+postgresql 18:49:21.53 INFO  ==> ** Starting PostgreSQL setup **
+postgresql 18:49:21.82 INFO  ==> Validating settings in POSTGRESQL_* env vars..
+postgresql 18:49:21.92 INFO  ==> Cleaning stale /bitnami/postgresql/data/postmaster.pid file
+postgresql 18:49:21.93 INFO  ==> Loading custom pre-init scripts...
+postgresql 18:49:22.03 INFO  ==> Initializing PostgreSQL database...
+postgresql 18:49:22.23 INFO  ==> pg_hba.conf file not detected. Generating it...
+postgresql 18:49:22.23 INFO  ==> Generating local authentication configuration
+postgresql 18:49:22.43 INFO  ==> Deploying PostgreSQL with persisted data...
+postgresql 18:49:22.73 INFO  ==> Configuring replication parameters
+postgresql 18:49:23.13 INFO  ==> Configuring fsync
+postgresql 18:49:23.23 INFO  ==> Configuring synchronous_replication
+postgresql 18:49:23.73 INFO  ==> Loading custom scripts...
+postgresql 18:49:23.83 INFO  ==> Enabling remote connections
+
+postgresql 18:49:23.93 INFO  ==> ** PostgreSQL setup finished! **
+postgresql 18:49:24.23 INFO  ==> ** Starting PostgreSQL **
+2026-11-11 18:49:24.445 GMT [1] LOG:  pgaudit extension initialized
+2026-11-11 18:49:24.627 GMT [1] LOG:  starting PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-11-11 18:49:24.628 GMT [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-11-11 18:49:24.628 GMT [1] LOG:  listening on IPv6 address "::", port 5432
+2026-11-11 18:49:24.635 GMT [1] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2026-11-11 18:49:24.659 GMT [94] LOG:  database system was interrupted; last known up at 2026-11-11 18:45:01 GMT
+2026-11-11 18:49:25.039 GMT [94] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-11-11 18:49:25.046 GMT [94] LOG:  redo starts at 0/1D76088
+2026-11-11 18:49:25.118 GMT [94] LOG:  invalid record length at 0/1D770D8: expected at least 24, got 0
+2026-11-11 18:49:25.118 GMT [94] LOG:  redo done at 0/1D770A0 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.07 s
+2026-11-11 18:49:25.126 GMT [92] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-11-11 18:49:25.161 GMT [92] LOG:  checkpoint complete: wrote 5 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.018 s, total=0.038 s; sync files=4, longest=0.014 s, average=0.005 s; distance=4 kB, estimate=4 kB; lsn=0/1D770D8, redo lsn=0/1D770D8
+2026-11-11 18:49:25.169 GMT [1] LOG:  database system is ready to accept connections
+[     0.000306s]  INFO ThreadId(01) linkerd2_proxy: release 2.370.0 (0cdcc07) by linkerd on 2026-09-23T08:50:17Z
+[     0.006222s]  INFO ThreadId(01) linkerd2_proxy::rt: Using single-threaded proxy runtime
+[     0.007966s]  INFO ThreadId(01) linkerd2_proxy: Admin interface on 0.0.0.0:4191
+[     0.008021s]  INFO ThreadId(01) linkerd2_proxy: Inbound interface on 0.0.0.0:4143
+[     0.008026s]  INFO ThreadId(01) linkerd2_proxy: Outbound interface on 127.0.0.1:4140
+[     0.008031s]  INFO ThreadId(01) linkerd2_proxy: Tap interface on 0.0.0.0:4190
+[     0.008035s]  INFO ThreadId(01) linkerd2_proxy: SNI is mio-keycloak.progetto.serviceaccount.identity.linkerd.cluster.local
+[     0.008039s]  INFO ThreadId(01) linkerd2_proxy: Local identity is mio-keycloak.progetto.serviceaccount.identity.linkerd.cluster.local
+[     0.008045s]  INFO ThreadId(01) linkerd2_proxy: Destinations resolved via linkerd-dst-headless.linkerd.svc.cluster.local:8086 (linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local)
+[     0.009645s]  INFO ThreadId(01) policy:controller{addr=linkerd-policy.linkerd.svc.cluster.local:8090}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8090
+[     0.010497s]  INFO ThreadId(02) identity:identity{server.addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}:controller{addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.9:8080
+[     0.086140s]  INFO ThreadId(01) dst:controller{addr=linkerd-dst-headless.linkerd.svc.cluster.local:8086}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8086
+[     0.095392s]  INFO ThreadId(02) daemon:identity: linkerd_app: Certified identity id=mio-keycloak.progetto.serviceaccount.identity.linkerd.cluster.local
+[     3.231380s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[    34.868364s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:36206}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    44.868238s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:47738}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    54.868184s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:60466}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    64.868778s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:53832}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    74.868394s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:48436}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    84.869072s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:52664}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    90.316234s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:52666}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   100.316528s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:51472}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   110.316625s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:40262}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   110.824452s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   143.847546s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   149.715622s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:48568}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   164.646657s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   192.530617s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   196.080293s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:58486}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   225.628336s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   252.392722s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   256.553827s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:33118}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   317.623440s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   343.880949s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   349.253306s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:52516}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   436.672700s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   464.453143s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   468.195232s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:58698}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   635.650217s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   662.951011s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   666.720729s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:57058}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   970.673319s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   997.555509s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[  1002.195752s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:52200}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[  1305.645170s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[  1333.299454s]  INFO ThreadId(01) outbound:proxy{addr=10.106.164.145:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[  1336.637379s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:45468}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+
+
+minikube kubectl -- logs mio-keycloak-postgresql-0 -n progetto -c linkerd-proxy --since=3h
+[     0.000311s]  INFO ThreadId(01) linkerd2_proxy: release 2.370.0 (0cdcc07) by linkerd on 2026-09-23T08:50:17Z
+[     0.006110s]  INFO ThreadId(01) linkerd2_proxy::rt: Using single-threaded proxy runtime
+[     0.007826s]  INFO ThreadId(01) linkerd2_proxy: Admin interface on 0.0.0.0:4191
+[     0.007850s]  INFO ThreadId(01) linkerd2_proxy: Inbound interface on 0.0.0.0:4143
+[     0.007855s]  INFO ThreadId(01) linkerd2_proxy: Outbound interface on 127.0.0.1:4140
+[     0.007860s]  INFO ThreadId(01) linkerd2_proxy: Tap interface on 0.0.0.0:4190
+[     0.007864s]  INFO ThreadId(01) linkerd2_proxy: SNI is mio-keycloak-postgresql.progetto.serviceaccount.identity.linkerd.cluster.local
+[     0.007869s]  INFO ThreadId(01) linkerd2_proxy: Local identity is mio-keycloak-postgresql.progetto.serviceaccount.identity.linkerd.cluster.local
+[     0.007874s]  INFO ThreadId(01) linkerd2_proxy: Destinations resolved via linkerd-dst-headless.linkerd.svc.cluster.local:8086 (linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local)
+[     0.009480s]  INFO ThreadId(01) policy:controller{addr=linkerd-policy.linkerd.svc.cluster.local:8090}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8090
+[     0.010218s]  INFO ThreadId(02) identity:identity{server.addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}:controller{addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.9:8080
+[     0.086031s]  INFO ThreadId(01) dst:controller{addr=linkerd-dst-headless.linkerd.svc.cluster.local:8086}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8086
+[     0.096150s]  INFO ThreadId(02) daemon:identity: linkerd_app: Certified identity id=mio-keycloak-postgresql.progetto.serviceaccount.identity.linkerd.cluster.local
+
+minikube kubectl -- get configmap mio-keycloak-env-vars -n progetto -o yaml
+apiVersion: v1
+data:
+  BITNAMI_DEBUG: "false"
+  JAVA_OPTS_APPEND: -Djgroups.dns.query=mio-keycloak-headless.progetto.svc.cluster.local
+  KC_BOOTSTRAP_ADMIN_PASSWORD_FILE: /opt/bitnami/keycloak/secrets/admin-password
+  KC_BOOTSTRAP_ADMIN_USERNAME: admin
+  KC_CACHE: ispn
+  KC_CACHE_CONFIG_FILE: cache-ispn.xml
+  KC_CACHE_STACK: jdbc-ping
+  KC_DB_PASSWORD_FILE: /opt/bitnami/keycloak/secrets/db-password
+  KC_DB_SCHEMA: public
+  KC_DB_URL: jdbc:postgresql://mio-keycloak-postgresql:5432/keycloak_db?currentSchema=public
+  KC_DB_USERNAME: admin
+  KC_HTTP_ENABLED: "true"
+  KC_HTTP_MANAGEMENT_PORT: "9000"
+  KC_HTTP_PORT: "8080"
+  KC_HTTP_RELATIVE_PATH: /
+  KC_LOG_CONSOLE_OUTPUT: default
+  KC_LOG_LEVEL: INFO
+  KC_METRICS_ENABLED: "false"
+  KC_SPI_ADMIN_REALM: master
+  KEYCLOAK_PRODUCTION: "false"
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: mio-keycloak
+    meta.helm.sh/release-namespace: progetto
+  creationTimestamp: "2026-11-11T18:32:50Z"
+  labels:
+    app.kubernetes.io/component: keycloak
+    app.kubernetes.io/instance: mio-keycloak
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: keycloak
+    app.kubernetes.io/part-of: keycloak
+    app.kubernetes.io/version: 26.3.3
+    helm.sh/chart: keycloak-25.2.0
+  name: mio-keycloak-env-vars
+  namespace: progetto
+  resourceVersion: "511"
+  uid: e0dc90d5-ccf6-4dd0-a4eb-d5af2950f40d

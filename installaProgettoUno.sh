@@ -80,10 +80,9 @@ echo -e "\033[32mINSTALLAZIONE MARIADB AVVENUTA CON SUCCESSO\033[0m"
 #Installazione keycloak con postgress
 helm install mio-keycloak bitnami/keycloak \
   -n progetto \
+  --set service.type=ClusterIP \
   --set image.repository=bitnamilegacy/keycloak \
   --set image.tag=26.3.3-debian-12-r0 \
-  --set service.type=NodePort \
-  --set service.nodePorts.http=32622 \
   --set postgresql.image.repository=bitnamilegacy/postgresql \
   --set postgresql.image.tag=17.6.0-debian-12-r0 \
   --set global.security.allowInsecureImages=true \
@@ -92,7 +91,9 @@ helm install mio-keycloak bitnami/keycloak \
   --set postgresql.auth.postgresPassword=Admin1234! \
   --set postgresql.auth.username=admin \
   --set postgresql.auth.password=Admin1234! \
-  --set postgresql.auth.database=keycloak_db || exit 1
+  --set postgresql.auth.database=keycloak_db \
+  --set-string 'extraEnvVars[0].name=KC_DB_URL' \
+  --set-string 'extraEnvVars[0].value=jdbc:postgresql://mio-keycloak-postgresql:5432/keycloak_db?currentSchema=public&sslmode=disable' || exit 1
 
 echo -e "\033[32mINSTALLAZIONE KEYCLOAK AVVENUTA CON SUCCESSO\033[0m"
 

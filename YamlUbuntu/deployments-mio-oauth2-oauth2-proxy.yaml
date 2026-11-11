@@ -1,0 +1,166 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "3"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"deployment.kubernetes.io/revision":"1","meta.helm.sh/release-name":"mio-oauth2","meta.helm.sh/release-namespace":"progetto"},"generation":1,"labels":{"app":"oauth2-proxy","app.kubernetes.io/component":"authentication-proxy","app.kubernetes.io/instance":"mio-oauth2","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"oauth2-proxy","app.kubernetes.io/part-of":"oauth2-proxy","app.kubernetes.io/version":"7.15.6","helm.sh/chart":"oauth2-proxy-10.7.4"},"name":"mio-oauth2-oauth2-proxy","namespace":"progetto","resourceVersion":"1497","uid":"6237c125-1b0d-4724-82e1-cdca11eb9212"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app.kubernetes.io/instance":"mio-oauth2","app.kubernetes.io/name":"oauth2-proxy"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"annotations":{"checksum/config":"052b3706583beb7047e0b3b36032555fdf49a204a18c93f7097d078005c2b9bf","checksum/google-secret":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","checksum/redis-secret":"01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b","checksum/secret":"9eb46bbdefd5cf844a2c4965b1241a7177addaa7c07789e7873ccda6b0104111","linkerd.io/inject":"enabled"},"labels":{"app":"oauth2-proxy","app.kubernetes.io/component":"authentication-proxy","app.kubernetes.io/instance":"mio-oauth2","app.kubernetes.io/managed-by":"Helm","app.kubernetes.io/name":"oauth2-proxy","app.kubernetes.io/part-of":"oauth2-proxy","app.kubernetes.io/version":"7.15.6","helm.sh/chart":"oauth2-proxy-10.7.4"}},"spec":{"automountServiceAccountToken":true,"containers":[{"args":["--http-address=0.0.0.0:4180","--https-address=0.0.0.0:4443","--metrics-address=0.0.0.0:44180","--cookie-secure=false","--oidc-issuer-url=http://192.168.49.2:32423/realms/progetto","--provider=keycloak-oidc","--redirect-url=http://localhost:8081/oauth2/callback","--reverse-proxy=true","--set-xauthrequest=true","--skip-provider-button=true","--whitelist-domain=localhost:8081","--config=/etc/oauth2_proxy/oauth2_proxy.cfg"],"env":[{"name":"OAUTH2_PROXY_CLIENT_ID","valueFrom":{"secretKeyRef":{"key":"client-id","name":"mio-oauth2-keycloak"}}},{"name":"OAUTH2_PROXY_CLIENT_SECRET","valueFrom":{"secretKeyRef":{"key":"client-secret","name":"mio-oauth2-keycloak"}}},{"name":"OAUTH2_PROXY_COOKIE_SECRET","valueFrom":{"secretKeyRef":{"key":"cookie-secret","name":"mio-oauth2-keycloak"}}}],"image":"quay.io/oauth2-proxy/oauth2-proxy:v7.15.6","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/ping","port":"http","scheme":"HTTP"},"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"oauth2-proxy","ports":[{"containerPort":4180,"name":"http","protocol":"TCP"},{"containerPort":44180,"name":"metrics","protocol":"TCP"}],"readinessProbe":{"failureThreshold":3,"httpGet":{"path":"/ready","port":"http","scheme":"HTTP"},"periodSeconds":10,"successThreshold":1,"timeoutSeconds":5},"securityContext":{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true,"runAsGroup":2000,"runAsNonRoot":true,"runAsUser":2000,"seccompProfile":{"type":"RuntimeDefault"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/etc/oauth2_proxy/oauth2_proxy.cfg","name":"configmain","subPath":"oauth2_proxy.cfg"}]}],"dnsPolicy":"ClusterFirst","enableServiceLinks":true,"restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"serviceAccount":"mio-oauth2-oauth2-proxy","serviceAccountName":"mio-oauth2-oauth2-proxy","terminationGracePeriodSeconds":30,"volumes":[{"configMap":{"defaultMode":420,"name":"mio-oauth2-oauth2-proxy"},"name":"configmain"}]}}},"status":{"availableReplicas":1,"conditions":[{"message":"Deployment has minimum availability.","reason":"MinimumReplicasAvailable","status":"True","type":"Available"},{"message":"ReplicaSet \"mio-oauth2-oauth2-proxy-694d68f848\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"}],"observedGeneration":1,"readyReplicas":1,"replicas":1,"terminatingReplicas":0,"updatedReplicas":1}}
+    meta.helm.sh/release-name: mio-oauth2
+    meta.helm.sh/release-namespace: progetto
+  creationTimestamp: "2026-11-11T18:44:54Z"
+  generation: 3
+  labels:
+    app: oauth2-proxy
+    app.kubernetes.io/component: authentication-proxy
+    app.kubernetes.io/instance: mio-oauth2
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: oauth2-proxy
+    app.kubernetes.io/part-of: oauth2-proxy
+    app.kubernetes.io/version: 7.15.6
+    helm.sh/chart: oauth2-proxy-10.7.4
+  name: mio-oauth2-oauth2-proxy
+  namespace: progetto
+  resourceVersion: "2410"
+  uid: 6237c125-1b0d-4724-82e1-cdca11eb9212
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: mio-oauth2
+      app.kubernetes.io/name: oauth2-proxy
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        checksum/config: 052b3706583beb7047e0b3b36032555fdf49a204a18c93f7097d078005c2b9bf
+        checksum/google-secret: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+        checksum/redis-secret: 01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b
+        checksum/secret: 9eb46bbdefd5cf844a2c4965b1241a7177addaa7c07789e7873ccda6b0104111
+        kubectl.kubernetes.io/restartedAt: "2026-11-11T18:47:54Z"
+        linkerd.io/inject: enabled
+      labels:
+        app: oauth2-proxy
+        app.kubernetes.io/component: authentication-proxy
+        app.kubernetes.io/instance: mio-oauth2
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: oauth2-proxy
+        app.kubernetes.io/part-of: oauth2-proxy
+        app.kubernetes.io/version: 7.15.6
+        helm.sh/chart: oauth2-proxy-10.7.4
+    spec:
+      automountServiceAccountToken: true
+      containers:
+      - args:
+        - --http-address=0.0.0.0:4180
+        - --https-address=0.0.0.0:4443
+        - --metrics-address=0.0.0.0:44180
+        - --cookie-secure=false
+        - --oidc-issuer-url=http://192.168.49.2:32423/realms/progetto
+        - --provider=keycloak-oidc
+        - --redirect-url=http://localhost:8081/oauth2/callback
+        - --reverse-proxy=true
+        - --set-xauthrequest=true
+        - --skip-provider-button=true
+        - --whitelist-domain=localhost:8081
+        - --config=/etc/oauth2_proxy/oauth2_proxy.cfg
+        env:
+        - name: OAUTH2_PROXY_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              key: client-id
+              name: mio-oauth2-keycloak
+        - name: OAUTH2_PROXY_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: client-secret
+              name: mio-oauth2-keycloak
+        - name: OAUTH2_PROXY_COOKIE_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: cookie-secret
+              name: mio-oauth2-keycloak
+        image: quay.io/oauth2-proxy/oauth2-proxy:v7.15.6
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ping
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: oauth2-proxy
+        ports:
+        - containerPort: 4180
+          name: http
+          protocol: TCP
+        - containerPort: 44180
+          name: metrics
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /ready
+            port: http
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsGroup: 2000
+          runAsNonRoot: true
+          runAsUser: 2000
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /etc/oauth2_proxy/oauth2_proxy.cfg
+          name: configmain
+          subPath: oauth2_proxy.cfg
+      dnsPolicy: ClusterFirst
+      enableServiceLinks: true
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: mio-oauth2-oauth2-proxy
+      serviceAccountName: mio-oauth2-oauth2-proxy
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: mio-oauth2-oauth2-proxy
+        name: configmain
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2026-11-11T18:45:00Z"
+    lastUpdateTime: "2026-11-11T18:45:00Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2026-11-11T18:44:54Z"
+    lastUpdateTime: "2026-11-11T18:48:00Z"
+    message: ReplicaSet "mio-oauth2-oauth2-proxy-69df8f7b5f" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 3
+  readyReplicas: 1
+  replicas: 1
+  terminatingReplicas: 0
+  updatedReplicas: 1

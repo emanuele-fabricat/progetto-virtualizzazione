@@ -10,7 +10,30 @@ printf '\n'
 COOKIE_SECRET="$(openssl rand -hex 16)"
 COOKIE_SECRET_B64="$(printf '%s' "$COOKIE_SECRET" | base64 -w0)"
 MINIKUBE_IP="$(minikube ip)" || exit 1
-KEYCLOAK_ISSUER_URL="http://${MINIKUBE_IP}:32622/realms/progetto"
+TRAEFIK_NODE_PORT="$(minikube kubectl -- get service traefik -n progetto \
+  -o jsonpath='{.spec.ports[?(@.name=="web")].nodePort}')" || exit 1
+if [[ -z "$TRAEFIK_NODE_PORT" ]]; then
+  echo "Impossibile determinare la porta NodePort HTTP assegnata a Traefik" >&2
+  exit 1
+fi
+KEYCLOAK_ISSUER_URL="http://${MINIKUBE_IP}:${TRAEFIK_NODE_PORT}/realms/progetto"
+
+minikube kubectl -- apply -f - <<YAML || exit 1
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: keycloak-minikube-ip
+  namespace: progetto
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(\`${MINIKUBE_IP}\`)
+      kind: Rule
+      services:
+        - name: mio-keycloak
+          port: 80
+YAML
 
 minikube kubectl -- create secret generic mio-oauth2-keycloak \
   -n progetto \
@@ -37,8 +60,6 @@ extraArgs:
   cookie-secure: "false"
   whitelist-domain: "localhost:8081"
   set-xauthrequest: "true"
-podAnnotations:
-  linkerd.io/inject: "enabled"
 EOF
 
 echo -e "\033[32mMIDIFICA YAML DEL SECRET AVVENUTA CON SUCCESSO\033[0m"
@@ -51,6 +72,7 @@ helm upgrade --install mio-oauth2 oauth2-proxy/oauth2-proxy \
   -f oauth2-keycloak-values.yaml || exit 1
 
 echo -e "\033[32mINSTALLAZIONE OAUTH2-PROXY AVVENUTA CON SUCCESSO\033[0m"
+
 
 #Installazione linkerd tramite guida ufficiale https://linkerd.io/docs/getting-started/
 # Setting LINKERD2_VERSION sets the version to install.
@@ -79,13 +101,14 @@ linkerd check || exit 1
 
 echo -e "\033[32mINSTALLAZIONE LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
+
 #Mashing di apache
 minikube kubectl -- get deploy mio-apache -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
   | minikube kubectl -- apply -f - || exit 1
 
+minikube kubectl -- rollout restart deployment/mio-apache -n progetto
 minikube kubectl -- rollout status deployment/mio-apache -n progetto || exit 1
-#Per prova minikube kubectl -- -n progetto port-forward svc/mio-apache 8080:80
 
 echo -e "\033[32mINIEZIONE DI APACHE IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
@@ -94,24 +117,18 @@ minikube kubectl -- get deployment mio-oauth2-oauth2-proxy -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
   | minikube kubectl -- apply -f - || exit 1
 
+minikube kubectl -- rollout restart deployment/mio-oauth2-oauth2-proxy -n progetto
 minikube kubectl -- rollout status deployment/mio-oauth2-oauth2-proxy -n progetto --timeout=180s || exit 1
 
 echo -e "\033[32mINIEZIONE DI OAUTH2-PROXY IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
-#Mashing Keycloak
-minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
-  | linkerd --linkerd-namespace linkerd inject - \
-  | minikube kubectl -- apply -f - || exit 1
-
-minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s || exit 1
-
-echo -e "\033[32mINIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
 #Mashing treafik
 minikube kubectl -- get deployment traefik -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
   | minikube kubectl -- apply -f - || exit 1
 
+minikube kubectl -- rollout restart deployment/traefik -n progetto
 minikube kubectl -- rollout status deployment/traefik -n progetto --timeout=180s || exit 1
 
 echo -e "\033[32mINIEZIONE DI TRAEFIK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
@@ -121,6 +138,7 @@ minikube kubectl -- get statefulset mio-mariadb -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
   | minikube kubectl -- apply -f - || exit 1
 
+minikube kubectl -- rollout restart statefulset/mio-mariadb -n progetto
 minikube kubectl -- rollout status statefulset/mio-mariadb -n progetto --timeout=300s || exit 1
 
 echo -e "\033[32mINIEZIONE DI MARIA-DB IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
@@ -130,7 +148,17 @@ minikube kubectl -- get statefulset mio-keycloak-postgresql -n progetto -o yaml 
   | linkerd --linkerd-namespace linkerd inject - \
   | minikube kubectl -- apply -f - || exit 1
 
+minikube kubectl -- rollout restart statefulset/mio-keycloak-postgresql -n progetto
 minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s || exit 1
 
 echo -e "\033[32mINIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
+# Riavvia Keycloak dopo PostgreSQL, così non resta con connessioni DB interrotte.
+minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
+  | linkerd --linkerd-namespace linkerd inject - \
+  | minikube kubectl -- apply -f - || exit 1
+
+minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s || exit 1
+
+echo -e "\033[32mINIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"

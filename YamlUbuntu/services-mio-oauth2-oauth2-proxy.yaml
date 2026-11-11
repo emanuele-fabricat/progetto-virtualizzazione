@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: mio-oauth2
+    meta.helm.sh/release-namespace: progetto
+  creationTimestamp: "2026-11-11T18:44:54Z"
+  labels:
+    app: oauth2-proxy
+    app.kubernetes.io/component: authentication-proxy
+    app.kubernetes.io/instance: mio-oauth2
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: oauth2-proxy
+    app.kubernetes.io/part-of: oauth2-proxy
+    app.kubernetes.io/version: 7.15.6
+    helm.sh/chart: oauth2-proxy-10.7.4
+  name: mio-oauth2-oauth2-proxy
+  namespace: progetto
+  resourceVersion: "1394"
+  uid: e39ad583-d25e-4c4b-8eae-c4d98e9ef9de
+spec:
+  clusterIP: 10.106.161.168
+  clusterIPs:
+  - 10.106.161.168
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - appProtocol: http
+    name: http
+    port: 80
+    protocol: TCP
+    targetPort: http
+  - appProtocol: http
+    name: metrics
+    port: 44180
+    protocol: TCP
+    targetPort: metrics
+  selector:
+    app.kubernetes.io/instance: mio-oauth2
+    app.kubernetes.io/name: oauth2-proxy
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
