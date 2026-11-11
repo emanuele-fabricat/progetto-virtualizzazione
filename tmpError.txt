@@ -1,65 +1,74 @@
-T
-http://192.168.49.2:32141/realms/progetto/protocol/openid-connect/auth?approval_prompt=force&client_id=oauth2-proxy&redirect_uri=http://localhost:8081/oauth2/callback&response_type=code&scope=openid+email+profile&state=dgzl6Jf2HGDUNxHj4okER0GiBCsZipzkH9BcVJoZGy0:http%3A%2F%2Flocalhost%3A8081%2F
-NS_ERROR_NET_ERROR_RESPONSE
+========================================================================
+APPENDICE - INTERPRETAZIONE DEL 504 E PROVA DI ESCLUSIONE DI KEYCLOAK
+========================================================================
 
-GET
-	
-scheme
-	http
-host
-	192.168.49.2:32141
-filename
-	/realms/progetto/protocol/openid-connect/auth
-approval_prompt
-	force
-client_id
-	oauth2-proxy
-redirect_uri
-	http://localhost:8081/oauth2/callback
-response_type
-	code
-scope
-	openid email profile
-state
-	dgzl6Jf2HGDUNxHj4okER0GiBCsZipzkH9BcVJoZGy0:http%3A%2F%2Flocalhost%3A8081%2F
-Address
-	192.168.49.2:32141
-Status
-504
-Gateway Timeout
-VersionHTTP/1.1
-Transferred239 B (0 B size)
-Request PriorityHighest
-DNS ResolutionSystem
+Questa sezione e' separata dai controlli generali qui sopra e si riferisce
+all'errore riportato in tmpError.txt:
 
-    	
-    content-length
-    	0
-    date
-    	Mon, 09 Nov 2026 18:44:39 GMT
-    l5d-proxy-connection
-    	close
-    l5d-proxy-error
-    	logical service 10.244.0.20:8080: route default.endpoint: backend default.unknown: service in fail-fast
-    	
-    Accept
-    	text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-    Accept-Encoding
-    	gzip, deflate
-    Accept-Language
-    	it,en-US;q=0.9,en;q=0.8
-    Connection
-    	keep-alive
-    Host
-    	192.168.49.2:32141
-    Priority
-    	u=0, i
-    Upgrade-Insecure-Requests
-    	1
-    User-Agent
-    	Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:158.0) Gecko/20100101 Firefox/158.0
+  HTTP 504 Gateway Timeout
+  l5d-proxy-error: logical service 10.244.0.20:8080:
+  route default.endpoint: backend default.unknown: service in fail-fast
 
-​
+Il messaggio indica che la richiesta raggiunge il proxy Linkerd, ma il proxy
+non riesce a inoltrarla a un endpoint backend utilizzabile. L'indirizzo
+10.244.0.20:8080 e' quello riportato dal log e puo' cambiare: non va
+considerato un indirizzo fisso. Il 504, da solo, non dimostra che siano
+errati il client secret o la redirect URI OAuth2.
 
-ser to the 'docker' group: 'sudo usermod -aG docker $USER && newgrp docker'
-📘  Documentation: https://docs.docker.com/engine/install/linux-postinstall/
+IMPORTANTE: gli esempi di questa appendice usano "minikube kubectl --",
+come gli script di installazione del progetto, per interrogare il cluster
+Minikube corretto. I comandi kubectl nella sezione precedente funzionano
+solo se il contesto kubectl attivo punta gia' a Minikube.
+
+1. Verificare che Keycloak sia pronto e che il Service abbia endpoint
+
+minikube kubectl -- get pods -n progetto -o wide
+minikube kubectl -- get statefulset mio-keycloak -n progetto
+minikube kubectl -- get service mio-keycloak -n progetto -o wide
+minikube kubectl -- get endpoints mio-keycloak -n progetto -o wide
+minikube kubectl -- get endpointslices -n progetto -l kubernetes.io/service-name=mio-keycloak -o wide
+
+Il pod mio-keycloak deve risultare Ready e il Service deve avere almeno un
+endpoint pronto. Se non ci sono endpoint, controllare prima il pod e il
+database: il Service senza endpoint non ha un backend a cui instradare le
+richieste.
+
+2. Esaminare i log applicativi e del proxy Linkerd
+
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c keycloak --since=15m
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=15m
+minikube kubectl -- logs statefulset/mio-keycloak-postgresql -n progetto --since=15m
+linkerd check
+
+Se Keycloak non e' pronto o i log mostrano problemi di avvio/connessione al
+database, correggere prima quella causa. Se Keycloak e' Ready, il Service ha
+endpoint e il proxy continua a segnalare fail-fast, si puo' fare la prova
+diagnostica seguente.
+
+3. Prova diagnostica reversibile: escludere solo Keycloak dal mesh
+
+L'annotazione deve essere applicata al template dei pod dello StatefulSet,
+non solo ai metadati dello StatefulSet. La patch seguente aggiorna il
+template e Kubernetes avvia automaticamente un nuovo pod:
+
+minikube kubectl -- patch statefulset mio-keycloak -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"linkerd.io/inject":"disabled"}}}}}'
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s
+minikube kubectl -- get pod mio-keycloak-0 -n progetto -o jsonpath='{.spec.containers[*].name}'; echo
+
+Verificare nell'ultimo comando che tra i container del pod non compaia
+"linkerd-proxy", quindi riprovare il login OAuth2. Se il 504 scompare, il
+problema e' probabilmente legato all'intercettazione o all'instradamento di
+Linkerd verso Keycloak; se resta, riabilitare il mesh e proseguire con la
+diagnosi del Service, degli endpoint e dei log.
+
+Questa e' una prova, non una correzione definitiva: mentre e' attiva,
+Keycloak non e' incluso nel mesh Linkerd. Per ripristinare il comportamento
+precedente e lasciare che Linkerd inietti il sidecar:
+
+minikube kubectl -- patch statefulset mio-keycloak -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"linkerd.io/inject":"enabled"}}}}}'
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s
+
+Se si riesegue installaProgettoDue.sh, il blocco "Mashing Keycloak" inietta
+nuovamente Linkerd: tenere conto di questo quando si ripete la prova.
+========================================================================
+
