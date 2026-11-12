@@ -382,3 +382,13 @@ Caused by: java.net.SocketException: Connection reset
 2026-11-12 16:30:17,974 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) For more details run the same command passing the '--verbose' option. Also you can use '--help' to see the details about the usage of the particular command.
 error: invalid argument "100d" for "--tail" flag: strconv.ParseInt: parsing "100d": invalid syntax
 See 'kubectl logs --help' for usage.
+
+minikube kubectl -- logs mio-keycloak-postgresql-0 -n progetto -c postgresql --tail=100
+minikube kubectl -- logs mio-keycloak-postgresql-0 -n progetto -c linkerd-proxy --tail=100
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --tail=100
+minikube kubectl -- get endpoints mio-keycloak-postgresql -n progetto -o wide
+
+minikube kubectl -- patch statefulset mio-keycloak-postgresql -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"linkerd.io/inject":"disabled"}}}}}'
+minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s
+minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s
