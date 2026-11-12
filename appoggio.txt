@@ -147,3 +147,5 @@ Defaulted container "oauth2-proxy" out of: oauth2-proxy, linkerd-init (init), li
 10.244.0.20 - fe9ddd75-d471-46ed-b4f0-188e17e621c2 - - [2026/11/12 16:59:59] 10.244.0.20:4180 GET - "/ping" HTTP/1.1 "kube-probe/1.35" 200 2 0.000
 10.244.0.20 - c39c0a91-96fd-4e71-a371-9c8551306eb4 - - [2026/11/12 17:00:03] 10.244.0.20:4180 GET - "/ready" HTTP/1.1 "kube-probe/1.35" 200 2 0.000
 
+minikube kubectl -- get ingressroute,middleware -n progetto
+minikube kubectl -- get endpoints -n progetto
