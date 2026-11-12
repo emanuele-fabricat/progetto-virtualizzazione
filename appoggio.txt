@@ -169,3 +169,11 @@ mio-mariadb                  10.244.0.23:3306                     64m
 mio-mariadb-headless         10.244.0.23:3306                     64m
 mio-oauth2-oauth2-proxy      10.244.0.20:4180,10.244.0.20:44180   53m
 traefik                      10.244.0.22:8443,10.244.0.22:8000    64m
+
+Esegui: minikube kubectl -- get ingressroute keycloak-minikube-ip keycloak-public -n progetto -o wide; minikube kubectl -- get endpoints mio-keycloak -n progetto -o wide
+
+curl -sv --max-time 10 http://192.168.49.2:30823/realms/progetto/.well-known/openid-configuration
+
+Con il port-forward attivo, esegui: curl -sv --max-time 10 -H 'Host: keycloak.localhost' http://127.0.0.1:8081/realms/progetto/.well-known/openid-configuration
+
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=5m --tail=80
