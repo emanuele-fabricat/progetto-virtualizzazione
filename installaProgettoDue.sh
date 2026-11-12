@@ -143,15 +143,15 @@ minikube kubectl -- rollout status statefulset/mio-mariadb -n progetto --timeout
 
 echo -e "\033[32mINIEZIONE DI MARIA-DB IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
-#Mashing postgress
-minikube kubectl -- get statefulset mio-keycloak-postgresql -n progetto -o yaml \
-  | linkerd --linkerd-namespace linkerd inject - \
-  | minikube kubectl -- apply -f - || exit 1
+# PostgreSQL resta fuori dal mesh: con il sidecar Linkerd Keycloak perdeva
+# la connessione JDBC durante l'autenticazione.
+minikube kubectl -- patch statefulset mio-keycloak-postgresql -n progetto \
+  --type=merge \
+  -p '{"spec":{"template":{"metadata":{"annotations":{"linkerd.io/inject":"disabled"}}}}}' || exit 1
 
-minikube kubectl -- rollout restart statefulset/mio-keycloak-postgresql -n progetto
 minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=300s || exit 1
 
-echo -e "\033[32mINIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
+echo -e "\033[32mPOSTGRESQL AGGIORNATO SENZA SIDECAR LINKERD\033[0m"
 
 # Riavvia Keycloak dopo PostgreSQL, così non resta con connessioni DB interrotte.
 minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
