@@ -226,3 +226,13 @@ metadata:
   namespace: progetto
   resourceVersion: "511"
   uid: e0dc90d5-ccf6-4dd0-a4eb-d5af2950f40d
+
+minikube kubectl -- get pods -n progetto -o wide
+NAME                                       READY   STATUS             RESTARTS      AGE     IP            NODE       NOMINATED NODE   READINESS GATES
+mio-apache-67594d666b-bwq5v                2/2     Running            0             9m10s   10.244.0.18   minikube   <none>           <none>
+mio-keycloak-0                             1/2     CrashLoopBackOff   4 (76s ago)   6m43s   10.244.0.25   minikube   <none>           <none>
+mio-keycloak-postgresql-0                  2/2     Running            0             7m2s    10.244.0.24   minikube   <none>           <none>
+mio-mariadb-0                              2/2     Running            0             8m10s   10.244.0.23   minikube   <none>           <none>
+mio-oauth2-oauth2-proxy-644f6f4d7c-sr4dw   2/2     Running            0             8m23s   10.244.0.20   minikube   <none>           <none>
+traefik-6bb654cbc5-2677p                   2/2     Running            0             8m17s   10.244.0.22   minikube   <none>           <none>
+
