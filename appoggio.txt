@@ -9,4 +9,37 @@ mio-mariadb-0                              2/2     Running   0          41m   10
 mio-oauth2-oauth2-proxy-644f6f4d7c-sr4dw   2/2     Running   0          42m   10.244.0.20   minikube   <none>           <none>
 traefik-6bb654cbc5-2677p                   2/2     Running   0          42m   10.244.0.22   minikube   <none>           <none>
 
-minikube kubectl -- logs deployment/traefik -n progetto --since=5m --tail=100
+minikube kubectl -- logs deployment/traefik -n progetto --since=2h --tail=100
+Defaulted container "traefik" out of: traefik, linkerd-init (init), linkerd-proxy (init)
+2026-11-12T16:12:37Z WRN Traefik can reject some encoded characters in the request path. When your backend is not fully compliant with [RFC 3986](https://datatracker.ietf.org/doc/html/rfc3986), it is recommended to set these options to `false` to avoid split-view situation. Refer to the documentation for more details: https://doc.traefik.io/traefik/v3.6/migrate/v3/#encoded-characters-configuration-default-values
+2026-11-12T16:12:37Z INF Traefik version 3.7.17 built on 2026-10-30T08:24:21Z version=3.7.17
+2026-11-12T16:12:37Z INF Version check is enabled.
+2026-11-12T16:12:37Z INF Traefik checks for new releases to notify you if your version is out of date.
+2026-11-12T16:12:37Z INF It also collects usage data during this process.
+2026-11-12T16:12:37Z INF Check the documentation to get more info: https://doc.traefik.io/traefik/contributing/data-collection/
+2026-11-12T16:12:37Z INF 
+Stats collection is disabled.
+Help us improve Traefik by turning this feature on :)
+More details on: https://doc.traefik.io/traefik/contributing/data-collection/
+
+2026-11-12T16:12:37Z WRN aliasHeadersStrategy is not configured: the request headers whose name aliases another header name (e.g. X_Auth_User or X.Auth.User for X-Auth-User) are forwarded as is. The backends deriving variable names from the header names (CGI, WSGI, PHP, NGINX, ...) read them as the header they alias, which allows a client to spoof the headers Traefik manages. Please set it to delete or reject on the entry points fronting such backends. entryPointName=websecure
+2026-11-12T16:12:37Z WRN aliasHeadersStrategy is not configured: the request headers whose name aliases another header name (e.g. X_Auth_User or X.Auth.User for X-Auth-User) are forwarded as is. The backends deriving variable names from the header names (CGI, WSGI, PHP, NGINX, ...) read them as the header they alias, which allows a client to spoof the headers Traefik manages. Please set it to delete or reject on the entry points fronting such backends. entryPointName=metrics
+2026-11-12T16:12:37Z WRN aliasHeadersStrategy is not configured: the request headers whose name aliases another header name (e.g. X_Auth_User or X.Auth.User for X-Auth-User) are forwarded as is. The backends deriving variable names from the header names (CGI, WSGI, PHP, NGINX, ...) read them as the header they alias, which allows a client to spoof the headers Traefik manages. Please set it to delete or reject on the entry points fronting such backends. entryPointName=traefik
+2026-11-12T16:12:37Z WRN aliasHeadersStrategy is not configured: the request headers whose name aliases another header name (e.g. X_Auth_User or X.Auth.User for X-Auth-User) are forwarded as is. The backends deriving variable names from the header names (CGI, WSGI, PHP, NGINX, ...) read them as the header they alias, which allows a client to spoof the headers Traefik manages. Please set it to delete or reject on the entry points fronting such backends. entryPointName=web
+2026-11-12T16:12:37Z INF Starting provider aggregator *aggregator.ProviderAggregator
+2026-11-12T16:12:37Z INF Starting provider *traefik.Provider
+2026-11-12T16:12:37Z INF Starting provider *acme.ChallengeTLSALPN
+2026-11-12T16:12:37Z INF Starting provider *ingress.Provider
+2026-11-12T16:12:37Z INF Starting provider *crd.Provider
+2026-11-12T16:12:37Z INF ingress label selector is: "" providerName=kubernetes
+2026-11-12T16:12:37Z INF label selector is: "" providerName=kubernetescrd
+2026-11-12T16:12:37Z INF Creating in-cluster Provider client providerName=kubernetes
+2026-11-12T16:12:37Z INF Creating in-cluster Provider client providerName=kubernetescrd
+2026-11-12T16:12:37Z WRN SafeNaming is not explicitly set: generated routers, middlewares and services will use the legacy naming scheme, under which names can collide across namespaces or resources. It is recommended to explicitly set the SafeNaming option, to `true` on new setups, or to `false` to keep the legacy behavior and silence this warning. Refer to the documentation for more details: https://doc.traefik.io/traefik/v3.6/migration/v3/#safe-naming-configuration-option providerName=kubernetescrd
+2026-11-12T16:12:38Z WRN maxResponseBodySize is not configured, allowing unlimited response body size which can lead to DoS attacks and memory exhaustion. Please set an appropriate limit. entryPointName=web middlewareName=progetto-oauth2-forwardauth@kubernetescrd middlewareType=ForwardAuth routerName=progetto-apache-protetto-55917f262e03ab35aba7@kubernetescrd
+2026-11-12T16:14:07Z WRN maxResponseBodySize is not configured, allowing unlimited response body size which can lead to DoS attacks and memory exhaustion. Please set an appropriate limit. entryPointName=web middlewareName=progetto-oauth2-forwardauth@kubernetescrd middlewareType=ForwardAuth routerName=progetto-apache-protetto-55917f262e03ab35aba7@kubernetescrd
+2026-11-12T16:14:09Z WRN maxResponseBodySize is not configured, allowing unlimited response body size which can lead to DoS attacks and memory exhaustion. Please set an appropriate limit. entryPointName=web middlewareName=progetto-oauth2-forwardauth@kubernetescrd middlewareType=ForwardAuth routerName=progetto-apache-protetto-55917f262e03ab35aba7@kubernetescrd
+2026-11-12T16:22:38Z WRN A new release of Traefik has been found: 3.7.18. Please consider updating.
+2026-11-12T16:42:21Z WRN maxResponseBodySize is not configured, allowing unlimited response body size which can lead to DoS attacks and memory exhaustion. Please set an appropriate limit. entryPointName=web middlewareName=progetto-oauth2-forwardauth@kubernetescrd middlewareType=ForwardAuth routerName=progetto-apache-protetto-55917f262e03ab35aba7@kubernetescrd
+2026-11-12T16:42:24Z WRN maxResponseBodySize is not configured, allowing unlimited response body size which can lead to DoS attacks and memory exhaustion. Please set an appropriate limit. entryPointName=web middlewareName=progetto-oauth2-forwardauth@kubernetescrd middlewareType=ForwardAuth routerName=progetto-apache-protetto-55917f262e03ab35aba7@kubernetescrd
+2026-11-12T16:44:37Z WRN maxResponseBodySize is not configured, allowing unlimited response body size which can lead to DoS attacks and memory exhaustion. Please set an appropriate limit. entryPointName=web middlewareName=progetto-oauth2-forwardauth@kubernetescrd middlewareType=ForwardAuth routerName=progetto-apache-protetto-55917f262e03ab35aba7@kubernetescrd
