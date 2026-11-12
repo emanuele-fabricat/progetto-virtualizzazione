@@ -238,3 +238,8 @@ minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=1h 
 [   109.013280s]  INFO ThreadId(01) outbound:proxy{addr=10.98.166.106:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.27:5432
 [   110.846864s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:32962}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
 [   120.846981s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:34114}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+
+
+ minikube kubectl -- logs deployment/traefik -n progetto -c linkerd-proxy --since=5m --tail=100
+
+ minikube kubectl -- get pods -n progetto -o wide
