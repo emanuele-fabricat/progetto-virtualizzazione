@@ -8,3 +8,5 @@ mio-keycloak-postgresql-0                  1/1     Running   0          15m   10
 mio-mariadb-0                              2/2     Running   0          41m   10.244.0.23   minikube   <none>           <none>
 mio-oauth2-oauth2-proxy-644f6f4d7c-sr4dw   2/2     Running   0          42m   10.244.0.20   minikube   <none>           <none>
 traefik-6bb654cbc5-2677p                   2/2     Running   0          42m   10.244.0.22   minikube   <none>           <none>
+
+minikube kubectl -- logs deployment/traefik -n progetto --since=5m --tail=100
