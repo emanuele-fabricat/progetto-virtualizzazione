@@ -170,10 +170,71 @@ mio-mariadb-headless         10.244.0.23:3306                     64m
 mio-oauth2-oauth2-proxy      10.244.0.20:4180,10.244.0.20:44180   53m
 traefik                      10.244.0.22:8443,10.244.0.22:8000    64m
 
-Esegui: minikube kubectl -- get ingressroute keycloak-minikube-ip keycloak-public -n progetto -o wide; minikube kubectl -- get endpoints mio-keycloak -n progetto -o wide
+minikube kubectl -- get ingressroute keycloak-minikube-ip keycloak-public -n progetto -o wide; minikube kubectl -- get endpoints mio-keycloak -n progetto -o wide
+NAME                   AGE
+keycloak-minikube-ip   57m
+keycloak-public        67m
+Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
+NAME           ENDPOINTS          AGE
+mio-keycloak   10.244.0.28:8080   68m
 
 curl -sv --max-time 10 http://192.168.49.2:30823/realms/progetto/.well-known/openid-configuration
+*   Trying 192.168.49.2:30823...
+* Connected to 192.168.49.2 (192.168.49.2) port 30823
+> GET /realms/progetto/.well-known/openid-configuration HTTP/1.1
+> Host: 192.168.49.2:30823
+> User-Agent: curl/8.5.0
+> Accept: */*
+> 
+< HTTP/1.1 504 Gateway Timeout
+< date: Thu, 12 Nov 2026 17:07:10 GMT
+< l5d-proxy-connection: close
+< l5d-proxy-error: logical service 10.244.0.28:8080: route default.endpoint: backend default.unknown: service in fail-fast
+< content-length: 0
+< 
+* Connection #0 to host 192.168.49.2 left intact
+
 
 Con il port-forward attivo, esegui: curl -sv --max-time 10 -H 'Host: keycloak.localhost' http://127.0.0.1:8081/realms/progetto/.well-known/openid-configuration
+*   Trying 127.0.0.1:8081...
+* Connected to 127.0.0.1 (127.0.0.1) port 8081
+> GET /realms/progetto/.well-known/openid-configuration HTTP/1.1
+> Host: keycloak.localhost
+> User-Agent: curl/8.5.0
+> Accept: */*
+> 
+< HTTP/1.1 504 Gateway Timeout
+< Content-Length: 0
+< Date: Thu, 12 Nov 2026 17:07:57 GMT
+< L5d-Proxy-Connection: close
+< L5d-Proxy-Error: logical service 10.244.0.28:8080: route default.endpoint: backend default.unknown: service in fail-fast
+< 
+* Connection #0 to host 127.0.0.1 left intact
 
-minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=5m --tail=80
+
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=1h --tail=80
+[     0.000340s]  INFO ThreadId(01) linkerd2_proxy: release 2.370.0 (0cdcc07) by linkerd on 2026-09-23T08:50:17Z
+[     0.006200s]  INFO ThreadId(01) linkerd2_proxy::rt: Using single-threaded proxy runtime
+[     0.007884s]  INFO ThreadId(01) linkerd2_proxy: Admin interface on 0.0.0.0:4191
+[     0.007905s]  INFO ThreadId(01) linkerd2_proxy: Inbound interface on 0.0.0.0:4143
+[     0.007910s]  INFO ThreadId(01) linkerd2_proxy: Outbound interface on 127.0.0.1:4140
+[     0.007914s]  INFO ThreadId(01) linkerd2_proxy: Tap interface on 0.0.0.0:4190
+[     0.007918s]  INFO ThreadId(01) linkerd2_proxy: SNI is mio-keycloak.progetto.serviceaccount.identity.linkerd.cluster.local
+[     0.007922s]  INFO ThreadId(01) linkerd2_proxy: Local identity is mio-keycloak.progetto.serviceaccount.identity.linkerd.cluster.local
+[     0.007927s]  INFO ThreadId(01) linkerd2_proxy: Destinations resolved via linkerd-dst-headless.linkerd.svc.cluster.local:8086 (linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local)
+[     0.009935s]  INFO ThreadId(01) dst:controller{addr=linkerd-dst-headless.linkerd.svc.cluster.local:8086}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8086
+[     0.010230s]  INFO ThreadId(01) policy:controller{addr=linkerd-policy.linkerd.svc.cluster.local:8090}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8090
+[     0.011159s]  INFO ThreadId(02) identity:identity{server.addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}:controller{addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.9:8080
+[     0.108598s]  INFO ThreadId(02) daemon:identity: linkerd_app: Certified identity id=mio-keycloak.progetto.serviceaccount.identity.linkerd.cluster.local
+[     3.218621s]  INFO ThreadId(01) outbound:proxy{addr=10.98.166.106:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.27:5432
+[    34.850387s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:39026}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    44.852216s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:42016}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    54.849855s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:52518}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    64.850059s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:54818}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    74.850189s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:45622}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    80.846718s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:45626}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    90.846692s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:52780}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   100.847253s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:48806}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   109.013280s]  INFO ThreadId(01) outbound:proxy{addr=10.98.166.106:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.27:5432
+[   110.846864s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:32962}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   120.846981s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:34114}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
