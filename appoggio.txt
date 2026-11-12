@@ -149,3 +149,23 @@ Defaulted container "oauth2-proxy" out of: oauth2-proxy, linkerd-init (init), li
 
 minikube kubectl -- get ingressroute,middleware -n progetto
 minikube kubectl -- get endpoints -n progetto
+NAME                                           AGE
+ingressroute.traefik.io/apache-protetto        64m
+ingressroute.traefik.io/keycloak-minikube-ip   53m
+ingressroute.traefik.io/keycloak-public        64m
+ingressroute.traefik.io/oauth2-endpoints       64m
+
+NAME                                       AGE
+middleware.traefik.io/oauth2-errors        64m
+middleware.traefik.io/oauth2-forwardauth   64m
+Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
+NAME                         ENDPOINTS                            AGE
+mio-apache                   10.244.0.18:8080,10.244.0.18:8443    64m
+mio-keycloak                 10.244.0.28:8080                     64m
+mio-keycloak-headless        10.244.0.28:8080                     64m
+mio-keycloak-postgresql      10.244.0.27:5432                     64m
+mio-keycloak-postgresql-hl   10.244.0.27:5432                     64m
+mio-mariadb                  10.244.0.23:3306                     64m
+mio-mariadb-headless         10.244.0.23:3306                     64m
+mio-oauth2-oauth2-proxy      10.244.0.20:4180,10.244.0.20:44180   53m
+traefik                      10.244.0.22:8443,10.244.0.22:8000    64m
