@@ -240,6 +240,20 @@ minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=1h 
 [   120.846981s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:34114}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
 
 
- minikube kubectl -- logs deployment/traefik -n progetto -c linkerd-proxy --since=5m --tail=100
+minikube kubectl -- logs deployment/traefik -n progetto -c linkerd-proxy --since=5m --tail=100
+[  3320.078241s]  WARN ThreadId(01) outbound:proxy{addr=10.244.0.28:8080}:forward{addr=10.244.0.28:8080}: linkerd_reconnect: Failed to connect error=connect timed out after 1s
+[  3321.188810s]  WARN ThreadId(01) outbound:proxy{addr=10.244.0.28:8080}:forward{addr=10.244.0.28:8080}: linkerd_reconnect: Failed to connect error=connect timed out after 1s
+[  3322.077527s]  WARN ThreadId(01) outbound:proxy{addr=10.244.0.28:8080}:forward{addr=10.244.0.28:8080}: linkerd_stack::failfast: Service entering failfast after 3s
+[  3322.077700s]  INFO ThreadId(01) outbound:proxy{addr=10.244.0.28:8080}:rescue{client.addr=10.244.0.22:34452}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=logical service 10.244.0.28:8080: route default.endpoint: backend default.unknown: service in fail-fast error.sources=[route default.endpoint: backend default.unknown: service in fail-fast, backend default.unknown: service in fail-fast, service in fail-fast] path="/realms/progetto/.well-known/openid-configuration"
+[  3322.398535s]  WARN ThreadId(01) outbound:proxy{addr=10.244.0.28:8080}:forward{addr=10.244.0.28:8080}: linkerd_reconnect: Failed to connect error=connect timed out after 1s
+[  3323.811102s]  WARN ThreadId(01) outbound:proxy{addr=10.244.0.28:8080}:forward{addr=10.244.0.28:8080}: linkerd_reconnect: Failed to connect error=connect timed out after 1s
+[  3325.654680s]  WARN ThreadId(01) outbound:proxy{addr=10.244.0.28:8080}:forward{addr=10.244.0.28:8080}: linkerd_reconnect: Failed to connect error=connect timed out after 1s
 
- minikube kubectl -- get pods -n progetto -o wide
+
+NAME                                       READY   STATUS    RESTARTS   AGE   IP            NODE       NOMINATED NODE   READINESS GATES
+mio-apache-67594d666b-bwq5v                2/2     Running   0          61m   10.244.0.18   minikube   <none>           <none>
+mio-keycloak-0                             2/2     Running   0          30m   10.244.0.28   minikube   <none>           <none>
+mio-keycloak-postgresql-0                  1/1     Running   0          33m   10.244.0.27   minikube   <none>           <none>
+mio-mariadb-0                              2/2     Running   0          60m   10.244.0.23   minikube   <none>           <none>
+mio-oauth2-oauth2-proxy-644f6f4d7c-sr4dw   2/2     Running   0          60m   10.244.0.20   minikube   <none>           <none>
+traefik-6bb654cbc5-2677p                   2/2     Running   0          60m   10.244.0.22   minikube   <none>           <none>
