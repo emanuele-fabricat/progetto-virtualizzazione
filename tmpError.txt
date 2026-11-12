@@ -1,3 +1,384 @@
 minikube kubectl -- describe pod mio-keycloak-0 -n progetto
 minikube kubectl -- logs mio-keycloak-0 -n progetto -c keycloak --previous --tail=100
 minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --previous --tail=100d
+Name:             mio-keycloak-0
+Namespace:        progetto
+Priority:         0
+Service Account:  mio-keycloak
+Node:             minikube/192.168.49.2
+Start Time:       Thu, 12 Nov 2026 16:14:08 +0000
+Labels:           app.kubernetes.io/component=keycloak
+                  app.kubernetes.io/instance=mio-keycloak
+                  app.kubernetes.io/managed-by=Helm
+                  app.kubernetes.io/name=keycloak
+                  app.kubernetes.io/part-of=keycloak
+                  app.kubernetes.io/version=26.3.3
+                  apps.kubernetes.io/pod-index=0
+                  controller-revision-hash=mio-keycloak-7c67f75bd9
+                  helm.sh/chart=keycloak-25.2.0
+                  linkerd.io/control-plane-ns=linkerd
+                  linkerd.io/proxy-statefulset=mio-keycloak
+                  linkerd.io/workload-ns=progetto
+                  statefulset.kubernetes.io/pod-name=mio-keycloak-0
+Annotations:      checksum/configmap-env-vars: f81e84fa751e5688fd8a05ebfd754b949896135a70eb1b88856e0a43539c634a
+                  checksum/secrets: e47655bfec9cf9b1b060726a1528ff6704698b5e7f2b1bf449103724bfeb9e27
+                  kubectl.kubernetes.io/restartedAt: 2026-11-12T16:14:07Z
+                  linkerd.io/created-by: linkerd/proxy-injector edge-26.10.1
+                  linkerd.io/inject: enabled
+                  linkerd.io/proxy-version: edge-26.10.1
+                  linkerd.io/trust-root-sha256: b02f977a9bf75961e11fd0eedb9320608cf6868823de4f945fd6dc6cfa6d6fd5
+                  viz.linkerd.io/tap-enabled: true
+Status:           Running
+IP:               10.244.0.25
+IPs:
+  IP:           10.244.0.25
+Controlled By:  StatefulSet/mio-keycloak
+Init Containers:
+  linkerd-init:
+    Container ID:    containerd://d480c85ab6659d904f9976f613e7beff196924aa23ecfbc916e117a5a25f4a1a
+    Image:           cr.l5d.io/linkerd/proxy:edge-26.10.1
+    Image ID:        cr.l5d.io/linkerd/proxy@sha256:f2add36071cfca33754d2930800860785aaed672590bc0207be2f4da9889eb11
+    Port:            <none>
+    Host Port:       <none>
+    SeccompProfile:  RuntimeDefault
+    Command:
+      /usr/lib/linkerd/linkerd2-proxy-init
+    Args:
+      --firewall-bin-path
+      iptables-nft
+      --firewall-save-bin-path
+      iptables-nft-save
+      --ipv6=false
+      --incoming-proxy-port
+      4143
+      --outgoing-proxy-port
+      4140
+      --proxy-uid
+      2102
+      --inbound-ports-to-ignore
+      4190,4191,4567,4568
+      --outbound-ports-to-ignore
+      4567,4568
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Thu, 12 Nov 2026 16:14:08 +0000
+      Finished:     Thu, 12 Nov 2026 16:14:08 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /run from linkerd-proxy-init-xtables-lock (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-s4gpf (ro)
+  linkerd-proxy:
+    Container ID:    containerd://1c00950a0116ffaa7fdb145742cc012f5e3868eba07b6fa72dbfd00b0e4229cb
+    Image:           cr.l5d.io/linkerd/proxy:edge-26.10.1
+    Image ID:        cr.l5d.io/linkerd/proxy@sha256:f2add36071cfca33754d2930800860785aaed672590bc0207be2f4da9889eb11
+    Ports:           4143/TCP (linkerd-proxy), 4191/TCP (linkerd-admin)
+    Host Ports:      0/TCP (linkerd-proxy), 0/TCP (linkerd-admin)
+    SeccompProfile:  RuntimeDefault
+    State:           Running
+      Started:       Thu, 12 Nov 2026 16:14:09 +0000
+    Ready:           True
+    Restart Count:   0
+    Liveness:        http-get http://:4191/live delay=10s timeout=1s period=10s #success=1 #failure=3
+    Readiness:       http-get http://:4191/ready delay=2s timeout=1s period=10s #success=1 #failure=3
+    Startup:         http-get http://:4191/ready delay=0s timeout=1s period=1s #success=1 #failure=120
+    Environment:
+      _pod_name:                                                 mio-keycloak-0 (v1:metadata.name)
+      _pod_ns:                                                   progetto (v1:metadata.namespace)
+      _pod_uid:                                                   (v1:metadata.uid)
+      _pod_ip:                                                    (v1:status.podIP)
+      _pod_nodeName:                                              (v1:spec.nodeName)
+      _pod_containerName:                                        linkerd-proxy
+      LINKERD2_PROXY_CORES:                                      1
+      LINKERD2_PROXY_CORES_MIN:                                  1
+      LINKERD2_PROXY_SHUTDOWN_ENDPOINT_ENABLED:                  false
+      LINKERD2_PROXY_LOG:                                        warn,linkerd=info,hickory=error,[{headers}]=off,[{request}]=off
+      LINKERD2_PROXY_LOG_FORMAT:                                 plain
+      LINKERD2_PROXY_DESTINATION_SVC_ADDR:                       linkerd-dst-headless.linkerd.svc.cluster.local.:8086
+      LINKERD2_PROXY_DESTINATION_PROFILE_NETWORKS:               10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16,fd00::/8
+      LINKERD2_PROXY_POLICY_SVC_ADDR:                            linkerd-policy.linkerd.svc.cluster.local.:8090
+      LINKERD2_PROXY_POLICY_WORKLOAD:                            {"ns":"$(_pod_ns)", "pod":"$(_pod_name)"}
+                                                                 
+      LINKERD2_PROXY_INBOUND_DEFAULT_POLICY:                     all-unauthenticated
+      LINKERD2_PROXY_POLICY_CLUSTER_NETWORKS:                    10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16,fd00::/8
+      LINKERD2_PROXY_CONTROL_STREAM_INITIAL_TIMEOUT:             3s
+      LINKERD2_PROXY_CONTROL_STREAM_IDLE_TIMEOUT:                5m
+      LINKERD2_PROXY_CONTROL_STREAM_LIFETIME:                    1h
+      LINKERD2_PROXY_INBOUND_CONNECT_TIMEOUT:                    100ms
+      LINKERD2_PROXY_OUTBOUND_CONNECT_TIMEOUT:                   1000ms
+      LINKERD2_PROXY_OUTBOUND_DISCOVERY_IDLE_TIMEOUT:            5s
+      LINKERD2_PROXY_INBOUND_DISCOVERY_IDLE_TIMEOUT:             90s
+      LINKERD2_PROXY_CONTROL_LISTEN_ADDR:                        0.0.0.0:4190
+      LINKERD2_PROXY_ADMIN_LISTEN_ADDR:                          0.0.0.0:4191
+      LINKERD2_PROXY_OUTBOUND_LISTEN_ADDR:                       127.0.0.1:4140
+      LINKERD2_PROXY_OUTBOUND_LISTEN_ADDRS:                      127.0.0.1:4140
+      LINKERD2_PROXY_INBOUND_LISTEN_ADDR:                        0.0.0.0:4143
+      LINKERD2_PROXY_INBOUND_IPS:                                 (v1:status.podIPs)
+      LINKERD2_PROXY_INBOUND_PORTS:                              7800,8080
+      LINKERD2_PROXY_DESTINATION_PROFILE_SUFFIXES:               svc.cluster.local.
+      LINKERD2_PROXY_INBOUND_ACCEPT_KEEPALIVE:                   10000ms
+      LINKERD2_PROXY_OUTBOUND_CONNECT_KEEPALIVE:                 10000ms
+      LINKERD2_PROXY_INBOUND_ACCEPT_USER_TIMEOUT:                30s
+      LINKERD2_PROXY_OUTBOUND_CONNECT_USER_TIMEOUT:              30s
+      LINKERD2_PROXY_OUTBOUND_METRICS_HOSTNAME_LABELS:           false
+      LINKERD2_PROXY_INBOUND_SERVER_HTTP2_KEEP_ALIVE_INTERVAL:   10s
+      LINKERD2_PROXY_INBOUND_SERVER_HTTP2_KEEP_ALIVE_TIMEOUT:    3s
+      LINKERD2_PROXY_OUTBOUND_SERVER_HTTP2_KEEP_ALIVE_INTERVAL:  10s
+      LINKERD2_PROXY_OUTBOUND_SERVER_HTTP2_KEEP_ALIVE_TIMEOUT:   3s
+      LINKERD2_PROXY_INBOUND_PORTS_DISABLE_PROTOCOL_DETECTION:   25,587,3306,4444,5432,6379,9300,11211
+      LINKERD2_PROXY_DESTINATION_CONTEXT:                        {"ns":"$(_pod_ns)", "nodeName":"$(_pod_nodeName)", "pod":"$(_pod_name)"}
+                                                                 
+      _pod_sa:                                                    (v1:spec.serviceAccountName)
+      _l5d_ns:                                                   linkerd
+      _l5d_trustdomain:                                          cluster.local
+      LINKERD2_PROXY_IDENTITY_DIR:                               /var/run/linkerd/identity/end-entity
+      LINKERD2_PROXY_IDENTITY_TRUST_ANCHORS:                     -----BEGIN CERTIFICATE-----
+                                                                 MIIBiTCCAS6gAwIBAgIBATAKBggqhkjOPQQDAjAcMRowGAYDVQQDExFpZGVudGl0
+                                                                 eS5saW5rZXJkLjAeFw0yNjExMTIxNjA5MzJaFw0yNzExMTIxNjA5NTJaMBwxGjAY
+                                                                 BgNVBAMTEWlkZW50aXR5LmxpbmtlcmQuMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD
+                                                                 QgAEjVPA7F/LI9BcbSX4twTqs77/N9Pqowl69qXTAv0Rm4ZfPLqHiQOC+nv9L0sY
+                                                                 elvfoDKXazIPAklIS+QTf6vAkaNhMF8wDgYDVR0PAQH/BAQDAgEGMB0GA1UdJQQW
+                                                                 MBQGCCsGAQUFBwMBBggrBgEFBQcDAjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW
+                                                                 BBSquglKKmNlmolsBp9tf0xUsQI1qjAKBggqhkjOPQQDAgNJADBGAiEApk++cCnG
+                                                                 tt9yt3tkY8zU5vev3t3mCzW/ZMX6VLtlLpUCIQCSGa/DNNknEC+gSXCbeh0usL9c
+                                                                 dmR5aGBVd8wVAhemoQ==
+                                                                 -----END CERTIFICATE-----
+                                                                 
+      LINKERD2_PROXY_IDENTITY_TOKEN_FILE:                        /var/run/secrets/tokens/linkerd-identity-token
+      LINKERD2_PROXY_IDENTITY_SVC_ADDR:                          linkerd-identity-headless.linkerd.svc.cluster.local.:8080
+      LINKERD2_PROXY_IDENTITY_LOCAL_NAME:                        $(_pod_sa).$(_pod_ns).serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_IDENTITY_SVC_NAME:                          linkerd-identity.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_DESTINATION_SVC_NAME:                       linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_POLICY_SVC_NAME:                            linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_TAP_SVC_NAME:                               tap.linkerd-viz.serviceaccount.identity.linkerd.cluster.local
+    Mounts:
+      /var/run/linkerd/identity/end-entity from linkerd-identity-end-entity (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-s4gpf (ro)
+      /var/run/secrets/tokens from linkerd-identity-token (rw)
+  prepare-write-dirs:
+    Container ID:    containerd://92faa0bbc29529f3c6154ef4cac3370a11b41118c86e742d1367b53df65485bb
+    Image:           docker.io/bitnamilegacy/keycloak:26.3.3-debian-12-r0
+    Image ID:        docker.io/bitnamilegacy/keycloak@sha256:da3df0976a9f9a664bdbde6cb5308b78f03ac94d0abf33b2df355bbb06cbc5b9
+    Port:            <none>
+    Host Port:       <none>
+    SeccompProfile:  RuntimeDefault
+    Command:
+      /bin/bash
+    Args:
+      -ec
+      . /opt/bitnami/scripts/liblog.sh
+      
+      info "Copying writable dirs to empty dir"
+      # In order to not break the application functionality we need to make some
+      # directories writable, so we need to copy it to an empty dir volume
+      cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/lib/quarkus /emptydir/app-quarkus-dir
+      cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/data /emptydir/app-data-dir
+      cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/providers /emptydir/app-providers-dir
+      cp -r --preserve=mode,timestamps /opt/bitnami/keycloak/themes /emptydir/app-themes-dir
+      info "Copy operation completed"
+      
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Thu, 12 Nov 2026 16:14:11 +0000
+      Finished:     Thu, 12 Nov 2026 16:14:11 +0000
+    Ready:          True
+    Restart Count:  0
+    Limits:
+      cpu:                150m
+      ephemeral-storage:  2Gi
+      memory:             192Mi
+    Requests:
+      cpu:                100m
+      ephemeral-storage:  50Mi
+      memory:             128Mi
+    Environment:          <none>
+    Mounts:
+      /emptydir from empty-dir (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-s4gpf (ro)
+Containers:
+  keycloak:
+    Container ID:    containerd://a9eeb84be502d93a3ce52667455ec73d57fb2d15299484894358bb055576cfa1
+    Image:           docker.io/bitnamilegacy/keycloak:26.3.3-debian-12-r0
+    Image ID:        docker.io/bitnamilegacy/keycloak@sha256:da3df0976a9f9a664bdbde6cb5308b78f03ac94d0abf33b2df355bbb06cbc5b9
+    Ports:           8080/TCP (http), 7800/TCP (discovery)
+    Host Ports:      0/TCP (http), 0/TCP (discovery)
+    SeccompProfile:  RuntimeDefault
+    State:           Waiting
+      Reason:        CrashLoopBackOff
+    Last State:      Terminated
+      Reason:        Error
+      Exit Code:     1
+      Started:       Thu, 12 Nov 2026 16:29:46 +0000
+      Finished:      Thu, 12 Nov 2026 16:30:18 +0000
+    Ready:           False
+    Restart Count:   7
+    Limits:
+      cpu:                750m
+      ephemeral-storage:  2Gi
+      memory:             768Mi
+    Requests:
+      cpu:                500m
+      ephemeral-storage:  50Mi
+      memory:             512Mi
+    Liveness:             tcp-socket :http delay=120s timeout=5s period=1s #success=1 #failure=3
+    Readiness:            http-get http://:http/realms/master delay=30s timeout=1s period=10s #success=1 #failure=3
+    Environment Variables from:
+      mio-keycloak-env-vars  ConfigMap  Optional: false
+    Environment:
+      KUBERNETES_NAMESPACE:  progetto (v1:metadata.namespace)
+      KC_DB_URL:             jdbc:postgresql://mio-keycloak-postgresql:5432/keycloak_db?currentSchema=public&sslmode=disable
+    Mounts:
+      /bitnami/keycloak from empty-dir (rw,path="app-volume-dir")
+      /opt/bitnami/keycloak/conf from empty-dir (rw,path="app-conf-dir")
+      /opt/bitnami/keycloak/data from empty-dir (rw,path="app-data-dir")
+      /opt/bitnami/keycloak/lib/quarkus from empty-dir (rw,path="app-quarkus-dir")
+      /opt/bitnami/keycloak/providers from empty-dir (rw,path="app-providers-dir")
+      /opt/bitnami/keycloak/secrets from keycloak-secrets (rw)
+      /opt/bitnami/keycloak/themes from empty-dir (rw,path="app-themes-dir")
+      /tmp from empty-dir (rw,path="tmp-dir")
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-s4gpf (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  empty-dir:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  keycloak-secrets:
+    Type:        Projected (a volume that contains injected data from multiple sources)
+    SecretName:  mio-keycloak
+    Optional:    false
+    SecretName:  mio-keycloak-postgresql
+    Optional:    false
+  kube-api-access-s4gpf:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+  linkerd-proxy-init-xtables-lock:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  linkerd-identity-end-entity:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     Memory
+    SizeLimit:  <unset>
+  linkerd-identity-token:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  86400
+QoS Class:                   Burstable
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type     Reason     Age                   From               Message
+  ----     ------     ----                  ----               -------
+  Normal   Scheduled  18m                   default-scheduler  Successfully assigned progetto/mio-keycloak-0 to minikube
+  Normal   Pulled     18m                   kubelet            spec.initContainers{linkerd-init}: Container image "cr.l5d.io/linkerd/proxy:edge-26.10.1" already present on machine and can be accessed by the pod
+  Normal   Created    18m                   kubelet            spec.initContainers{linkerd-init}: Container created
+  Normal   Started    18m                   kubelet            spec.initContainers{linkerd-init}: Container started
+  Normal   Started    18m                   kubelet            spec.initContainers{linkerd-proxy}: Container started
+  Normal   Created    18m                   kubelet            spec.initContainers{linkerd-proxy}: Container created
+  Normal   Pulled     18m                   kubelet            spec.initContainers{linkerd-proxy}: Container image "cr.l5d.io/linkerd/proxy:edge-26.10.1" already present on machine and can be accessed by the pod
+  Normal   Pulled     18m                   kubelet            spec.initContainers{prepare-write-dirs}: Container image "docker.io/bitnamilegacy/keycloak:26.3.3-debian-12-r0" already present on machine and can be accessed by the pod
+  Normal   Created    18m                   kubelet            spec.initContainers{prepare-write-dirs}: Container created
+  Normal   Started    18m                   kubelet            spec.initContainers{prepare-write-dirs}: Container started
+  Normal   Started    13m (x5 over 18m)     kubelet            spec.containers{keycloak}: Container started
+  Normal   Created    11m (x6 over 18m)     kubelet            spec.containers{keycloak}: Container created
+  Warning  BackOff    7m3s (x16 over 16m)   kubelet            spec.containers{keycloak}: Back-off restarting failed container keycloak in pod mio-keycloak-0_progetto(55b04246-2c94-4a54-8e14-fa2d45631e28)
+  Normal   Pulled     3m8s (x8 over 18m)    kubelet            spec.containers{keycloak}: Container image "docker.io/bitnamilegacy/keycloak:26.3.3-debian-12-r0" already present on machine and can be accessed by the pod
+  Warning  Unhealthy  2m36s (x15 over 18m)  kubelet            spec.containers{keycloak}: Readiness probe failed: HTTP probe failed with statuscode: 502
+keycloak 16:29:46.74 INFO  ==> 
+keycloak 16:29:46.75 INFO  ==> Welcome to the Bitnami keycloak container
+keycloak 16:29:46.75 INFO  ==> Subscribe to project updates by watching https://github.com/bitnami/containers
+keycloak 16:29:46.75 INFO  ==> NOTICE: Starting August 28th, 2025, only a limited subset of images/charts will remain available for free. Backup will be available for some time at the 'Bitnami Legacy' repository. More info at https://github.com/bitnami/containers/issues/83267
+keycloak 16:29:46.76 INFO  ==> 
+keycloak 16:29:46.76 INFO  ==> ** Starting keycloak setup **
+keycloak 16:29:46.80 INFO  ==> Validating settings in KEYCLOAK_*,KC_* env vars...
+keycloak 16:29:46.84 INFO  ==> Trying to connect to PostgreSQL server mio-keycloak-postgresql...
+keycloak 16:29:46.85 INFO  ==> Found PostgreSQL server listening at mio-keycloak-postgresql:5432
+keycloak 16:29:46.89 INFO  ==> Configuring database settings
+keycloak 16:29:46.90 INFO  ==> ** keycloak setup finished! **
+
+keycloak 16:29:46.92 INFO  ==> ** Starting Keycloak **
+Appending additional Java properties to JAVA_OPTS
+Running the server in development mode. DO NOT use this configuration in production.
+2026-11-12 16:30:13,145 WARN  [io.agroal.pool] (agroal-11) Datasource '<default>': The connection attempt failed.
+2026-11-12 16:30:13,149 WARN  [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator] (JPA Startup Thread) HHH000342: Could not obtain connection to query metadata: org.hibernate.exception.JDBCConnectionException: unable to obtain isolated JDBC connection [The connection attempt failed.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doTheWork(JtaIsolationDelegate.java:206)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.lambda$delegateWork$3(JtaIsolationDelegate.java:91)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doInSuspendedTransaction(JtaIsolationDelegate.java:125)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.delegateWork(JtaIsolationDelegate.java:88)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:336)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68)
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:52)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:136)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:247)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68)
+	at org.hibernate.boot.internal.SessionFactoryOptionsBuilder.<init>(SessionFactoryOptionsBuilder.java:290)
+	at io.quarkus.hibernate.orm.runtime.recording.PrevalidatedQuarkusMetadata.buildSessionFactoryOptionsBuilder(PrevalidatedQuarkusMetadata.java:72)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:84)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:163)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:63)
+	at java.base/java.lang.Thread.run(Unknown Source)
+Caused by: org.postgresql.util.PSQLException: The connection attempt failed.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:385)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:277)
+	at org.postgresql.Driver.makeConnection(Driver.java:448)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:225)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:585)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:566)
+	at java.base/java.util.concurrent.FutureTask.run(Unknown Source)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:75)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	... 1 more
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at org.postgresql.core.VisibleBufferedInputStream.readMore(VisibleBufferedInputStream.java:192)
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:159)
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:144)
+	at org.postgresql.core.VisibleBufferedInputStream.read(VisibleBufferedInputStream.java:76)
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:477)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.doAuthentication(ConnectionFactoryImpl.java:744)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:234)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289)
+	... 12 more
+
+2026-11-12 16:30:17,924 WARN  [io.agroal.pool] (agroal-11) Datasource '<default>': The connection attempt failed.
+2026-11-12 16:30:17,926 INFO  [com.arjuna.ats.jbossatx] (main) ARJUNA032014: Stopping transaction recovery manager
+2026-11-12 16:30:17,973 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to start server in (development) mode
+2026-11-12 16:30:17,974 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to obtain JDBC connection
+2026-11-12 16:30:17,974 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: The connection attempt failed.
+2026-11-12 16:30:17,974 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Connection reset
+2026-11-12 16:30:17,974 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) For more details run the same command passing the '--verbose' option. Also you can use '--help' to see the details about the usage of the particular command.
+error: invalid argument "100d" for "--tail" flag: strconv.ParseInt: parsing "100d": invalid syntax
+See 'kubectl logs --help' for usage.
