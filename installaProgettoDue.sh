@@ -160,6 +160,6 @@ minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
   | minikube kubectl -- apply -f - || exit 1
 
 minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
-minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=300s || exit 1
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto || exit 1
 
 echo -e "\033[32mINIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
