@@ -49,6 +49,7 @@ spec:
       services:
         - name: mio-oauth2-oauth2-proxy
           port: 80
+          nativeLB: true
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
@@ -68,6 +69,7 @@ spec:
       services:
         - name: mio-apache
           port: 80
+          nativeLB: true
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
@@ -83,4 +85,5 @@ spec:
       services:
         - name: mio-keycloak
           port: 80
+          nativeLB: true
 YAML

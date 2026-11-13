@@ -33,6 +33,7 @@ spec:
       services:
         - name: mio-keycloak
           port: 80
+          nativeLB: true
 YAML
 
 minikube kubectl -- create secret generic mio-oauth2-keycloak \
