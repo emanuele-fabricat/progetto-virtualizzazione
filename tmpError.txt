@@ -1,37 +1,50 @@
-cat > pg-mesh-probe.yaml <<EOF
-minikube kubectl -- exec -n progetto mio-keycloak-postgresql-0 -c postgresql -- \
-  sh -ec 'PGPASSWORD="$(cat "$POSTGRES_PASSWORD_FILE")" PGSSLMODE=disable psql -h 127.0.0.1 -p 5432 -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atc "select current_user, current_database();"'
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pg-mesh-probe
-  namespace: progetto
-  annotations:
-    linkerd.io/inject: enabled
-spec:
-  restartPolicy: Never
-  containers:
-    - name: client
-      image: docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0
-      command: ["/bin/bash", "-ec"]
-      args:
-        - |
-          export PGPASSWORD="$(cat /db/password)"
-          export PGSSLMODE=disable
-          psql -h mio-keycloak-postgresql -p 5432 \
-            -U admin -d keycloak_db \
-            -Atc 'select current_user, current_database();'
-      volumeMounts:
-        - name: db-secret
-          mountPath: /db
-          readOnly: true
-  volumes:
-    - name: db-secret
-      secret:
-        secretName: mio-keycloak-postgresql
-        items:
-          - key: password
-            path: password
+cat > pg-mesh-probe.json <<EOF
+{
+  "apiVersion": "v1",
+  "kind": "Pod",
+  "metadata": {
+    "name": "pg-mesh-probe",
+    "namespace": "progetto",
+    "annotations": {
+      "linkerd.io/inject": "enabled"
+    }
+  },
+  "spec": {
+    "restartPolicy": "Never",
+    "containers": [
+      {
+        "name": "client",
+        "image": "docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0",
+        "command": ["/bin/bash", "-ec"],
+        "args": [
+          "export PGPASSWORD=\"$(cat /db/password)\"\nexport PGSSLMODE=disable\npsql -h mio-keycloak-postgresql -p 5432 -U admin -d keycloak_db -Atc 'select current_user, current_database();'\n"
+        ],
+        "volumeMounts": [
+          {
+            "name": "db-secret",
+            "mountPath": "/db",
+            "readOnly": true
+          }
+        ]
+      }
+    ],
+    "volumes": [
+      {
+        "name": "db-secret",
+        "secret": {
+          "secretName": "mio-keycloak-postgresql",
+          "items": [
+            {
+              "key": "password",
+              "path": "password"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+
 EOF
 
 
