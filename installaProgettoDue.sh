@@ -5,7 +5,7 @@ set -o pipefail
 echo "Nel prossimo comando sarà richiesta il client secret, immettere quello salvato nel passo precedente"
 
 #Creazione secret kubernetes
-read -r -s -p 'Client secret Keycloak: ' KC_CLIENT_SECRET
+read -r -p 'Client secret Keycloak: ' KC_CLIENT_SECRET
 printf '\n'
 COOKIE_SECRET="$(openssl rand -hex 16)"
 COOKIE_SECRET_B64="$(printf '%s' "$COOKIE_SECRET" | base64 -w0)"
