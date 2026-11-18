@@ -1,4 +1,4 @@
-cat > pg-mesh-probe.json <<EOF
+cat > pg-mesh-probe.json <<'EOF'
 {
   "apiVersion": "v1",
   "kind": "Pod",
@@ -6,7 +6,7 @@ cat > pg-mesh-probe.json <<EOF
     "name": "pg-mesh-probe",
     "namespace": "progetto",
     "annotations": {
-      "linkerd.io/inject": "disalabled"
+      "linkerd.io/inject": "disabled"
     }
   },
   "spec": {
@@ -15,51 +15,43 @@ cat > pg-mesh-probe.json <<EOF
       {
         "name": "client",
         "image": "docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0",
-        "command": ["/bin/bash", "-ec"],
+        "command": ["/opt/bitnami/postgresql/bin/psql"],
         "args": [
-          "export PGPASSWORD=\"$(cat /db/password)\"\nexport PGSSLMODE=disable\npsql -h mio-keycloak-postgresql -p 5432 -U admin -d keycloak_db -Atc 'select current_user, current_database();'\n"
+          "-h",
+          "mio-keycloak-postgresql",
+          "-p",
+          "5432",
+          "-U",
+          "admin",
+          "-d",
+          "postgres",
+          "-Atc",
+          "SELECT current_user, current_database(), (SELECT string_agg(datname::text, ',') FROM pg_database WHERE datname IN ('keycloak_db','keykloack_db'));"
         ],
-        "volumeMounts": [
+        "env": [
           {
-            "name": "db-secret",
-            "mountPath": "/db",
-            "readOnly": true
+            "name": "PGPASSWORD",
+            "valueFrom": {
+              "secretKeyRef": {
+                "name": "mio-keycloak-postgresql",
+                "key": "password"
+              }
+            }
+          },
+          {
+            "name": "PGSSLMODE",
+            "value": "disable"
           }
         ]
-      }
-    ],
-    "volumes": [
-      {
-        "name": "db-secret",
-        "secret": {
-          "secretName": "mio-keycloak-postgresql",
-          "items": [
-            {
-              "key": "password",
-              "path": "password"
-            }
-          ]
-        }
       }
     ]
   }
 }
-
 EOF
 
-
+minikube kubectl -- delete pod pg-mesh-probe -n progetto --ignore-not-found
 minikube kubectl -- apply -f pg-mesh-probe.json
-minikube kubectl -- get pod pg-mesh-probe -n progetto
-minikube kubectl -- logs pg-mesh-probe -n progetto -c client
-minikube kubectl -- get pod pg-mesh-probe -n progetto
-
-NAME            READY   STATUS   RESTARTS   AGE
-pg-mesh-probe   0/1     Error    0          66s
-lele@leleserver:~$ 
-minikube kubectl -- logs pg-mesh-probe -n progetto -c client
-Password for user admin: 
-psql: error: connection to server at "mio-keycloak-postgresql" (10.107.111.134), port 5432 failed: fe_sendauth: no password supplied
-
+minikube kubectl -- logs -n progetto pg-mesh-probe -c client --pod-running-timeout=60s
 
 
 
