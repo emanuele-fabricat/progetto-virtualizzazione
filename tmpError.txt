@@ -1,4 +1,5 @@
-minikube kubectl -- exec -n progetto mio-keycloak-postgresql-0 -c postgresql -- \
-  sh -ec 'printf "POSTGRESQL_ENABLE_TLS=%s\n" "${POSTGRESQL_ENABLE_TLS:-unset}"; PGPASSWORD="$(cat "$POSTGRES_PASSWORD_FILE")" psql -h 127.0.0.1 -U "$POSTGRES_USER" -d "$POSTGRES_DATABASE" -Atc "SHOW ssl;"'
-POSTGRESQL_ENABLE_TLS=no
-off
+minikube kubectl -- patch configmap mio-keycloak-env-vars -n progetto \
+  --type=merge \
+  -p '{"data":{"KC_DB_URL":"jdbc:postgresql://mio-keycloak-postgresql:5432/keycloak_db?currentSchema=public&sslmode=disable"}}'
+
+minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
