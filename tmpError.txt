@@ -8,3 +8,254 @@ minikube kubectl -- logs mio-keycloak-0 -n progetto -c keycloak --previous --tai
 minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=20m --tail=100
 
 minikube kubectl -- logs mio-keycloak-postgresql-0 -n progetto -c postgresql --since=20m --tail=100
+keycloak ready=false restarts=7
+Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
+NAME           ENDPOINTS   AGE
+mio-keycloak               32m
+keycloak 13:06:11.55 INFO  ==> 
+keycloak 13:06:11.56 INFO  ==> Welcome to the Bitnami keycloak container
+keycloak 13:06:11.56 INFO  ==> Subscribe to project updates by watching https://github.com/bitnami/containers
+keycloak 13:06:11.57 INFO  ==> NOTICE: Starting August 28th, 2025, only a limited subset of images/charts will remain available for free. Backup will be available for some time at the 'Bitnami Legacy' repository. More info at https://github.com/bitnami/containers/issues/83267
+keycloak 13:06:11.57 INFO  ==> 
+keycloak 13:06:11.58 INFO  ==> ** Starting keycloak setup **
+keycloak 13:06:11.61 INFO  ==> Validating settings in KEYCLOAK_*,KC_* env vars...
+keycloak 13:06:11.69 INFO  ==> Trying to connect to PostgreSQL server mio-keycloak-postgresql...
+keycloak 13:06:11.71 INFO  ==> Found PostgreSQL server listening at mio-keycloak-postgresql:5432
+keycloak 13:06:11.72 INFO  ==> Configuring database settings
+
+keycloak 13:06:11.73 INFO  ==> ** keycloak setup finished! **
+keycloak 13:06:11.78 INFO  ==> ** Starting Keycloak **
+Appending additional Java properties to JAVA_OPTS
+Running the server in development mode. DO NOT use this configuration in production.
+2026-11-18 13:06:42,813 WARN  [io.agroal.pool] (agroal-11) Datasource '<default>': The connection attempt failed.
+2026-11-18 13:06:42,818 WARN  [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator] (JPA Startup Thread) HHH000342: Could not obtain connection to query metadata: org.hibernate.exception.JDBCConnectionException: unable to obtain isolated JDBC connection [The connection attempt failed.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doTheWork(JtaIsolationDelegate.java:206)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.lambda$delegateWork$3(JtaIsolationDelegate.java:91)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doInSuspendedTransaction(JtaIsolationDelegate.java:125)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.delegateWork(JtaIsolationDelegate.java:88)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:336)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68)
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:52)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:136)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:247)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68)
+	at org.hibernate.boot.internal.SessionFactoryOptionsBuilder.<init>(SessionFactoryOptionsBuilder.java:290)
+	at io.quarkus.hibernate.orm.runtime.recording.PrevalidatedQuarkusMetadata.buildSessionFactoryOptionsBuilder(PrevalidatedQuarkusMetadata.java:72)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:84)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:163)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:63)
+	at java.base/java.lang.Thread.run(Unknown Source)
+Caused by: org.postgresql.util.PSQLException: The connection attempt failed.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:385)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:277)
+	at org.postgresql.Driver.makeConnection(Driver.java:448)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:225)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:585)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:566)
+	at java.base/java.util.concurrent.FutureTask.run(Unknown Source)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:75)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	... 1 more
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at org.postgresql.core.VisibleBufferedInputStream.readMore(VisibleBufferedInputStream.java:192)
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:159)
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:144)
+	at org.postgresql.core.VisibleBufferedInputStream.read(VisibleBufferedInputStream.java:76)
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:477)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.enableSSL(ConnectionFactoryImpl.java:627)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:207)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289)
+	... 12 more
+
+2026-11-18 13:06:47,895 WARN  [io.agroal.pool] (agroal-11) Datasource '<default>': The connection attempt failed.
+2026-11-18 13:06:47,898 INFO  [com.arjuna.ats.jbossatx] (main) ARJUNA032014: Stopping transaction recovery manager
+2026-11-18 13:06:48,011 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to start server in (development) mode
+2026-11-18 13:06:48,011 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to obtain JDBC connection
+2026-11-18 13:06:48,012 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: The connection attempt failed.
+2026-11-18 13:06:48,012 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Connection reset
+2026-11-18 13:06:48,012 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) For more details run the same command passing the '--verbose' option. Also you can use '--help' to see the details about the usage of the particular command.
+keycloak 13:06:11.55 INFO  ==> 
+keycloak 13:06:11.56 INFO  ==> Welcome to the Bitnami keycloak container
+keycloak 13:06:11.56 INFO  ==> Subscribe to project updates by watching https://github.com/bitnami/containers
+keycloak 13:06:11.57 INFO  ==> NOTICE: Starting August 28th, 2025, only a limited subset of images/charts will remain available for free. Backup will be available for some time at the 'Bitnami Legacy' repository. More info at https://github.com/bitnami/containers/issues/83267
+keycloak 13:06:11.57 INFO  ==> 
+keycloak 13:06:11.58 INFO  ==> ** Starting keycloak setup **
+keycloak 13:06:11.61 INFO  ==> Validating settings in KEYCLOAK_*,KC_* env vars...
+keycloak 13:06:11.69 INFO  ==> Trying to connect to PostgreSQL server mio-keycloak-postgresql...
+keycloak 13:06:11.71 INFO  ==> Found PostgreSQL server listening at mio-keycloak-postgresql:5432
+keycloak 13:06:11.72 INFO  ==> Configuring database settings
+
+keycloak 13:06:11.73 INFO  ==> ** keycloak setup finished! **
+keycloak 13:06:11.78 INFO  ==> ** Starting Keycloak **
+Appending additional Java properties to JAVA_OPTS
+Running the server in development mode. DO NOT use this configuration in production.
+2026-11-18 13:06:42,813 WARN  [io.agroal.pool] (agroal-11) Datasource '<default>': The connection attempt failed.
+2026-11-18 13:06:42,818 WARN  [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator] (JPA Startup Thread) HHH000342: Could not obtain connection to query metadata: org.hibernate.exception.JDBCConnectionException: unable to obtain isolated JDBC connection [The connection attempt failed.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doTheWork(JtaIsolationDelegate.java:206)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.lambda$delegateWork$3(JtaIsolationDelegate.java:91)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.doInSuspendedTransaction(JtaIsolationDelegate.java:125)
+	at org.hibernate.resource.transaction.backend.jta.internal.JtaIsolationDelegate.delegateWork(JtaIsolationDelegate.java:88)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:336)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:129)
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:81)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:130)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68)
+	at org.hibernate.engine.jdbc.internal.JdbcServicesImpl.configure(JdbcServicesImpl.java:52)
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.configureService(StandardServiceRegistryImpl.java:136)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:247)
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215)
+	at org.hibernate.service.ServiceRegistry.requireService(ServiceRegistry.java:68)
+	at org.hibernate.boot.internal.SessionFactoryOptionsBuilder.<init>(SessionFactoryOptionsBuilder.java:290)
+	at io.quarkus.hibernate.orm.runtime.recording.PrevalidatedQuarkusMetadata.buildSessionFactoryOptionsBuilder(PrevalidatedQuarkusMetadata.java:72)
+	at io.quarkus.hibernate.orm.runtime.boot.FastBootEntityManagerFactoryBuilder.build(FastBootEntityManagerFactoryBuilder.java:84)
+	at io.quarkus.hibernate.orm.runtime.FastBootHibernatePersistenceProvider.createEntityManagerFactory(FastBootHibernatePersistenceProvider.java:72)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:80)
+	at jakarta.persistence.Persistence.createEntityManagerFactory(Persistence.java:55)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$LazyPersistenceUnit.get(JPAConfig.java:163)
+	at io.quarkus.hibernate.orm.runtime.JPAConfig$1.run(JPAConfig.java:63)
+	at java.base/java.lang.Thread.run(Unknown Source)
+Caused by: org.postgresql.util.PSQLException: The connection attempt failed.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:385)
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:57)
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:277)
+	at org.postgresql.Driver.makeConnection(Driver.java:448)
+	at org.postgresql.Driver.connect(Driver.java:298)
+	at io.agroal.pool.ConnectionFactory.createConnection(ConnectionFactory.java:225)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:585)
+	at io.agroal.pool.ConnectionPool$CreateConnectionTask.call(ConnectionPool.java:566)
+	at java.base/java.util.concurrent.FutureTask.run(Unknown Source)
+	at io.agroal.pool.util.PriorityScheduledExecutor.beforeExecute(PriorityScheduledExecutor.java:75)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	... 1 more
+Caused by: java.net.SocketException: Connection reset
+	at java.base/sun.nio.ch.NioSocketImpl.implRead(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl.read(Unknown Source)
+	at java.base/sun.nio.ch.NioSocketImpl$1.read(Unknown Source)
+	at java.base/java.net.Socket$SocketInputStream.read(Unknown Source)
+	at org.postgresql.core.VisibleBufferedInputStream.readMore(VisibleBufferedInputStream.java:192)
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:159)
+	at org.postgresql.core.VisibleBufferedInputStream.ensureBytes(VisibleBufferedInputStream.java:144)
+	at org.postgresql.core.VisibleBufferedInputStream.read(VisibleBufferedInputStream.java:76)
+	at org.postgresql.core.PGStream.receiveChar(PGStream.java:477)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.enableSSL(ConnectionFactoryImpl.java:627)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:207)
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:289)
+	... 12 more
+
+2026-11-18 13:06:47,895 WARN  [io.agroal.pool] (agroal-11) Datasource '<default>': The connection attempt failed.
+2026-11-18 13:06:47,898 INFO  [com.arjuna.ats.jbossatx] (main) ARJUNA032014: Stopping transaction recovery manager
+2026-11-18 13:06:48,011 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to start server in (development) mode
+2026-11-18 13:06:48,011 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Failed to obtain JDBC connection
+2026-11-18 13:06:48,012 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: The connection attempt failed.
+2026-11-18 13:06:48,012 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) ERROR: Connection reset
+2026-11-18 13:06:48,012 ERROR [org.keycloak.quarkus.runtime.cli.ExecutionExceptionHandler] (main) For more details run the same command passing the '--verbose' option. Also you can use '--help' to see the details about the usage of the particular command.
+[     0.000330s]  INFO ThreadId(01) linkerd2_proxy: release 2.370.0 (0cdcc07) by linkerd on 2026-09-23T08:50:17Z
+[     0.006336s]  INFO ThreadId(01) linkerd2_proxy::rt: Using single-threaded proxy runtime
+[     0.008155s]  INFO ThreadId(01) linkerd2_proxy: Admin interface on 0.0.0.0:4191
+[     0.008179s]  INFO ThreadId(01) linkerd2_proxy: Inbound interface on 0.0.0.0:4143
+[     0.008184s]  INFO ThreadId(01) linkerd2_proxy: Outbound interface on 127.0.0.1:4140
+[     0.008188s]  INFO ThreadId(01) linkerd2_proxy: Tap interface on 0.0.0.0:4190
+[     0.008193s]  INFO ThreadId(01) linkerd2_proxy: SNI is mio-keycloak.progetto.serviceaccount.identity.linkerd.cluster.local
+[     0.008197s]  INFO ThreadId(01) linkerd2_proxy: Local identity is mio-keycloak.progetto.serviceaccount.identity.linkerd.cluster.local
+[     0.008202s]  INFO ThreadId(01) linkerd2_proxy: Destinations resolved via linkerd-dst-headless.linkerd.svc.cluster.local:8086 (linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local)
+[     0.009982s]  INFO ThreadId(01) policy:controller{addr=linkerd-policy.linkerd.svc.cluster.local:8090}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8090
+[     0.010406s]  INFO ThreadId(02) identity:identity{server.addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}:controller{addr=linkerd-identity-headless.linkerd.svc.cluster.local:8080}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.9:8080
+[     0.089536s]  INFO ThreadId(01) dst:controller{addr=linkerd-dst-headless.linkerd.svc.cluster.local:8086}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.10:8086
+[     0.099078s]  INFO ThreadId(02) daemon:identity: linkerd_app: Certified identity id=mio-keycloak.progetto.serviceaccount.identity.linkerd.cluster.local
+[     3.222627s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[    34.861215s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:38374}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    44.860967s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:48202}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    54.861591s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:35386}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    64.861533s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:49600}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    74.861147s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:35428}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    84.861006s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:44516}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[    94.371961s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:40300}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   104.372074s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:44422}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   110.361825s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   114.371546s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:38042}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   144.186038s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   148.714280s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:58148}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   160.704089s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   187.198940s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   192.044206s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:54940}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   215.696931s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   242.980001s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   247.477176s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:48540}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   299.700152s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   326.969277s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   331.121433s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:60592}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   413.713041s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   440.822622s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   444.962034s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:49752}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   607.703682s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   635.591509s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   639.389140s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:58206}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+[   951.751204s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   981.842324s]  INFO ThreadId(01) outbound:proxy{addr=10.107.111.134:5432}:balance{addr=mio-keycloak-postgresql.progetto.svc.cluster.local:5432}: linkerd_pool_p2c: Adding endpoint addr=10.244.0.23:5432
+[   982.977655s]  INFO ThreadId(01) inbound:server{port=8080}:rescue{client.addr=10.244.0.1:36784}: linkerd_app_core::errors::respond: HTTP/1.1 request failed error=client error (Connect) error.sources=[Connection refused (os error 111)] path="/realms/master"
+postgresql 12:50:04.37 INFO  ==> 
+postgresql 12:50:04.37 INFO  ==> Welcome to the Bitnami postgresql container
+postgresql 12:50:04.46 INFO  ==> Subscribe to project updates by watching https://github.com/bitnami/containers
+postgresql 12:50:04.46 INFO  ==> NOTICE: Starting August 28th, 2025, only a limited subset of images/charts will remain available for free. Backup will be available for some time at the 'Bitnami Legacy' repository. More info at https://github.com/bitnami/containers/issues/83267
+postgresql 12:50:04.47 INFO  ==> 
+postgresql 12:50:04.77 INFO  ==> ** Starting PostgreSQL setup **
+postgresql 12:50:05.07 INFO  ==> Validating settings in POSTGRESQL_* env vars..
+postgresql 12:50:05.17 INFO  ==> Cleaning stale /bitnami/postgresql/data/postmaster.pid file
+postgresql 12:50:05.27 INFO  ==> Loading custom pre-init scripts...
+postgresql 12:50:05.36 INFO  ==> Initializing PostgreSQL database...
+postgresql 12:50:05.57 INFO  ==> pg_hba.conf file not detected. Generating it...
+postgresql 12:50:05.57 INFO  ==> Generating local authentication configuration
+postgresql 12:50:05.77 INFO  ==> Deploying PostgreSQL with persisted data...
+postgresql 12:50:06.06 INFO  ==> Configuring replication parameters
+postgresql 12:50:06.47 INFO  ==> Configuring fsync
+postgresql 12:50:06.57 INFO  ==> Configuring synchronous_replication
+postgresql 12:50:07.16 INFO  ==> Loading custom scripts...
+postgresql 12:50:07.17 INFO  ==> Enabling remote connections
+postgresql 12:50:07.36 INFO  ==> ** PostgreSQL setup finished! **
+
+postgresql 12:50:07.66 INFO  ==> ** Starting PostgreSQL **
+2026-11-18 12:50:07.865 GMT [1] LOG:  pgaudit extension initialized
+2026-11-18 12:50:07.968 GMT [1] LOG:  starting PostgreSQL 17.6 on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14+deb12u1) 12.2.0, 64-bit
+2026-11-18 12:50:07.969 GMT [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2026-11-18 12:50:07.969 GMT [1] LOG:  listening on IPv6 address "::", port 5432
+2026-11-18 12:50:07.977 GMT [1] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2026-11-18 12:50:07.996 GMT [95] LOG:  database system was interrupted; last known up at 2026-11-18 12:46:10 GMT
+2026-11-18 12:50:08.399 GMT [95] LOG:  database system was not properly shut down; automatic recovery in progress
+2026-11-18 12:50:08.407 GMT [95] LOG:  redo starts at 0/1D6B3F0
+2026-11-18 12:50:08.407 GMT [95] LOG:  invalid record length at 0/1D6B530: expected at least 24, got 0
+2026-11-18 12:50:08.407 GMT [95] LOG:  redo done at 0/1D6B4F8 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2026-11-18 12:50:08.469 GMT [93] LOG:  checkpoint starting: end-of-recovery immediate wait
+2026-11-18 12:50:08.496 GMT [93] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.006 s, sync=0.010 s, total=0.031 s; sync files=2, longest=0.009 s, average=0.005 s; distance=0 kB, estimate=0 kB; lsn=0/1D6B530, redo lsn=0/1D6B530
+2026-11-18 12:50:08.504 GMT [1] LOG:  database system is ready to accept connections
+2026-11-18 12:55:08.596 GMT [93] LOG:  checkpoint starting: time
+2026-11-18 12:55:08.821 GMT [93] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.204 s, sync=0.007 s, total=0.225 s; sync files=3, longest=0.005 s, average=0.003 s; distance=2 kB, estimate=2 kB; lsn=0/1D6BF18, redo lsn=0/1D6BEC0
+
