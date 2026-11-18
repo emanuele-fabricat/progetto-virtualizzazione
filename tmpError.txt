@@ -81,3 +81,77 @@ minikube kubectl -- describe pod pg-mesh-probe -n progetto
 minikube kubectl -- logs -n progetto pg-mesh-probe -c linkerd-init --tail=80
 
 
+
+minikube kubectl -- describe pod pg-mesh-probe -n progetto
+minikube kubectl -- logs -n progetto pg-mesh-probe -c linkerd-init --tail=80
+
+Name:             pg-mesh-probe
+Namespace:        progetto
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Wed, 18 Nov 2026 15:21:08 +0000
+Labels:           <none>
+Annotations:      linkerd.io/inject: disabled
+Status:           Succeeded
+IP:               10.244.0.30
+IPs:
+  IP:  10.244.0.30
+Containers:
+  client:
+    Container ID:  containerd://b09486d882e33065b42b05243f430cd0fcaf8dfaa9599f8f42799ec704b8e48f
+    Image:         docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0
+    Image ID:      docker.io/bitnamilegacy/postgresql@sha256:de520acd66fc954d538faa997771ca791f9fcba8b837419a8bc4d08a08df3762
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      /opt/bitnami/postgresql/bin/psql
+    Args:
+      -h
+      mio-keycloak-postgresql
+      -p
+      5432
+      -U
+      admin
+      -d
+      postgres
+      -Atc
+      SELECT current_user, current_database(), (SELECT string_agg(datname::text, ',') FROM pg_database WHERE datname IN ('keycloak_db','keykloack_db'));
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Wed, 18 Nov 2026 15:21:09 +0000
+      Finished:     Wed, 18 Nov 2026 15:21:09 +0000
+    Ready:          False
+    Restart Count:  0
+    Environment:
+      PGPASSWORD:  <set to the key 'password' in secret 'mio-keycloak-postgresql'>  Optional: false
+      PGSSLMODE:   disable
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-b92rx (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   False 
+  Initialized                 True 
+  Ready                       False 
+  ContainersReady             False 
+  PodScheduled                True 
+Volumes:
+  kube-api-access-b92rx:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  14s   default-scheduler  Successfully assigned progetto/pg-mesh-probe to minikube
+  Normal  Pulled     14s   kubelet            spec.containers{client}: Container image "docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0" already present on machine and can be accessed by the pod
+  Normal  Created    13s   kubelet            spec.containers{client}: Container created
+  Normal  Started    13s   kubelet            spec.containers{client}: Container started
+error: container linkerd-init is not valid for pod pg-mesh-probe
