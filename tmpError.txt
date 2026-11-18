@@ -1,105 +1,154 @@
-cat > pg-mesh-probe.json <<'EOF'
-{
-  "apiVersion": "v1",
-  "kind": "Pod",
-  "metadata": {
-    "name": "pg-mesh-probe",
-    "namespace": "progetto",
-    "annotations": {
-      "linkerd.io/inject": "disabled"
-    }
-  },
-  "spec": {
-    "restartPolicy": "Never",
-    "containers": [
-      {
-        "name": "client",
-        "image": "docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0",
-        "command": ["/opt/bitnami/postgresql/bin/psql"],
-        "args": [
-          "-h",
-          "mio-keycloak-postgresql",
-          "-p",
-          "5432",
-          "-U",
-          "admin",
-          "-d",
-          "postgres",
-          "-Atc",
-          "SELECT current_user, current_database(), (SELECT string_agg(datname::text, ',') FROM pg_database WHERE datname IN ('keycloak_db','keykloack_db'));"
-        ],
-        "env": [
-          {
-            "name": "PGPASSWORD",
-            "valueFrom": {
-              "secretKeyRef": {
-                "name": "mio-keycloak-postgresql",
-                "key": "password"
-              }
-            }
-          },
-          {
-            "name": "PGSSLMODE",
-            "value": "disable"
-          }
-        ]
-      }
-    ]
-  }
-}
-EOF
-
-minikube kubectl -- delete pod pg-mesh-probe -n progetto --ignore-not-found
-minikube kubectl -- apply -f pg-mesh-probe.json
-minikube kubectl -- logs -n progetto pg-mesh-probe -c client --pod-running-timeout=60s
-
 minikube kubectl -- get pod pg-mesh-probe -n progetto
-NAME            READY   STATUS      RESTARTS   AGE
-pg-mesh-probe   0/1     Completed   0          2m32s
-lele@leleserver:~$ 
-minikube kubectl -- logs -n progetto pg-mesh-probe -c client --pod-running-timeout=60s
-admin|postgres|keycloak_db
-
-
-
-
-sed -i 's/"linkerd.io\/inject": "disabled"/"linkerd.io\/inject": "enabled"/' pg-mesh-probe.json
-grep 'linkerd.io/inject' pg-mesh-probe.json
-
-minikube kubectl -- delete pod pg-mesh-probe -n progetto --ignore-not-found
-minikube kubectl -- apply -f pg-mesh-probe.json
-minikube kubectl -- logs -n progetto pg-mesh-probe -c client --pod-running-timeout=60s
-minikube kubectl -- get pod pg-mesh-probe -n progetto
-      "linkerd.io/inject": "enabled"
-pod/pg-mesh-probe created
-Error from server (BadRequest): container "client" in pod "pg-mesh-probe" is waiting to start: PodInitializing
 NAME            READY   STATUS   RESTARTS   AGE
-pg-mesh-probe   0/2     Error    0          2m52s
-
-
-minikube kubectl -- describe pod pg-mesh-probe -n progetto
-minikube kubectl -- logs -n progetto pg-mesh-probe -c linkerd-init --tail=80
-
-
-
-minikube kubectl -- describe pod pg-mesh-probe -n progetto
-minikube kubectl -- logs -n progetto pg-mesh-probe -c linkerd-init --tail=80
-
+pg-mesh-probe   0/2     Error    0          3m37s
+lele@leleserver:~$ minikube kubectl -- describe pod pg-mesh-probe -n progetto
 Name:             pg-mesh-probe
 Namespace:        progetto
 Priority:         0
 Service Account:  default
 Node:             minikube/192.168.49.2
-Start Time:       Wed, 18 Nov 2026 15:21:08 +0000
-Labels:           <none>
-Annotations:      linkerd.io/inject: disabled
-Status:           Succeeded
-IP:               10.244.0.30
+Start Time:       Wed, 18 Nov 2026 15:50:06 +0000
+Labels:           linkerd.io/control-plane-ns=linkerd
+                  linkerd.io/workload-ns=progetto
+Annotations:      linkerd.io/created-by: linkerd/proxy-injector edge-26.10.1
+                  linkerd.io/inject: enabled
+                  linkerd.io/proxy-version: edge-26.10.1
+                  linkerd.io/trust-root-sha256: d2c3a00747a416e6b58b8cf963f41d6d2e89c7efb06a161e8a4aecb5c0f6f091
+                  viz.linkerd.io/tap-enabled: true
+Status:           Failed
+IP:               10.244.0.31
 IPs:
-  IP:  10.244.0.30
+  IP:  10.244.0.31
+Init Containers:
+  linkerd-init:
+    Container ID:    containerd://35df813cce868905fd94a16f7524481f5d593fd3cbb33a393758b59fcbd2d5a2
+    Image:           cr.l5d.io/linkerd/proxy:edge-26.10.1
+    Image ID:        cr.l5d.io/linkerd/proxy@sha256:f2add36071cfca33754d2930800860785aaed672590bc0207be2f4da9889eb11
+    Port:            <none>
+    Host Port:       <none>
+    SeccompProfile:  RuntimeDefault
+    Command:
+      /usr/lib/linkerd/linkerd2-proxy-init
+    Args:
+      --firewall-bin-path
+      iptables-nft
+      --firewall-save-bin-path
+      iptables-nft-save
+      --ipv6=false
+      --incoming-proxy-port
+      4143
+      --outgoing-proxy-port
+      4140
+      --proxy-uid
+      2102
+      --inbound-ports-to-ignore
+      4190,4191,4567,4568
+      --outbound-ports-to-ignore
+      4567,4568
+    State:          Terminated
+      Reason:       Completed
+      Exit Code:    0
+      Started:      Wed, 18 Nov 2026 15:50:07 +0000
+      Finished:     Wed, 18 Nov 2026 15:50:07 +0000
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /run from linkerd-proxy-init-xtables-lock (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-djccb (ro)
+  linkerd-proxy:
+    Container ID:    containerd://7ec8ae222081a845eccb42d94b4ae219b830b8cc944a95c0f799c3ee510119ba
+    Image:           cr.l5d.io/linkerd/proxy:edge-26.10.1
+    Image ID:        cr.l5d.io/linkerd/proxy@sha256:f2add36071cfca33754d2930800860785aaed672590bc0207be2f4da9889eb11
+    Ports:           4143/TCP (linkerd-proxy), 4191/TCP (linkerd-admin)
+    Host Ports:      0/TCP (linkerd-proxy), 0/TCP (linkerd-admin)
+    SeccompProfile:  RuntimeDefault
+    State:           Terminated
+      Reason:        Completed
+      Exit Code:     0
+      Started:       Wed, 18 Nov 2026 15:50:08 +0000
+      Finished:      Wed, 18 Nov 2026 15:50:12 +0000
+    Ready:           False
+    Restart Count:   0
+    Liveness:        http-get http://:4191/live delay=10s timeout=1s period=10s #success=1 #failure=3
+    Readiness:       http-get http://:4191/ready delay=2s timeout=1s period=10s #success=1 #failure=3
+    Startup:         http-get http://:4191/ready delay=0s timeout=1s period=1s #success=1 #failure=120
+    Environment:
+      _pod_name:                                                 pg-mesh-probe (v1:metadata.name)
+      _pod_ns:                                                   progetto (v1:metadata.namespace)
+      _pod_uid:                                                   (v1:metadata.uid)
+      _pod_ip:                                                    (v1:status.podIP)
+      _pod_nodeName:                                              (v1:spec.nodeName)
+      _pod_containerName:                                        linkerd-proxy
+      LINKERD2_PROXY_CORES:                                      1
+      LINKERD2_PROXY_CORES_MIN:                                  1
+      LINKERD2_PROXY_SHUTDOWN_ENDPOINT_ENABLED:                  false
+      LINKERD2_PROXY_LOG:                                        warn,linkerd=info,hickory=error,[{headers}]=off,[{request}]=off
+      LINKERD2_PROXY_LOG_FORMAT:                                 plain
+      LINKERD2_PROXY_DESTINATION_SVC_ADDR:                       linkerd-dst-headless.linkerd.svc.cluster.local.:8086
+      LINKERD2_PROXY_DESTINATION_PROFILE_NETWORKS:               10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16,fd00::/8
+      LINKERD2_PROXY_POLICY_SVC_ADDR:                            linkerd-policy.linkerd.svc.cluster.local.:8090
+      LINKERD2_PROXY_POLICY_WORKLOAD:                            {"ns":"$(_pod_ns)", "pod":"$(_pod_name)"}
+                                                                 
+      LINKERD2_PROXY_INBOUND_DEFAULT_POLICY:                     all-unauthenticated
+      LINKERD2_PROXY_POLICY_CLUSTER_NETWORKS:                    10.0.0.0/8,100.64.0.0/10,172.16.0.0/12,192.168.0.0/16,fd00::/8
+      LINKERD2_PROXY_CONTROL_STREAM_INITIAL_TIMEOUT:             3s
+      LINKERD2_PROXY_CONTROL_STREAM_IDLE_TIMEOUT:                5m
+      LINKERD2_PROXY_CONTROL_STREAM_LIFETIME:                    1h
+      LINKERD2_PROXY_INBOUND_CONNECT_TIMEOUT:                    100ms
+      LINKERD2_PROXY_OUTBOUND_CONNECT_TIMEOUT:                   1000ms
+      LINKERD2_PROXY_OUTBOUND_DISCOVERY_IDLE_TIMEOUT:            5s
+      LINKERD2_PROXY_INBOUND_DISCOVERY_IDLE_TIMEOUT:             90s
+      LINKERD2_PROXY_CONTROL_LISTEN_ADDR:                        0.0.0.0:4190
+      LINKERD2_PROXY_ADMIN_LISTEN_ADDR:                          0.0.0.0:4191
+      LINKERD2_PROXY_OUTBOUND_LISTEN_ADDR:                       127.0.0.1:4140
+      LINKERD2_PROXY_OUTBOUND_LISTEN_ADDRS:                      127.0.0.1:4140
+      LINKERD2_PROXY_INBOUND_LISTEN_ADDR:                        0.0.0.0:4143
+      LINKERD2_PROXY_INBOUND_IPS:                                 (v1:status.podIPs)
+      LINKERD2_PROXY_INBOUND_PORTS:                              
+      LINKERD2_PROXY_DESTINATION_PROFILE_SUFFIXES:               svc.cluster.local.
+      LINKERD2_PROXY_INBOUND_ACCEPT_KEEPALIVE:                   10000ms
+      LINKERD2_PROXY_OUTBOUND_CONNECT_KEEPALIVE:                 10000ms
+      LINKERD2_PROXY_INBOUND_ACCEPT_USER_TIMEOUT:                30s
+      LINKERD2_PROXY_OUTBOUND_CONNECT_USER_TIMEOUT:              30s
+      LINKERD2_PROXY_OUTBOUND_METRICS_HOSTNAME_LABELS:           false
+      LINKERD2_PROXY_INBOUND_SERVER_HTTP2_KEEP_ALIVE_INTERVAL:   10s
+      LINKERD2_PROXY_INBOUND_SERVER_HTTP2_KEEP_ALIVE_TIMEOUT:    3s
+      LINKERD2_PROXY_OUTBOUND_SERVER_HTTP2_KEEP_ALIVE_INTERVAL:  10s
+      LINKERD2_PROXY_OUTBOUND_SERVER_HTTP2_KEEP_ALIVE_TIMEOUT:   3s
+      LINKERD2_PROXY_INBOUND_PORTS_DISABLE_PROTOCOL_DETECTION:   25,587,3306,4444,5432,6379,9300,11211
+      LINKERD2_PROXY_DESTINATION_CONTEXT:                        {"ns":"$(_pod_ns)", "nodeName":"$(_pod_nodeName)", "pod":"$(_pod_name)"}
+                                                                 
+      _pod_sa:                                                    (v1:spec.serviceAccountName)
+      _l5d_ns:                                                   linkerd
+      _l5d_trustdomain:                                          cluster.local
+      LINKERD2_PROXY_IDENTITY_DIR:                               /var/run/linkerd/identity/end-entity
+      LINKERD2_PROXY_IDENTITY_TRUST_ANCHORS:                     -----BEGIN CERTIFICATE-----
+                                                                 MIIBiTCCAS6gAwIBAgIBATAKBggqhkjOPQQDAjAcMRowGAYDVQQDExFpZGVudGl0
+                                                                 eS5saW5rZXJkLjAeFw0yNjExMTgxMjQ1MjlaFw0yNzExMTgxMjQ1NDlaMBwxGjAY
+                                                                 BgNVBAMTEWlkZW50aXR5LmxpbmtlcmQuMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcD
+                                                                 QgAEzDnFpMLSfEsJtkcFTZUfGqqazdqEFE056wC1Cjf1iQtktD5Y/uiGriZi5mjx
+                                                                 VVZe8oX2vqXmZ5BYEs2mSBrH7qNhMF8wDgYDVR0PAQH/BAQDAgEGMB0GA1UdJQQW
+                                                                 MBQGCCsGAQUFBwMBBggrBgEFBQcDAjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQW
+                                                                 BBRv0WHOW2pDPWmMzywYobXeGJ+HWDAKBggqhkjOPQQDAgNJADBGAiEA3lrDH9h5
+                                                                 DBi6NhkFiJIxUjBh60tXlW7SE3nxoeyhLhcCIQC75r9OCVVwzgjKA06cZwpMBpzT
+                                                                 /sPBRKskCQ2ZoUtrsQ==
+                                                                 -----END CERTIFICATE-----
+                                                                 
+      LINKERD2_PROXY_IDENTITY_TOKEN_FILE:                        /var/run/secrets/tokens/linkerd-identity-token
+      LINKERD2_PROXY_IDENTITY_SVC_ADDR:                          linkerd-identity-headless.linkerd.svc.cluster.local.:8080
+      LINKERD2_PROXY_IDENTITY_LOCAL_NAME:                        $(_pod_sa).$(_pod_ns).serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_IDENTITY_SVC_NAME:                          linkerd-identity.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_DESTINATION_SVC_NAME:                       linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_POLICY_SVC_NAME:                            linkerd-destination.linkerd.serviceaccount.identity.linkerd.cluster.local
+      LINKERD2_PROXY_TAP_SVC_NAME:                               tap.linkerd-viz.serviceaccount.identity.linkerd.cluster.local
+    Mounts:
+      /var/run/linkerd/identity/end-entity from linkerd-identity-end-entity (rw)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-djccb (ro)
+      /var/run/secrets/tokens from linkerd-identity-token (rw)
 Containers:
   client:
-    Container ID:  containerd://b09486d882e33065b42b05243f430cd0fcaf8dfaa9599f8f42799ec704b8e48f
+    Container ID:  containerd://7bb3d5b5adf7b8c4019711f3b7088f98147dfc9d6ab9eb75aaa2b0177387dac7
     Image:         docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0
     Image ID:      docker.io/bitnamilegacy/postgresql@sha256:de520acd66fc954d538faa997771ca791f9fcba8b837419a8bc4d08a08df3762
     Port:          <none>
@@ -118,17 +167,17 @@ Containers:
       -Atc
       SELECT current_user, current_database(), (SELECT string_agg(datname::text, ',') FROM pg_database WHERE datname IN ('keycloak_db','keykloack_db'));
     State:          Terminated
-      Reason:       Completed
-      Exit Code:    0
-      Started:      Wed, 18 Nov 2026 15:21:09 +0000
-      Finished:     Wed, 18 Nov 2026 15:21:09 +0000
+      Reason:       Error
+      Exit Code:    2
+      Started:      Wed, 18 Nov 2026 15:50:10 +0000
+      Finished:     Wed, 18 Nov 2026 15:50:11 +0000
     Ready:          False
     Restart Count:  0
     Environment:
       PGPASSWORD:  <set to the key 'password' in secret 'mio-keycloak-postgresql'>  Optional: false
       PGSSLMODE:   disable
     Mounts:
-      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-b92rx (ro)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-djccb (ro)
 Conditions:
   Type                        Status
   PodReadyToStartContainers   False 
@@ -137,47 +186,38 @@ Conditions:
   ContainersReady             False 
   PodScheduled                True 
 Volumes:
-  kube-api-access-b92rx:
+  kube-api-access-djccb:
     Type:                    Projected (a volume that contains injected data from multiple sources)
     TokenExpirationSeconds:  3607
     ConfigMapName:           kube-root-ca.crt
     Optional:                false
     DownwardAPI:             true
+  linkerd-proxy-init-xtables-lock:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     
+    SizeLimit:  <unset>
+  linkerd-identity-end-entity:
+    Type:       EmptyDir (a temporary directory that shares a pod's lifetime)
+    Medium:     Memory
+    SizeLimit:  <unset>
+  linkerd-identity-token:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  86400
 QoS Class:                   BestEffort
 Node-Selectors:              <none>
 Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
                              node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
 Events:
-  Type    Reason     Age   From               Message
-  ----    ------     ----  ----               -------
-  Normal  Scheduled  14s   default-scheduler  Successfully assigned progetto/pg-mesh-probe to minikube
-  Normal  Pulled     14s   kubelet            spec.containers{client}: Container image "docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0" already present on machine and can be accessed by the pod
-  Normal  Created    13s   kubelet            spec.containers{client}: Container created
-  Normal  Started    13s   kubelet            spec.containers{client}: Container started
-error: container linkerd-init is not valid for pod pg-mesh-probe
-
-
-
-sed -i 's/"disabled"/"enabled"/' pg-mesh-probe.json
-grep -n '"enabled"' pg-mesh-probe.json
-
-minikube kubectl -- delete pod pg-mesh-probe -n progetto --ignore-not-found
-minikube kubectl -- apply -f pg-mesh-probe.json
-minikube kubectl -- get pod pg-mesh-probe -n progetto
-minikube kubectl -- logs -n progetto pg-mesh-probe -c client --pod-running-timeout=60s
-
-
-sed -i 's/"disabled"/"enabled"/' pg-mesh-probe.json
-grep -n '"enabled"' pg-mesh-probe.json
-
-minikube kubectl -- delete pod pg-mesh-probe -n progetto --ignore-not-found
-minikube kubectl -- apply -f pg-mesh-probe.json
-minikube kubectl -- get pod pg-mesh-probe -n progetto
-minikube kubectl -- logs -n progetto pg-mesh-probe -c client --pod-running-timeout=60s
-8:      "linkerd.io/inject": "enabled"
-pod "pg-mesh-probe" deleted from progetto namespace
-pod/pg-mesh-probe created
-NAME            READY   STATUS     RESTARTS   AGE
-pg-mesh-probe   0/2     Init:0/2   0          0s
-Error from server (BadRequest): container "client" in pod "pg-mesh-probe" is waiting to start: PodInitializing
-
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  3m55s  default-scheduler  Successfully assigned progetto/pg-mesh-probe to minikube
+  Normal  Pulled     3m55s  kubelet            spec.initContainers{linkerd-init}: Container image "cr.l5d.io/linkerd/proxy:edge-26.10.1" already present on machine and can be accessed by the pod
+  Normal  Created    3m55s  kubelet            spec.initContainers{linkerd-init}: Container created
+  Normal  Started    3m54s  kubelet            spec.initContainers{linkerd-init}: Container started
+  Normal  Pulled     3m53s  kubelet            spec.initContainers{linkerd-proxy}: Container image "cr.l5d.io/linkerd/proxy:edge-26.10.1" already present on machine and can be accessed by the pod
+  Normal  Created    3m53s  kubelet            spec.initContainers{linkerd-proxy}: Container created
+  Normal  Started    3m53s  kubelet            spec.initContainers{linkerd-proxy}: Container started
+  Normal  Pulled     3m51s  kubelet            spec.containers{client}: Container image "docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0" already present on machine and can be accessed by the pod
+  Normal  Created    3m51s  kubelet            spec.containers{client}: Container created
+  Normal  Started    3m51s  kubelet            spec.containers{client}: Container started
+  Normal  Killing    3m49s  kubelet            spec.initContainers{linkerd-proxy}: Stopping container linkerd-proxy
