@@ -62,4 +62,13 @@ admin|postgres|keycloak_db
 
 
 
-minikube kubectl -- delete pod pg-mesh-probe -n progetto
+
+sed -i 's/"linkerd.io\/inject": "disabled"/"linkerd.io\/inject": "enabled"/' pg-mesh-probe.json
+grep 'linkerd.io/inject' pg-mesh-probe.json
+
+minikube kubectl -- delete pod pg-mesh-probe -n progetto --ignore-not-found
+minikube kubectl -- apply -f pg-mesh-probe.json
+minikube kubectl -- logs -n progetto pg-mesh-probe -c client --pod-running-timeout=60s
+minikube kubectl -- get pod pg-mesh-probe -n progetto
+
+
