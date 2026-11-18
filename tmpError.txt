@@ -155,3 +155,13 @@ Events:
   Normal  Created    13s   kubelet            spec.containers{client}: Container created
   Normal  Started    13s   kubelet            spec.containers{client}: Container started
 error: container linkerd-init is not valid for pod pg-mesh-probe
+
+
+
+sed -i 's/"disabled"/"enabled"/' pg-mesh-probe.json
+grep -n '"enabled"' pg-mesh-probe.json
+
+minikube kubectl -- delete pod pg-mesh-probe -n progetto --ignore-not-found
+minikube kubectl -- apply -f pg-mesh-probe.json
+minikube kubectl -- get pod pg-mesh-probe -n progetto
+minikube kubectl -- logs -n progetto pg-mesh-probe -c client --pod-running-timeout=60s
