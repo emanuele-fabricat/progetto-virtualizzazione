@@ -90,7 +90,7 @@ helm install mio-keycloak bitnami/keycloak \
   --set postgresql.auth.postgresPassword=Admin1234! \
   --set postgresql.auth.username=admin \
   --set postgresql.auth.password=Admin1234! \
-  --set postgresql.auth.database=keycloak_db \ || exit 1
+  --set postgresql.auth.database=keycloak_db || exit 1
 
 echo -e "\033[32mINSTALLAZIONE KEYCLOAK AVVENUTA CON SUCCESSO\033[0m"
 
