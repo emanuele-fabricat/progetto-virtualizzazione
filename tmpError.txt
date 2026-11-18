@@ -1,6 +1,2 @@
 minikube kubectl -- exec -n progetto mio-keycloak-postgresql-0 -c postgresql -- \
-  bash -ec 'PGPASSWORD="$(cat "$POSTGRESQL_POSTGRES_PASSWORD_FILE")" psql -h 127.0.0.1 -U postgres -d postgres -Atc "SHOW ssl;"'
-cat: '': No such file or directory
-Password for user postgres: 
-psql: error: connection to server at "127.0.0.1", port 5432 failed: fe_sendauth: no password supplied
-command terminated with exit code 2
+  sh -c 'env | cut -d= -f1 | grep -E "^(POSTGRESQL|POSTGRES|PG)" | sort'
