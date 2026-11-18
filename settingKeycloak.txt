@@ -1,39 +1,77 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: pg-mesh-probe
-  namespace: progetto
-  annotations:
-    linkerd.io/inject: enabled
-spec:
-  restartPolicy: Never
-  containers:
-    - name: client
-      image: docker.io/bitnamilegacy/postgresql:17.6.0-debian-12-r0
-      command: ["/bin/bash", "-ec"]
-      args:
-        - |
-          export PGPASSWORD="$(cat /db/password)"
-          export PGSSLMODE=disable
-          psql -h mio-keycloak-postgresql -p 5432 \
-            -U admin -d keycloak_db \
-            -Atc 'select current_user, current_database();'
-      volumeMounts:
-        - name: db-secret
-          mountPath: /db
-          readOnly: true
-  volumes:
-    - name: db-secret
-      secret:
-        secretName: mio-keycloak-postgresql
-        items:
-          - key: password
-            path: password
+Eseguire il seguente comando per aprire un tunnel alla porta 8082 e potersi connettere a keycloak
 
+minikube kubectl -- port-forward -n progetto svc/mio-keycloak 8082:80
 
-minikube kubectl -- apply -f pg-mesh-probe.yaml
-minikube kubectl -- get pod pg-mesh-probe -n progetto
-minikube kubectl -- logs pg-mesh-probe -n progetto -c client
+Keycloak rimane esposto nel cluster come ClusterIP. OAuth2 Proxy raggiunge Keycloak tramite la route pubblica di Traefik: lo script installaProgettoDue.sh ricava l'IP corrente di Minikube e il NodePort HTTP di Traefik, quindi compone automaticamente l'indirizzo dell'issuer e crea la route per quell'IP. Se l'IP o il NodePort cambia, rieseguire lo script per aggiornare la configurazione.
 
+Aprire la pagina web http://127.0.0.1:8082 e entrare nella dashboard digitando
+utente: admin
+pswd: Admin1234!
 
-minikube kubectl -- delete pod pg-mesh-probe -n progetto
+CREAZIONE REALM
+
+Click Manage realms nella colonna a sinistra.
+Click Create realm.
+Enter progetto nel Realm name.
+Set enabled on
+Click Create.
+Controllare in alto a destra di essere nel realm appena creato, alternativamente click menage relams e click progetto
+
+CREAZIONE CLIENTS
+
+Click clients
+Click create clients
+Settare:
+	Client type: OpenID Connect
+	Client ID: oauth2-proxy
+	Always display in UI: active
+Click next
+Settare: 
+	Client authentication: on
+	Standard flow: on
+Click next
+Set
+	Valid redirect URIs: http://localhost:8081/oauth2/callback
+	Web Origins: http://localhost:8081
+Click save
+
+CREAZIONE DI UN UTENTE
+
+Click users
+Click create user
+Settare:
+	email verified: on
+	username: pippo
+	email: pippo@prova.it
+	first name: pippo
+	last name: pluto
+Click create
+Click sulla credentials section
+Click set password
+Settare:
+	Password: Admin1234!
+	Password confirmation: Admin1234!
+	Temporary: off
+Click save
+
+FINE PROCESSO
+
+Click clients
+Click oauth2-proxy 
+Click credentials field
+Copiare ClientSecret da qualche parte,  volendo anche qui sotto 
+" "
+
+MODIFICA PERSISTENZA SESSIONE UTENTE
+Click Realm Settings
+Click Session field
+Settare:
+	SSO Session Max: 1 hour;
+	Offilne Sesson Idle: 90 minutes;
+	Salvare tutto  
+
+Click sul proprio nome utente in alto a destra
+Click su Sign out
+Chiudere il tunnel con ctrl+c
+	
+
