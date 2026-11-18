@@ -92,6 +92,7 @@ helm install mio-keycloak bitnami/keycloak \
   --set postgresql.auth.password=Admin1234! \
   --set postgresql.auth.database=keycloak_db  \
   --set postgresql.auth.database=keycloak_db \
+  --set-string 'podAnnotations.config\.linkerd\.io/skip-outbound-ports=5432'
   --set-string 'postgresql.primary.service.annotations.config\.linkerd\.io/opaque-ports=5432' \
   --set-string 'postgresql.primary.service.headless.annotations.config\.linkerd\.io/opaque-ports=5432' || exit 1
 echo -e "\033[32mINSTALLAZIONE KEYCLOAK AVVENUTA CON SUCCESSO\033[0m"
