@@ -1,39 +1,10 @@
-minikube kubectl -- patch statefulset mio-keycloak-postgresql -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"linkerd.io/inject":"disabled"}}}}}'
-minikube kubectl -- patch statefulset mio-keycloak -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"linkerd.io/inject":"disabled"}}}}}'
+minikube kubectl -- get pod mio-keycloak-0 -n progetto \
+  -o jsonpath='{range .status.containerStatuses[*]}{.name}{" ready="}{.ready}{" restarts="}{.restartCount}{"\n"}{end}'
 
-minikube kubectl -- rollout restart statefulset/mio-keycloak-postgresql -n progetto
-minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n progetto --timeout=180s
-minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
-minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=180s
-E1118 11:58:43.275514    5295 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:58:46.346491    5295 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:58:49.418539    5295 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:58:52.490512    5295 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:58:55.562480    5295 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-Unable to connect to the server: dial tcp 192.168.49.2:8443: connect: no route to host
-E1118 11:58:59.018524    5324 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:02.090459    5324 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:05.162581    5324 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:08.234353    5324 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:11.306513    5324 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-Unable to connect to the server: dial tcp 192.168.49.2:8443: connect: no route to host
-E1118 11:59:14.635050    5359 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:17.706646    5359 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:20.778514    5359 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:23.850327    5359 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-Unable to connect to the server: dial tcp 192.168.49.2:8443: connect: no route to host
-E1118 11:59:27.178655    5386 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:30.250472    5386 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:33.322548    5386 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:36.394454    5386 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-Unable to connect to the server: dial tcp 192.168.49.2:8443: connect: no route to host
-E1118 11:59:39.722581    5416 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:42.794422    5416 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:45.866510    5416 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:48.938489    5416 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-Unable to connect to the server: dial tcp 192.168.49.2:8443: connect: no route to host
-E1118 11:59:52.266605    5454 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:55.338381    5454 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 11:59:58.410613    5454 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-E1118 12:00:01.482451    5454 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"https://192.168.49.2:8443/api?timeout=32s\": dial tcp 192.168.49.2:8443: connect: no route to host"
-Unable to connect to the server: dial tcp 192.168.49.2:8443: connect: no route to host
+minikube kubectl -- get endpoints mio-keycloak -n progetto -o wide
+
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c keycloak --since=20m --tail=200
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c keycloak --previous --tail=200
+minikube kubectl -- logs mio-keycloak-0 -n progetto -c linkerd-proxy --since=20m --tail=100
+
+minikube kubectl -- logs mio-keycloak-postgresql-0 -n progetto -c postgresql --since=20m --tail=100
