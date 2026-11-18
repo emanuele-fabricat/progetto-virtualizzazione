@@ -165,3 +165,19 @@ minikube kubectl -- delete pod pg-mesh-probe -n progetto --ignore-not-found
 minikube kubectl -- apply -f pg-mesh-probe.json
 minikube kubectl -- get pod pg-mesh-probe -n progetto
 minikube kubectl -- logs -n progetto pg-mesh-probe -c client --pod-running-timeout=60s
+
+
+sed -i 's/"disabled"/"enabled"/' pg-mesh-probe.json
+grep -n '"enabled"' pg-mesh-probe.json
+
+minikube kubectl -- delete pod pg-mesh-probe -n progetto --ignore-not-found
+minikube kubectl -- apply -f pg-mesh-probe.json
+minikube kubectl -- get pod pg-mesh-probe -n progetto
+minikube kubectl -- logs -n progetto pg-mesh-probe -c client --pod-running-timeout=60s
+8:      "linkerd.io/inject": "enabled"
+pod "pg-mesh-probe" deleted from progetto namespace
+pod/pg-mesh-probe created
+NAME            READY   STATUS     RESTARTS   AGE
+pg-mesh-probe   0/2     Init:0/2   0          0s
+Error from server (BadRequest): container "client" in pod "pg-mesh-probe" is waiting to start: PodInitializing
+
