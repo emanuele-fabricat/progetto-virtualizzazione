@@ -48,9 +48,17 @@ cat > pg-mesh-probe.json <<EOF
 EOF
 
 
-minikube kubectl -- apply -f pg-mesh-probe.yaml
+minikube kubectl -- apply -f pg-mesh-probe.json
 minikube kubectl -- get pod pg-mesh-probe -n progetto
 minikube kubectl -- logs pg-mesh-probe -n progetto -c client
+pod/pg-mesh-probe configured
+NAME            READY   STATUS   RESTARTS   AGE
+pg-mesh-probe   0/2     Error    0          2m29s
+psql: error: connection to server at "mio-keycloak-postgresql" (10.107.111.134), port 5432 failed: server closed the connection unexpectedly
+	This probably means the server terminated abnormally
+	before or while processing the request.
+
+
 
 
 minikube kubectl -- delete pod pg-mesh-probe -n progetto
