@@ -77,5 +77,7 @@ NAME            READY   STATUS   RESTARTS   AGE
 pg-mesh-probe   0/2     Error    0          2m52s
 
 
+minikube kubectl -- describe pod pg-mesh-probe -n progetto
+minikube kubectl -- logs -n progetto pg-mesh-probe -c linkerd-init --tail=80
 
 
