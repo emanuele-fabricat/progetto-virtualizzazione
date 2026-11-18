@@ -1,5 +1,6 @@
-minikube kubectl -- patch configmap mio-keycloak-env-vars -n progetto \
-  --type=merge \
-  -p '{"data":{"KC_DB_URL":"jdbc:postgresql://mio-keycloak-postgresql:5432/keycloak_db?currentSchema=public&sslmode=disable"}}'
+minikube kubectl -- get pods -n progetto -o wide
 
-minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
+minikube kubectl -- logs -n progetto mio-keycloak-0 -c keycloak --previous --tail=150
+
+minikube kubectl -- get configmap mio-keycloak-env-vars -n progetto \
+  -o jsonpath='{.data.KC_DB_URL}{"\n"}'
