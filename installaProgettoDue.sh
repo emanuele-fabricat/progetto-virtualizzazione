@@ -162,4 +162,8 @@ minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
 minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
 minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto || exit 1
 
+minikube kubectl -- patch statefulset mio-keycloak -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"config.linkerd\u002eio/skip-outbound-ports":"5432"}}}}}'
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=180s
+minikube kubectl -- get pod mio-keycloak-0 -n progetto
+
 echo -e "\033[32mINIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
