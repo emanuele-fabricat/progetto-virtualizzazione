@@ -20,3 +20,7 @@ i pod siano pronti:
 minikube kubectl -- get pod mio-keycloak-0 mio-keycloak-postgresql-0 -n progetto \
   -o custom-columns=NAME:.metadata.name,READY:.status.containerStatuses[*].ready,SKIP-DB-PROXY:.metadata.annotations.config\\.linkerd\\.io/skip-outbound-ports
 ```
+
+Le differenze tra lo script originale `installaProgettoDue.sh` e la versione
+aggiornata `installaProgettoDue-web.sh` sono descritte in
+[comparazione-script.md](./comparazione-script.md).
