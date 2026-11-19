@@ -154,16 +154,17 @@ minikube kubectl -- rollout status statefulset/mio-keycloak-postgresql -n proget
 
 echo -e "\033[32mINIEZIONE DI POSTGRESS IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
-# Riavvia Keycloak dopo PostgreSQL, così non resta con connessioni DB interrotte.
+# Escludi PostgreSQL dal proxy in uscita prima di applicare l'iniezione:
+# l'aggiornamento del template avvia subito il rollout del StatefulSet.
+minikube kubectl -- patch statefulset mio-keycloak -n progetto --type=merge \
+  -p '{"spec":{"template":{"metadata":{"annotations":{"config.linkerd\u002eio/skip-outbound-ports":"5432"}}}}}' || exit 1
+
+# Keycloak deve avere l'esclusione già presente quando viene iniettato e riavviato.
 minikube kubectl -- get statefulset mio-keycloak -n progetto -o yaml \
   | linkerd --linkerd-namespace linkerd inject - \
   | minikube kubectl -- apply -f - || exit 1
 
 minikube kubectl -- rollout restart statefulset/mio-keycloak -n progetto
-minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto || exit 1
-
-minikube kubectl -- patch statefulset mio-keycloak -n progetto --type=merge -p '{"spec":{"template":{"metadata":{"annotations":{"config.linkerd\u002eio/skip-outbound-ports":"5432"}}}}}'
-minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=180s
-minikube kubectl -- get pod mio-keycloak-0 -n progetto
+minikube kubectl -- rollout status statefulset/mio-keycloak -n progetto --timeout=180s || exit 
 
 echo -e "\033[32mINIEZIONE DI KEYCLOACK IN LINKERD AVVENUTA CON SUCCESSO\033[0m"
