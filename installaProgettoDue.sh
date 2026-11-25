@@ -132,9 +132,13 @@ linkerd check || exit 1
 
 echo -e "\033[32mINSTALLAZIONE LINKERD AVVENUTA CON SUCCESSO\033[0m"
 
-minikube kubectl -- annotate "service/mio-keycloak-postgresql" config.linkerd.io/opaque-ports=5432 --overwrite
+
+
+minikube kubectl -- annotate service/mio-keycloak-postgresql config.linkerd.io/opaque-ports=5432 -n progetto --overwrite
 consenti_proxy "mio-keycloak-postgresql" "statefulset/mio-keycloak"        # Keycloak -> PostgreSQL
-consenti_proxy "mio-keycloak" deployment/traefik       # Traefik -> Keycloak (issuer OIDC)
+consenti_proxy "mio-keycloak" deployment/traefik                           # Traefik -> Keycloak (issuer OIDC)
+
+
 
 
 #Mashing di apache
