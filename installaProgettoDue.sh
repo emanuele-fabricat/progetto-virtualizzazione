@@ -2,6 +2,36 @@
 set -e
 set -o pipefail
 
+# Le policy Bitnami possono consentire la porta dell'app ma NON la porta inbound
+# del proxy. Aggiungi un permesso mirato solo se una policy del chart isola già
+# in ingresso i Pod; non creare il primo isolamento di un Pod altrimenti aperto.
+consenti_proxy() {
+  local policy=$1 sorgente=$2 tipi dst src
+  tipi=$(minikube kubectl -- get "networkpolicy/$policy" --ignore-not-found -o jsonpath='{.spec.policyTypes[*]}')
+  [[ " $tipi " == *' Ingress '* ]] || return 0
+  dst=$(minikube kubectl -- get "networkpolicy/$policy" -o jsonpath='{.spec.podSelector}')
+  src=$(kminikube kubectl -- get "$sorgente" -o jsonpath='{.spec.selector}')
+  if [[ -z $dst || $dst == '{}' || -z $src || $src == '{}' ]]; then
+    echo "Selettore mancante per $policy o $sorgente: non apro la porta 4143." >&2
+    return 1
+  fi
+  minikube kubectl -- apply -f - <<YAML
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ${policy}-ingresso-linkerd
+  namespace: ${NS}
+spec:
+  podSelector: ${dst}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector: ${src}
+      ports:
+        - {protocol: TCP, port: 4143}
+YAML
+}
+
 echo "Nel prossimo comando sarà richiesta il client secret, immettere quello salvato nel passo precedente"
 
 #Creazione secret kubernetes
@@ -101,6 +131,10 @@ linkerd viz install | minikube kubectl -- apply -f - || exit 1
 linkerd check || exit 1
 
 echo -e "\033[32mINSTALLAZIONE LINKERD AVVENUTA CON SUCCESSO\033[0m"
+
+minikube kubectl -- annotate "service/mio-keycloak-postgresql" config.linkerd.io/opaque-ports=5432 --overwrite
+consenti_proxy "mio-keycloak-postgresql" "statefulset/mio-keycloak"        # Keycloak -> PostgreSQL
+consenti_proxy "mio-keycloak" deployment/traefik       # Traefik -> Keycloak (issuer OIDC)
 
 
 #Mashing di apache
